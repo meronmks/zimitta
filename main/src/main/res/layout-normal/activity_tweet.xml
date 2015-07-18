@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:id="@+id/Activity_Tweet"
+    android:background="@drawable/button_select_coloer">
+
+    <Button
+        android:id="@+id/Image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/image_select"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
+
+    <EditText
+        android:id="@+id/input_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/Image_button"
+        android:layout_alignParentRight="true"
+        android:background="#ff000000"
+        android:ems="10"
+        android:gravity="left|top"
+        android:inputType="textMultiLine"
+        android:padding="15.0px"
+        android:hint="@string/tweet_edittext_hinttext"
+        android:textColor="#ffffffff"
+        android:textSize="15sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <ImageView
+        android:id="@+id/Select_Image_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignBottom="@+id/input_text"
+        android:src="@drawable/clear" />
+
+     <ImageView
+         android:id="@+id/Select_Image_button3"
+         android:layout_width="64dp"
+         android:layout_height="64dp"
+         android:src="@drawable/clear" android:layout_alignBottom="@+id/input_text"
+         android:layout_toRightOf="@+id/Select_Image_button1" android:layout_toEndOf="@+id/Select_Image_button1"/>
+
+        <ImageView
+            android:id="@+id/Select_Image_button2"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/clear" android:layout_alignTop="@+id/Select_Image_button3"
+            android:layout_toRightOf="@+id/Select_Image_button3" android:layout_toEndOf="@+id/Select_Image_button3"/>
+
+        <ImageView
+            android:id="@+id/Select_Image_button1"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_alignTop="@+id/Select_Image_button3"
+            android:layout_toRightOf="@+id/Select_Image_button"
+            android:src="@drawable/clear" />
+
+        <TextView
+        android:id="@+id/textCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/input_text"
+        android:layout_alignRight="@+id/input_text"
+        android:textColor="#ff888888"
+        android:text="140" />
+
+        <ImageButton
+            android:id="@+id/listTlReloadButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignRight="@+id/Select_Image_button"
+            android:layout_alignTop="@+id/Select_Image_button"
+            android:background="@drawable/button_select_coloer"
+            android:src="@drawable/x_c"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/Button02"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignRight="@+id/Select_Image_button1"
+            android:layout_alignTop="@+id/Select_Image_button1"
+            android:background="@drawable/button_select_coloer"
+            android:src="@drawable/x_c"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/Button04"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignRight="@+id/Select_Image_button2"
+            android:layout_alignTop="@+id/Select_Image_button2"
+            android:background="@drawable/button_select_coloer"
+            android:src="@drawable/x_c"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/Button03"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignRight="@+id/Select_Image_button3"
+            android:layout_alignTop="@+id/Select_Image_button3"
+            android:background="@drawable/button_select_coloer"
+            android:src="@drawable/x_c"
+            android:visibility="gone" />
+
+
+
+</RelativeLayout>

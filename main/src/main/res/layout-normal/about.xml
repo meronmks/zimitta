@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+    <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" >
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical" >
+
+            <TextView
+                    android:id="@+id/verTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/oauthTextView1"
+                    android:layout_below="@+id/oauthTextView1"
+                    android:text="バージョン情報" />
+
+            <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Copyright(C)2014 meronmks All Rights Reserved\nこのアプリの開発者\nmeronmks　@meronmks"
+                    android:layout_below="@+id/verTextView" android:layout_alignLeft="@+id/verTextView"
+                    android:layout_alignStart="@+id/verTextView" android:layout_marginTop="17dp"/>
+
+            <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/oauthTextView1"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/app_name" android:layout_marginTop="15dp"/>
+
+            <TextView
+                    android:id="@+id/oauthTextView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textView4"
+                    android:layout_marginLeft="20dp"
+                    android:text="このアプリのバージョン" />
+
+            <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView3"
+                    android:layout_below="@+id/textView3"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="17dp"
+                    android:text="このアプリは以下のライブラリ等を使用して作られています。\nTwitter4j\nGlide\nZoomImageView\njsoup\nAsyncHttpClient\nまたこのアプリは Apache License, Version 2.0 のライセンスで配布されている成果物を含んでいます。" />
+
+            <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView5"
+                    android:layout_below="@+id/textView5"
+                    android:layout_marginTop="16dp"
+                    android:text="使用アイコン等\nmonochromat\n作者様に多大な感謝をいたします。" />
+
+            <TextView
+                    android:id="@+id/textView7"
+                    android:layout_alignLeft="@+id/textView6"
+                    android:layout_below="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="オープンソースライブラリ"
+                    android:layout_marginRight="20dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium" android:layout_marginTop="17dp"
+                    android:layout_marginBottom="17dp"/>
+
+            <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/textView7"
+                    android:layout_below="@+id/textView7"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginRight="20dp"
+                    android:text="Twitter4J\nCopyright 2007 Yusuke Yamamoto\nLicensed under the Apache License, Version 2.0 (the &quot;License&quot;);\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n\thttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing,\nsoftware Distributed under the License is distributed on an &quot;AS IS&quot; BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and limitations under the License.\n\nApache License, Version 2.0\nLicensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.\n
+ActionBarSherlock\n"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

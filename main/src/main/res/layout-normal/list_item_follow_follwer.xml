@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/Tweet_List"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+    <TextView
+            android:id="@+id/screen_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/name"
+            android:layout_marginLeft="6sp"
+            android:layout_toRightOf="@+id/name"
+            android:ellipsize="end"
+            android:gravity="right"
+            android:singleLine="true"
+            android:text="meron"
+            android:textColor="#ffffff"
+            android:textSize="10sp" />
+
+    <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/name"
+            android:layout_below="@+id/name"
+            android:layout_marginRight="6sp"
+            android:layout_toLeftOf="@+id/TweetStatus"
+            android:text="本文本文本文本文本文本文本文本文本文本文"
+            android:textColor="#ffffff"
+            android:textSize="13sp"
+            android:maxLines="2"
+            android:ellipsize="end" />
+
+    <ImageView
+            android:id="@+id/icon"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:src="@android:drawable/ic_menu_gallery" />
+
+    <ImageView
+            android:id="@+id/TweetStatus"
+            android:layout_width="3sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/name"
+            android:maxWidth="3sp"
+            android:src="@drawable/clear" />
+
+    <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/icon"
+            android:layout_marginLeft="5sp"
+            android:layout_toRightOf="@+id/icon"
+            android:text="名前入ります"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+</RelativeLayout>

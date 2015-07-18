@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+            android:title="一度に読み込むツイート数"
+            android:key="Load_Tweet"
+            android:entries="@array/entries_list_preference"
+            android:entryValues="@array/entryvalues_list_preference"
+            android:defaultValue="20"/>
+    <CheckBoxPreference
+            android:title="ツイート長押しで\nメニュー表示"
+            android:key="Tap_Setting"
+            android:summary=""
+            android:defaultValue="true"/>
+    <CheckBoxPreference
+            android:title="ツイート圧縮"
+            android:key="zipTweet"
+            android:summary="ループしている内容を圧縮します"
+            android:defaultValue="false"/>
+    <CheckBoxPreference
+            android:title="Streamingを使う"
+            android:key="Streem_Flug"
+            android:summary="現在Homeのみ有効"
+            android:defaultValue="false"/>
+    <PreferenceScreen
+            android:title="Streaming設定">
+        <CheckBoxPreference
+                android:title="ツイートを貯める"
+                android:summary="更新を押すと反映されます（要再起動）"
+                android:key="Streeming_stok"/>
+        <CheckBoxPreference
+                android:title="更新可能時通知"
+                android:summary="トーストで通知します"
+                android:key="Streeming_Nof_Tost"/>
+        <CheckBoxPreference
+                android:title="FF外のリプライを取得する"
+                android:summary="反映には再起動必須"
+                android:key="Streeming_FF_Mention"/>
+        <CheckBoxPreference
+                android:title="Wi-Fiのみで有効（予定）"
+                android:summary="Wi-Fi接続時のみでStreamingします"
+                android:key="Streeming_Wifi"/>
+    </PreferenceScreen>
+    <PreferenceScreen
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:title="通知設定"
+            android:summary="Streaming時のみ適用">
+        <CheckBoxPreference
+                android:title="Mention通知"
+                android:key="NotificationMen"
+                android:enabled="false"
+                android:defaultValue="ture"
+                android:selectable="true" />
+        <CheckBoxPreference
+                android:title="RT通知"
+                android:key="NotificationRT"
+                android:enabled="false"
+                android:defaultValue="ture"
+                android:selectable="true" />
+        <CheckBoxPreference
+                android:title="Fav通知"
+                android:key="NotificationFav"
+                android:enabled="false"
+                android:defaultValue="ture"
+                android:selectable="true" />
+        <CheckBoxPreference
+                android:title="DM通知"
+                android:key="NotificationDM"
+                android:enabled="false"
+                android:defaultValue="ture"
+                android:selectable="true" />
+        <CheckBoxPreference
+                android:title="Follow通知"
+                android:key="NotificationFol"
+                android:enabled="false"
+                android:defaultValue="ture"
+                android:selectable="true" />
+    </PreferenceScreen>
+    <CheckBoxPreference
+            android:title="公式ミュート機能を使う"
+            android:key="mute_flag"/>
+    <PreferenceScreen
+            android:title="About"
+            android:key="About"/>
+</PreferenceScreen>

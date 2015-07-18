@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ScrollView"
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="fill"
+            tools:context=".MainActivity" android:padding="20sp">
+
+        <TextView
+                android:id="@+id/ScreenNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/icon"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@+id/icon"
+                android:text="名前を表示"
+                />
+
+        <ImageView
+                android:id="@+id/icon"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:src="@android:drawable/ic_menu_gallery" />
+
+        <TextView
+                android:id="@+id/NameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/icon"
+                android:layout_alignLeft="@+id/ScreenNameView"
+                android:text="＠ID"
+                android:textColor="#ffffff" />
+
+        <TextView
+                android:id="@+id/ProfTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/icon"
+                android:layout_below="@+id/icon"
+                android:layout_marginTop="14dp"
+                android:text="プロフィール欄"/>
+
+        <TextView
+                android:id="@+id/LocView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="すんでいる場所"
+                android:layout_below="@+id/UserStaticID" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
+
+        <Button
+                android:id="@+id/FollowingCountView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/TweetCountView"
+                android:layout_alignRight="@+id/TweetCountView"
+                android:layout_below="@+id/TweetCountView"
+                android:text="フォロー\n数値"/>
+
+        <Button
+                android:id="@+id/FollwersCountView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/FollowingCountView"
+                android:layout_alignBottom="@+id/FollowingCountView"
+                android:layout_alignLeft="@+id/FavCountView"
+                android:layout_alignRight="@+id/FavCountView"
+                android:text="フォロワー\n数値"/>
+
+        <Button
+                android:id="@+id/FavCountView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/FollwersCountView"
+                android:layout_alignParentRight="true"
+                android:text="お気に入り\n数値"/>
+
+        <TextView
+                android:id="@+id/URLTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/LocView"
+                android:layout_below="@+id/LocView"
+                android:text="URLText"/>
+
+        <Button
+                android:id="@+id/TweetCountView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/URLTextView"
+                android:layout_below="@+id/URLTextView"
+                android:text="ツイート\n数値"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="フォロー"
+                android:id="@+id/followButton" android:layout_below="@+id/FollowingCountView"
+                android:layout_alignParentLeft="true" android:layout_alignParentStart="true"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="メニュー"
+                android:id="@+id/MenuButton"
+                android:layout_below="@+id/FollwersCountView" android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" android:layout_alignBottom="@+id/followButton"
+                android:layout_alignLeft="@+id/FollwersCountView" android:layout_alignStart="@+id/FollwersCountView"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="固有ID"
+                android:id="@+id/UserStaticID"
+                android:layout_below="@+id/ProfTextView" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_marginTop="5sp"/>
+
+    </RelativeLayout>
+</ScrollView>

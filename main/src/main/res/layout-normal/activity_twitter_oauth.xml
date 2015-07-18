@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp">
+
+    <Button
+            android:id="@+id/actionStartOauth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/twitter_oauth"/>
+
+    <TextView
+            android:id="@+id/oauthTextView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="07dp"
+            android:text="@string/FIRST_Attention_Text" />
+    <TextView
+            android:id="@+id/oauthTextView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/actionStartOauth"
+            android:layout_alignParentLeft="true"
+            android:text="@string/FIRST_Action_Button_Text" />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/APP_renkei_kaizyo_Text"
+            android:id="@+id/oauthTextView3"
+            android:layout_below="@+id/actionStartOauth"
+            android:layout_alignParentLeft="true"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/apprenkei_Text"
+            android:id="@+id/AppRenkeiButton"
+            android:layout_below="@+id/oauthTextView3"
+            android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

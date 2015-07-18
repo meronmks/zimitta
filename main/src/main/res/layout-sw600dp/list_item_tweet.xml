@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Tweet_List"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:padding="3dp" >
+
+    <TextView
+        android:id="@+id/screen_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/name"
+        android:layout_marginLeft="6sp"
+        android:layout_toRightOf="@+id/name"
+        android:ellipsize="end"
+        android:gravity="right"
+        android:singleLine="true"
+        android:text="meron"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/name"
+        android:layout_below="@+id/name"
+        android:text="本文本文本文本文本文本文本文本文本文本文"
+        android:textSize="13sp"
+        android:layout_toLeftOf="@+id/deletedTweetImageView" android:layout_toStartOf="@+id/deletedTweetImageView"/>
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@android:drawable/ic_menu_gallery" />
+
+    <ImageView
+        android:id="@+id/TweetStatus"
+        android:layout_width="3sp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/Fav"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/name"
+        android:maxWidth="3sp"
+        android:src="@drawable/clear" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/icon"
+        android:layout_marginLeft="5sp"
+        android:layout_toRightOf="@+id/icon"
+        android:text="名前入ります"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/via"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/time"
+        android:layout_below="@+id/time"
+        android:text="クライアント名"
+        android:textSize="9sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/RT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/via"
+        android:layout_below="@+id/via"
+        android:text="RT:0"
+        android:textSize="10sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/Fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/RT"
+        android:layout_alignBottom="@+id/RT"
+        android:layout_marginLeft="4sp"
+        android:layout_toRightOf="@+id/RT"
+        android:text="Fav:0"
+        android:textSize="10sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text"
+        android:layout_below="@+id/text"
+        android:text="時間表示"
+        android:textSize="9sp" />
+
+    <TextView
+        android:id="@+id/RT_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/RT"
+        android:layout_below="@+id/RT"
+        android:text="RTした人のＩＤ"
+        android:textSize="9sp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/rticon"
+        android:layout_width="25sp"
+        android:layout_height="25sp"
+        android:layout_below="@+id/icon"
+        android:layout_toLeftOf="@+id/name"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:visibility="gone" />
+    <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/deletedTweetImageView"
+            android:src="@android:drawable/ic_menu_delete"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/lockedImageView" />
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lockedImageView"
+            android:src="@drawable/lock_locked"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/TweetStatus"/>
+
+</RelativeLayout>

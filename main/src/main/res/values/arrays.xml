@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="entries_list_preference">
+        <item>10件</item>
+        <item>20件</item>
+        <item>30件</item>
+        <item>40件</item>
+        <item>50件</item>
+        <item>60件</item>
+        <item>70件</item>
+        <item>80件</item>
+        <item>90件</item>
+        <item>100件</item>
+        <item>110件</item>
+        <item>120件</item>
+        <item>130件</item>
+        <item>140件</item>
+        <item>150件</item>
+        <item>160件</item>
+        <item>170件</item>
+        <item>180件</item>
+        <item>190件</item>
+        <item>200件</item>
+    </string-array>
+    <string-array name="entryvalues_list_preference">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>40</item>
+        <item>50</item>
+        <item>60</item>
+        <item>70</item>
+        <item>80</item>
+        <item>90</item>
+        <item>100</item>
+        <item>110</item>
+        <item>120</item>
+        <item>130</item>
+        <item>140</item>
+        <item>150</item>
+        <item>160</item>
+        <item>170</item>
+        <item>180</item>
+        <item>190</item>
+        <item>200</item>
+    </string-array>
+</resources>

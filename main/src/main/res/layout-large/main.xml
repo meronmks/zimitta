@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/Back">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="horizontal"
+                  android:layout_weight="1"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:orientation="vertical"
+                      android:layout_width="fill_parent"
+                      android:layout_height="match_parent"
+                      android:layout_weight="1">
+            <TextView android:layout_weight="0.03"
+                      android:layout_width="fill_parent"
+                      android:layout_height="0dp"
+                      android:textStyle="bold"
+                      android:text="TL"
+                      android:gravity="center"/>
+            <fragment
+                    android:id="@+id/TimeLineFragment1"
+                    class="com.meronmks.zimitta.Fragments.TimeLineFragment"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+        </LinearLayout>
+        <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1" >
+
+            <android.support.v4.view.PagerTitleStrip
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top" />
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <ImageView
+                android:layout_width="25dp"
+                android:layout_height="20dp"
+                android:background="@drawable/twitter_logo_blue"
+                android:layout_margin="8dp" android:layout_gravity="center_vertical"/>
+
+        <ImageButton
+                android:id="@+id/tweet"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/draw_pencil"
+                android:background="@color/Back"/>
+
+        <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/progressBar"
+                android:layout_gravity="center_vertical"/>
+
+        <View android:layout_width="1dp"
+              android:layout_height="0dp"
+              android:layout_weight="0.01"/>
+
+        <ImageButton
+                android:id="@+id/Menu_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/config"
+                android:background="@color/Back"/>
+    </LinearLayout>
+</LinearLayout>
+

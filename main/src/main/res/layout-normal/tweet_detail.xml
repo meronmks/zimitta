@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Tweet_List"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="@drawable/button_select_coloer" >
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
+        android:src="@android:drawable/ic_menu_gallery" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/icon"
+        android:layout_marginLeft="5sp"
+        android:layout_toRightOf="@+id/icon"
+        android:text="名前入ります"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/screen_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/name"
+        android:layout_below="@+id/name"
+        android:ellipsize="end"
+        android:gravity="right"
+        android:singleLine="true"
+        android:text="meron"
+        android:textColor="#ffffff"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/screen_name"
+        android:layout_below="@+id/screen_name"
+        android:layout_marginTop="9sp"
+        android:text="本文本文本文本文本文本文本文本文本文本文"
+        android:textColor="#ffffff"
+        android:textSize="15sp" />
+
+    <ImageButton
+        android:id="@+id/favImageButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/retweetImageButton"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/retweetImageButton"
+        android:layout_weight="1"
+        android:background="@drawable/button_select_coloer"
+        android:scaleType="fitXY"
+        android:src="@drawable/favorite" />
+
+    <ImageButton
+        android:id="@+id/retweetImageButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/mentionimageButton"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/mentionimageButton"
+        android:layout_weight="1"
+        android:background="@drawable/button_select_coloer"
+        android:scaleType="fitXY"
+        android:src="@drawable/retweet" />
+
+    <TextView
+        android:id="@+id/via"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/time"
+        android:layout_below="@+id/time"
+        android:text="ツイートしたクライアント名"
+        android:textColor="#ffffff"
+        android:textSize="10sp" />
+
+    <ImageButton
+        android:id="@+id/menuImageButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignTop="@+id/favImageButton"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/favImageButton"
+        android:background="@drawable/button_select_coloer"
+        android:scaleType="fitXY"
+        android:src="@drawable/arrow_c_down"/>
+
+    <TextView
+        android:id="@+id/RT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RT:0"
+        android:textColor="#ffffff"
+        android:textSize="10sp"
+        android:layout_below="@+id/RTvia" android:layout_alignLeft="@+id/RTvia" android:layout_alignStart="@+id/RTvia"/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text"
+        android:layout_below="@+id/text"
+        android:text="時間表示"
+        android:textColor="#ffffff"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/RT"
+        android:layout_alignBottom="@+id/RT"
+        android:layout_marginLeft="4sp"
+        android:layout_toRightOf="@+id/RT"
+        android:text="Fav:0"
+        android:textColor="#ffffff"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/RT_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RTした人のＩＤ"
+        android:textColor="#ffffff"
+        android:textSize="10sp"
+        android:layout_below="@+id/RT" android:layout_alignLeft="@+id/RT" android:layout_alignStart="@+id/RT"/>
+
+    <ImageButton
+        android:id="@+id/mentionimageButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_select_coloer"
+        android:scaleType="fitXY"
+        android:src="@drawable/reply" android:layout_alignLeft="@+id/RT_to"
+        android:layout_alignStart="@+id/RT_to" android:layout_below="@+id/RT_to"/>
+    <TextView android:id="@+id/RTvia" android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="RTしたクライアント名"
+              android:textColor="#ffffff" android:textSize="10sp"
+              android:layout_below="@+id/via" android:layout_alignLeft="@+id/via" android:layout_alignStart="@+id/via"/>
+    <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/mTMListView" android:layout_centerHorizontal="true"
+            android:layout_below="@+id/favImageButton"/>
+
+</RelativeLayout>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.meronmks.zimitta">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+            android:label="@string/app_name"
+            android:icon="@drawable/icon"
+            android:theme="@style/Theme.AppCompat">
+        <activity android:name=".core.MainActivity"
+                  android:label="@string/app_name"
+                  android:configChanges="orientation|screenSize"
+                  android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name=".Activity.TwitterOAuthActivity"
+                android:launchMode="singleTask"
+                android:label="@string/twitter_oauth">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                        android:host="twitter"
+                        android:scheme="meron" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.TweetActivity"
+                  android:label="@string/new_tweet_activity_label"
+                  android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".AppCooperation.WebTwitterLoginActivity"
+                  android:label="@string/web_login_text"/>
+        <activity android:name=".AppCooperation.ApplicationsCooperationActivity"
+                  android:label="@string/app_cooperation_text"/>
+        <activity android:name=".Activity.ImageActivity"
+                  android:theme="@android:style/Theme.Translucent"/>
+        <activity android:name=".Activity.TweetDetail"
+                android:label="@string/tweet_detail_label_text"/>
+        <activity android:name=".settings.SettingActivity"
+                  android:label="@string/setting_activity_label_text"/>
+        <activity android:name=".settings.About"
+                  android:label="@string/about_label_text"/>
+        <activity android:name=".user.Prof_Activity"
+                  android:label="@string/prof_activity_label_text"/>
+        <activity android:name=".Activity.MentionsActivity"
+                  android:label="@string/mention_act_label_text"/>
+        <activity android:name=".Activity.AccountChangeActivity"
+                  android:label="@string/accountchangeactovity_label_text"/>
+        <activity android:name=".Activity.DMSendActivity"
+                  android:label="@string/dmsendactivity_labeltext"/>
+        <activity android:name=".user.UserTimeLineActivity"/>
+        <activity android:name=".user.UserFollowActivity"/>
+        <activity android:name=".user.UserFollowersActivity"/>
+        <activity android:name=".user.UserFavActivity"/>
+    </application>
+</manifest>
