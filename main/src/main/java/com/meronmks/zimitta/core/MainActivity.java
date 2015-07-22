@@ -10,8 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+import com.gc.materialdesign.views.ProgressBarIndeterminate;
 import com.meronmks.zimitta.Activity.TweetActivity;
 import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
 import com.meronmks.zimitta.Adapter.MainTabFragmentPagerAdapter;
@@ -25,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
     private SharedPreferences accountIDCount;
 //    private ShowRateLimit limit;
     //プログレスバー格納用
-    private static ProgressBar progres;
+    private static ProgressBarIndeterminate progres;
     private static ProgressDialog progressDialog;
     private TwitterActionClass mtAction;
     private ViewPager viewPager;
@@ -68,7 +68,7 @@ public class MainActivity extends ActionBarActivity {
             if(CoreVariable.mutelist == null) {
                 mtAction.getMyMuteList();
             }
-            progres = (ProgressBar) findViewById(R.id.progressBar);
+            progres = (ProgressBarIndeterminate) findViewById(R.id.progressBar);
             //ボタン準備
             ImageButton tweet = (ImageButton) findViewById(R.id.tweet);
             ImageButton menu = (ImageButton) findViewById(R.id.Menu_button);
@@ -108,7 +108,6 @@ public class MainActivity extends ActionBarActivity {
      * 読み込み表示
      */
     public static void progresRun() {
-        progres.setIndeterminate(true);
         progres.setVisibility(View.VISIBLE);
     }
 
@@ -116,7 +115,6 @@ public class MainActivity extends ActionBarActivity {
      * 読み込み表示終了
      */
     public static void progresStop() {
-        progres.setIndeterminate(false);
         progres.setVisibility(View.INVISIBLE);
     }
 
