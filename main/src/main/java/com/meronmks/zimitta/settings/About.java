@@ -1,10 +1,13 @@
 package com.meronmks.zimitta.settings;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.support.v7.app.AlertDialog;
+import android.view.*;
+import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.TextView;
 import com.meronmks.zimitta.BuildConfig;
 import com.meronmks.zimitta.R;
@@ -20,6 +23,38 @@ public class About extends ActionBarActivity {
         TextView verName = (TextView)findViewById(R.id.verTextView);
 
         verName.setText(BuildConfig.VERSION_NAME);
+
+        Button button = (Button)findViewById(R.id.aboutLicenseButton);
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // クリックの処理を実行する
+                LayoutInflater factory = LayoutInflater.from(About.this);
+                final View inputView = factory.inflate(R.layout.license_dialog, null);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(About.this);
+                builder.setTitle("オープンソースライブラリ");
+                builder.setView(inputView);
+
+                if (inputView != null){
+                    WebView webView = (WebView) inputView.findViewById(R.id.webView);
+                    webView.loadUrl("file:///android_asset/licenses.html");
+                }
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+
+        });
     }
 
     @Override
