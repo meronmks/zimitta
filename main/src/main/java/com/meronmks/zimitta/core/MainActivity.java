@@ -128,7 +128,7 @@ public class MainActivity extends ActionBarActivity {
         PendingIntent pi = PendingIntent.getActivity(MainContext, 0, i, 0);
 
         n = new Notification.Builder(MainContext)
-                .setContentIntent(pi).setSmallIcon(R.drawable.icon)
+                .setContentIntent(pi).setSmallIcon(R.drawable.app_icon)
                 .setTicker(text).setContentTitle(text)
                 .setContentText("").setWhen(System.currentTimeMillis());
         // 通知時の音・バイブ・ライト
