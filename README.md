@@ -5,11 +5,18 @@
 
 ## 使用ライブラリ ##
 android-support-v4  
+
 android-support-v7-appcompat
+
 [Android Smart Image View](http://loopj.com/android-smart-image-view/ "Android Smart Image View")  
+
 [jsoup](http://jsoup.org/ "jsoup")  
+
 [twitter4j](http://twitter4j.org/ja/ "twitter4j") 
+
 Glide
+
+[AsyncHttpClient](http://loopj.com/android-async-http/ "AsyncHttpClient")
 
 ## 直さないといけないバグ ##
 * Fragment上に設置したListView以外が反応悪くなる（機種依存問題の為時間かかりそう）
