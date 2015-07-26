@@ -108,14 +108,22 @@ public class MainActivity extends ActionBarActivity {
      * 読み込み表示
      */
     public static void progresRun() {
-        progres.setVisibility(View.VISIBLE);
+        new UiHandler(){
+            public void run(){
+                progres.setVisibility(View.VISIBLE);
+            }
+        }.post();
     }
 
     /**
      * 読み込み表示終了
      */
     public static void progresStop() {
-        progres.setVisibility(View.INVISIBLE);
+        new UiHandler(){
+            public void run(){
+                progres.setVisibility(View.INVISIBLE);
+            }
+        }.post();
     }
 
     //通知のメゾット
