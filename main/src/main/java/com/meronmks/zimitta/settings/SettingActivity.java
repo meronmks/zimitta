@@ -3,14 +3,13 @@ package com.meronmks.zimitta.settings;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.graphics.Color;
-import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.preference.*;
 import android.preference.Preference.OnPreferenceClickListener;
 import com.meronmks.zimitta.R;
 
-public class SettingActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+
+public class SettingActivity extends AppCompatPreferenceActivity implements OnSharedPreferenceChangeListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

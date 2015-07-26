@@ -25,38 +25,53 @@ public class InvalidateFragmentClass {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-            new UiHandler() {
-                public void run() {
-                    if(mAdapter == null || mAdapter.getCount() == 0)return;
+                if(mAdapter == null || mAdapter.getCount() == 0)return;
 
-                    //TL以外でHeaderが無いか
-                    if(mAdapter.getItem(0) != null && !className.equals("TL")){
-                        mAdapter.insert(null, 0);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    //TLでストリーミングOFFでHeaderが無い
-                    else if(className.equals("TL") && !CoreVariable.runStream && mAdapter.getItem(0) != null){
-                        mAdapter.insert(null,0);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    //TLでストリーミングONでHeaderがあってストック機能がOFFなら
-                    else if(className.equals("TL") && CoreVariable.runStream && mAdapter.getItem(0) == null && !streemingStok){
-                        mAdapter.remove(mAdapter.getItem(0));
-                        mAdapter.notifyDataSetChanged();
-                    }
-                    //TLでストリーミングONでHeaderがなくてストック機能がONなら
-                    else if(className.equals("TL") && CoreVariable.runStream && mAdapter.getItem(0) != null && streemingStok){
-                        mAdapter.insert(null,0);
-                        mAdapter.notifyDataSetChanged();
-                    }
-
-                    //Headerの追加
-                    if(mAdapter.getItem(mAdapter.getCount() - 1) != null){
-                        mAdapter.add(null);
-                        mAdapter.notifyDataSetChanged();
-                    }
+                //TL以外でHeaderが無いか
+                if(mAdapter.getItem(0) != null && !className.equals("TL")){
+                    new UiHandler() {
+                        public void run() {
+                            mAdapter.insert(null, 0);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }.post();
                 }
-            }.post();
+                //TLでストリーミングOFFでHeaderが無い
+                else if(className.equals("TL") && !CoreVariable.runStream && mAdapter.getItem(0) != null){
+                    new UiHandler() {
+                        public void run() {
+                            mAdapter.insert(null,0);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }.post();
+                }
+                //TLでストリーミングONでHeaderがあってストック機能がOFFなら
+                else if(className.equals("TL") && CoreVariable.runStream && mAdapter.getItem(0) == null && !streemingStok){
+                    new UiHandler() {
+                        public void run() {
+                            mAdapter.remove(mAdapter.getItem(0));
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }.post();
+                }
+                //TLでストリーミングONでHeaderがなくてストック機能がONなら
+                else if(className.equals("TL") && CoreVariable.runStream && mAdapter.getItem(0) != null && streemingStok){
+                    new UiHandler() {
+                        public void run() {
+                            mAdapter.insert(null, 0);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }.post();
+                }
+                //Headerの追加
+                if(mAdapter.getItem(mAdapter.getCount() - 1) != null){
+                    new UiHandler() {
+                        public void run() {
+                            mAdapter.add(null);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }.post();
+                }
             }
         }, 0, 1000);
     }
@@ -70,21 +85,25 @@ public class InvalidateFragmentClass {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-            new UiHandler() {
-                public void run() {
-                    if(mAdapter == null || mAdapter.getCount() == 0)return;
+                if (mAdapter == null || mAdapter.getCount() == 0) return;
 
-                    if(mAdapter.getItem(0) != null){
-                        mAdapter.insert(null, 0);
-                        mAdapter.notifyDataSetChanged();
-                    }
-
-                    if(mAdapter.getItem(mAdapter.getCount() - 1) != null){
-                        mAdapter.add(null);
-                        mAdapter.notifyDataSetChanged();
-                    }
+                if (mAdapter.getItem(0) != null) {
+                    new UiHandler() {
+                        public void run() {
+                            mAdapter.insert(null, 0);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }.post();
                 }
-            }.post();
+
+                if (mAdapter.getItem(mAdapter.getCount() - 1) != null) {
+                    new UiHandler() {
+                        public void run() {
+                            mAdapter.add(null);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }.post();
+                }
             }
         }, 0, 1000);
     }

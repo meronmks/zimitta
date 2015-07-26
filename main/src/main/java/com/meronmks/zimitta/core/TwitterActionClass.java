@@ -497,54 +497,58 @@ public class TwitterActionClass {
      * 受信したツイートをアダプタに条件が合えばセットする
      **/
     protected void setItemtoAdapter(final List<twitter4j.Status> status, final Long ID){
-        new UiHandler(){
-            public void run(){
-                int count;
-                getListViewPosition();
-                if(mAdapter.getCount() == 0){
-                    count = 0;
-                }else if(ID != null){
-                    count = mAdapter.getCount() - 1;
-                }else{
-                    count = 1;
-                }
-                for (twitter4j.Status tweet : status) {
-                    if(!isTweetMute(tweet)){
-                        if(mAdapter.getCount() != 0 && mAdapter.getPosition(tweet) > 0) continue;
-                        mAdapter.insert(tweet, count);
-                        count++;
+        int count;
+        getListViewPosition();
+        if(mAdapter.getCount() == 0){
+            count = 0;
+        }else if(ID != null){
+            count = mAdapter.getCount() - 1;
+        }else{
+            count = 1;
+        }
+        for (final twitter4j.Status tweet : status) {
+            if(!isTweetMute(tweet)){
+                if(mAdapter.getCount() != 0 && mAdapter.getPosition(tweet) > 0) continue;
+                final int finalCount = count;
+                new UiHandler(){
+                    public void run(){
+                        mAdapter.insert(tweet, finalCount);
+                        mAdapter.notifyDataSetChanged();
                     }
-                }
-
-                mAdapter.notifyDataSetChanged();
-                if(ID == null) {
-                    setListViewPosition(count);
-                }
-
-                MainActivity.progresStop();
+                }.post();
+                count++;
             }
-        }.post();
+        }
+
+        if(ID == null) {
+            setListViewPosition(count);
+        }
+
+        MainActivity.progresStop();
     }
     protected void setItemtoAdapter(final twitter4j.Status tweet, final long MaxId){
-        new UiHandler(){
-            public void run(){
-                if(!isTweetMute(tweet)){
-
-                    getListViewPosition();
-
-                    if(MaxId > 0){
+        if(!isTweetMute(tweet)){
+            getListViewPosition();
+            if(MaxId > 0){
+                new UiHandler(){
+                    public void run(){
                         mAdapter.insert(tweet,0);
-                    }else{
-                        mAdapter.add(tweet);
+                        mAdapter.notifyDataSetChanged();
                     }
-                }
-                mAdapter.notifyDataSetChanged();
-                if(listPosition.position != 0){
-                    setListViewPosition(1);
-                }
-                MainActivity.progresStop();
+                }.post();
+            }else{
+                new UiHandler(){
+                    public void run(){
+                        mAdapter.add(tweet);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }.post();
             }
-        }.post();
+        }
+        if(listPosition.position != 0){
+            setListViewPosition(1);
+        }
+        MainActivity.progresStop();
     }
 
     /**
@@ -553,9 +557,6 @@ public class TwitterActionClass {
      * @param MaxId
      */
     protected void setMessegetoAdapter(final List<twitter4j.DirectMessage> messages, final Long MaxId){
-        new UiHandler() {
-            public void run() {
-
                 int count;
                 if(mDMAdapter.getCount() == 0){
                     count = 0;
@@ -564,15 +565,19 @@ public class TwitterActionClass {
                 }else{
                     count = 1;
                 }
-                for (twitter4j.DirectMessage message : messages) {
+                for (final twitter4j.DirectMessage message : messages) {
                     if(mDMAdapter.getCount() != 0 && mDMAdapter.getPosition(message) > 0 ) continue;
-                    mDMAdapter.insert(message,count);
+                    final int finalCount = count;
+                    new UiHandler() {
+                        public void run() {
+                            mDMAdapter.insert(message, finalCount);
+                            mDMAdapter.notifyDataSetChanged();
+                        }
+                    }.post();
                     count++;
                 }
-                mDMAdapter.notifyDataSetChanged();
+
                 MainActivity.progresStop();
-            }
-        }.post();
     }
 
     /**
@@ -1160,8 +1165,12 @@ public class TwitterActionClass {
      * リストビューの位置をセットする
      * @param movePosition ずらしたい項目数
      */
-    protected void setListViewPosition(int movePosition){
-        listView.setSelectionFromTop(listPosition.position + movePosition, listPosition.y);
+    protected void setListViewPosition(final int movePosition){
+        new UiHandler() {
+            public void run() {
+                listView.setSelectionFromTop(listPosition.position + movePosition, listPosition.y);
+            }
+        }.post();
     }
 
     /**

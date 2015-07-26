@@ -10,8 +10,6 @@ apply plugin: 'com.android.application'
 
 repositories {
     jcenter()
-    mavenCentral()
-    maven { url 'https://raw.github.com/mixi-inc/Android-Device-Compatibility/master/repository/' }
 }
 
 def VERSION_NAME = "3.1.0"
@@ -60,5 +58,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
     compile 'com.nineoldandroids:library:2.4.0+'
-    compile 'jp.mixi.compatibility:AndroidDeviceCompatibility:0.1.0'
 }
