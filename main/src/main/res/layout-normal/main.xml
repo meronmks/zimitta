@@ -4,6 +4,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:exported="false"
         android:background="@color/Back">
     <android.support.v4.view.ViewPager
             android:id="@+id/pager"
@@ -19,7 +20,8 @@
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
         <ImageView
                 android:layout_width="25dp"
@@ -43,10 +45,6 @@
                 android:id="@+id/progressBar"
                 android:layout_gravity="center_vertical"
                 android:background="#1E88E5"/>
-
-        <View android:layout_width="1dp"
-              android:layout_height="0dp"
-              android:layout_weight="0.01"/>
 
         <ImageButton
                 android:id="@+id/Menu_button"

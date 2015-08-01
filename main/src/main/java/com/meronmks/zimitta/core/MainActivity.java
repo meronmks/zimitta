@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -108,22 +109,15 @@ public class MainActivity extends ActionBarActivity {
      * 読み込み表示
      */
     public static void progresRun() {
-        new UiHandler(){
-            public void run(){
-                progres.setVisibility(View.VISIBLE);
-            }
-        }.post();
+        Log.d("Debug", "MainActivity:progresRun");
+        progres.setVisibility(View.VISIBLE);
     }
 
     /**
      * 読み込み表示終了
      */
     public static void progresStop() {
-        new UiHandler(){
-            public void run(){
-                progres.setVisibility(View.INVISIBLE);
-            }
-        }.post();
+        progres.setVisibility(View.INVISIBLE);
     }
 
     //通知のメゾット
@@ -160,6 +154,7 @@ public class MainActivity extends ActionBarActivity {
      * プロセスダイアログを表示
      */
     public static void showProcessDialog() {
+        Log.d("Debug", "MainActivity:showProcessDialog");
         progressDialog = new ProgressDialog(MainContext);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(true);

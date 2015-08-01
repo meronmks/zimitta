@@ -1,5 +1,6 @@
 package com.meronmks.zimitta.Fragments;
 
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,56 +23,58 @@ public class InvalidateFragmentClass {
      * @param className
      */
     public void invalidate(Timer timer, final TweetAdapter mAdapter, final String className, final boolean streemingStok){
+
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if(mAdapter == null || mAdapter.getCount() == 0)return;
 
-                //TL以外でHeaderが無いか
-                if(mAdapter.getItem(0) != null && !className.equals("TL")){
-                    new UiHandler() {
-                        public void run() {
-                            mAdapter.insert(null, 0);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    }.post();
-                }
-                //TLでストリーミングOFFでHeaderが無い
-                else if(className.equals("TL") && !CoreVariable.runStream && mAdapter.getItem(0) != null){
-                    new UiHandler() {
-                        public void run() {
-                            mAdapter.insert(null,0);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    }.post();
-                }
-                //TLでストリーミングONでHeaderがあってストック機能がOFFなら
-                else if(className.equals("TL") && CoreVariable.runStream && mAdapter.getItem(0) == null && !streemingStok){
-                    new UiHandler() {
-                        public void run() {
-                            mAdapter.remove(mAdapter.getItem(0));
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    }.post();
-                }
-                //TLでストリーミングONでHeaderがなくてストック機能がONなら
-                else if(className.equals("TL") && CoreVariable.runStream && mAdapter.getItem(0) != null && streemingStok){
-                    new UiHandler() {
-                        public void run() {
-                            mAdapter.insert(null, 0);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    }.post();
-                }
-                //Headerの追加
-                if(mAdapter.getItem(mAdapter.getCount() - 1) != null){
-                    new UiHandler() {
-                        public void run() {
-                            mAdapter.add(null);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    }.post();
-                }
+            if(mAdapter == null || mAdapter.getCount() == 0)return;
+
+            //TL以外でHeaderが無いか
+            if(mAdapter.getItem(0) != null && !className.equals("TL")){
+                new UiHandler() {
+                    public void run() {
+                        mAdapter.insert(null, 0);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }.post();
+            }
+            //TLでストリーミングOFFでHeaderが無い
+            else if(className.equals("TL") && !CoreVariable.runStream && mAdapter.getItem(0) != null){
+                new UiHandler() {
+                    public void run() {
+                        mAdapter.insert(null,0);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }.post();
+            }
+            //TLでストリーミングONでHeaderがあってストック機能がOFFなら
+            else if(className.equals("TL") && CoreVariable.runStream && mAdapter.getItem(0) == null && !streemingStok){
+                new UiHandler() {
+                    public void run() {
+                        mAdapter.remove(mAdapter.getItem(0));
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }.post();
+            }
+            //TLでストリーミングONでHeaderがなくてストック機能がONなら
+            else if(className.equals("TL") && CoreVariable.runStream && mAdapter.getItem(0) != null && streemingStok){
+                new UiHandler() {
+                    public void run() {
+                        mAdapter.insert(null, 0);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }.post();
+            }
+            //Headerの追加
+            if(mAdapter.getItem(mAdapter.getCount() - 1) != null){
+                new UiHandler() {
+                    public void run() {
+                        mAdapter.add(null);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }.post();
+            }
             }
         }, 0, 1000);
     }

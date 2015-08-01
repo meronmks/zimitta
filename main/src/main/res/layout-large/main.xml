@@ -3,6 +3,7 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              android:exported="false"
               android:background="@color/Back">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:orientation="horizontal"
@@ -67,10 +68,6 @@
                 android:id="@+id/progressBar"
                 android:layout_gravity="center_vertical"
                 android:background="#1E88E5"/>
-
-        <View android:layout_width="1dp"
-              android:layout_height="0dp"
-              android:layout_weight="0.01"/>
 
         <ImageButton
                 android:id="@+id/Menu_button"
