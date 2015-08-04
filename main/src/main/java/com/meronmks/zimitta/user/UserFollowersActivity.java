@@ -3,9 +3,10 @@ package com.meronmks.zimitta.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import com.meronmks.zimitta.Adapter.FollowAdapter;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.TwitterUtils;
 import twitter4j.PagableResponseList;
 import twitter4j.Twitter;
@@ -13,13 +14,9 @@ import twitter4j.TwitterException;
 import twitter4j.User;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.PaintDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,7 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class UserFollowersActivity extends ListActivity {
+public class UserFollowersActivity extends ActionBarActivity {
 
     private FollowAdapter mAdapter;
     private Twitter mTwitter;
@@ -50,57 +47,43 @@ public class UserFollowersActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         accountIDCount = getSharedPreferences("accountidcount", 0);
-        if (!TwitterUtils.hasAccessToken(this, accountIDCount.getLong("ID_Num_Now", 0))) {
-            Intent intent = new Intent(this, TwitterOAuthActivity.class);
-            startActivity(intent);
-            finish();
-        }else {
-            mAdapter = new FollowAdapter(this);
-            setListAdapter(mAdapter);
-            ListView lv = getListView();
-            final boolean LongTap = sp.getBoolean("Tap_Setting", true);
+        mAdapter = new FollowAdapter(this);
+        setContentView(R.layout.listview_base);
+        ListView listView = (ListView)findViewById(R.id.listView_base);
+        listView.setAdapter(mAdapter);
+        final boolean LongTap = sp.getBoolean("Tap_Setting", true);
 
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                //通常押し
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                    if(LongTap == false){
-                        List_Menu(position);
-                    }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //通常押し
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (LongTap == false) {
+                    List_Menu(position);
                 }
-            });
-
-            lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                //長押し
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
-                    if(LongTap == true){
-                        List_Menu(position);
-                    }
-                    return true;
-                }
-            });
-            mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong("ID_Num_Now", 0));
-            MainActivity.showProcessDialog();
-            Intent Intent = getIntent();
-            UserID = Intent.getLongExtra("UserID_TL", BIND_ABOVE_CLIENT);
-            ScreenName = Intent.getStringExtra("ScreenName");
-            if(UserID != 0){
-                setTitle(ScreenName + "のフォロワー一覧");
-                reloadUserTimeLine();
             }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            //長押し
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
+                if(LongTap == true){
+                    List_Menu(position);
+                }
+                return true;
+            }
+        });
+        mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong("ID_Num_Now", 0));
+        Intent Intent = getIntent();
+        UserID = Intent.getLongExtra("UserID_TL", BIND_ABOVE_CLIENT);
+        ScreenName = Intent.getStringExtra("ScreenName");
+        if(UserID != 0){
+            setTitle(ScreenName + "のフォロワー一覧");
+            reloadUserTimeLine();
         }
     }
 
-    //Activity動作の一歩前
-    @Override
-    protected void onResume() {
-        super.onResume();
-        PaintDrawable paintDrawable = new PaintDrawable(Color.argb(255,0,0,0));
-        getWindow().setBackgroundDrawable(paintDrawable);
-    }
-
-    //タイムラインの非同期取得
+    //フォロワーの非同期取得
     private void reloadUserTimeLine() {
         AsyncTask<Void, Void, PagableResponseList<User>> task = new AsyncTask<Void, Void, PagableResponseList<User>>() {
             String exception;
@@ -131,7 +114,6 @@ public class UserFollowersActivity extends ListActivity {
                         mAdapter.add(status);
                     }
                     Next_cursor = result.getNextCursor();
-                    MainActivity.dismissProcessDialog();
                 }else{
                     showDialog(exception);
                 }
@@ -160,7 +142,6 @@ public class UserFollowersActivity extends ListActivity {
                         break;
                     case 1: //フォロワーの追加取得
                         NewReloadFulg = false;
-                        MainActivity.showProcessDialog();
                         reloadUserTimeLine();
                         break;
                 }

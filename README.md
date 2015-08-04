@@ -18,8 +18,9 @@ Glide
 
 [AsyncHttpClient](http://loopj.com/android-async-http/ "AsyncHttpClient")
 
+[MaterialDesignLibrary](https://github.com/navasmdc/MaterialDesignLibrary "MaterialDesignLibrary")
+
 ## 直さないといけないバグ ##
-* Fragment上に設置したListView以外が反応悪くなる（機種依存問題の為時間かかりそう）
 * 実機でもOutOfMemoryで落ちることがある
 
 ## ToDo ##
@@ -33,4 +34,8 @@ Glide
 
 ## Ver3.1.0との変更点（メモしないと忘れそう） ##
 * ActionBarSherlockを使用ライブラリから外しandroid-support-v7-appcompatで代替
+* ライブラリ変更に伴いマテリアルデザインの投入
 * Build方式を大幅に変更
+* 特定環境で処理落ちするバグを修正
+* 引用表示に対応
+* 画像のサムネイル表示（公式分のみ）対応

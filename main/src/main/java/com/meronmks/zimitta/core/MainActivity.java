@@ -27,7 +27,6 @@ public class MainActivity extends ActionBarActivity {
 //    private ShowRateLimit limit;
     //プログレスバー格納用
     private static ProgressBarIndeterminate progres;
-    private static ProgressDialog progressDialog;
     private TwitterActionClass mtAction;
     private ViewPager viewPager;
     private  MainTabFragmentPagerAdapter pagerAdapter;
@@ -148,26 +147,6 @@ public class MainActivity extends ActionBarActivity {
      */
     public static void showToast(String text){
         Toast.makeText(MainContext, text, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * プロセスダイアログを表示
-     */
-    public static void showProcessDialog() {
-        Log.d("Debug", "MainActivity:showProcessDialog");
-        progressDialog = new ProgressDialog(MainContext);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(true);
-        progressDialog.setMessage(MainContext.getString(R.string.now_loading_text));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-    }
-
-    /**
-     * プロセスダイアログを閉じる
-     */
-    public static void dismissProcessDialog(){
-        progressDialog.dismiss();
     }
 
     /**

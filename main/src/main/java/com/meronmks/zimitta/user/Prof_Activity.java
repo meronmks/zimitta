@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Activity.*;
 import com.meronmks.zimitta.R;
-import com.meronmks.zimitta.core.MainActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 import com.meronmks.zimitta.core.TwitterUtils;
 import com.meronmks.zimitta.menu.List_Menu;
@@ -54,7 +53,6 @@ public class Prof_Activity extends ActionBarActivity implements View.OnClickList
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         PaintDrawable paintDrawable = new PaintDrawable(Color.argb(255, 0, 0, 0));
         getWindow().setBackgroundDrawable(paintDrawable);
-        MainActivity.showProcessDialog();
         ScreenName = (TextView)this.findViewById(R.id.NameView);
         UserName = (TextView)this.findViewById(R.id.ScreenNameView);
         ProfText = (TextView)this.findViewById(R.id.ProfTextView);
@@ -147,7 +145,6 @@ public class Prof_Activity extends ActionBarActivity implements View.OnClickList
 
             @Override
             protected void onPostExecute(User result) {
-                MainActivity.dismissProcessDialog();
                 if(result != null){
                     ScreenName.setText("@" + result.getScreenName());
                     UserName.setText(result.getName());

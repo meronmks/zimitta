@@ -2,8 +2,6 @@ package com.meronmks.zimitta.user;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,12 +11,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
 import com.meronmks.zimitta.Adapter.FollowAdapter;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.TwitterUtils;
 import twitter4j.PagableResponseList;
 import twitter4j.Twitter;
@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Created by p-user on 2015/05/25.
  */
-public class UserFollowActivity extends ListActivity {
+public class UserFollowActivity extends ActionBarActivity {
 
     private FollowAdapter mAdapter;
     private Twitter mTwitter;
@@ -58,21 +58,22 @@ public class UserFollowActivity extends ListActivity {
             finish();
         }else {
             mAdapter = new FollowAdapter(this);
-            setListAdapter(mAdapter);
-            ListView lv = getListView();
+            setContentView(R.layout.listview_base);
+            ListView listView = (ListView)findViewById(R.id.listView_base);
+            listView.setAdapter(mAdapter);
             final boolean LongTap = sp.getBoolean("Tap_Setting", true);
 
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                    if(LongTap == false){
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (LongTap == false) {
                         List_Menu(position);
                     }
                 }
             });
 
-            lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
                     if(LongTap == true){
@@ -82,7 +83,6 @@ public class UserFollowActivity extends ListActivity {
                 }
             });
             mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong("ID_Num_Now", 0));
-            MainActivity.showProcessDialog();
             Intent Intent = getIntent();
             UserID = Intent.getLongExtra("UserID_TL", BIND_ABOVE_CLIENT);
             ScreenName = Intent.getStringExtra("ScreenName");
@@ -131,7 +131,6 @@ public class UserFollowActivity extends ListActivity {
                         mAdapter.add(status);
                     }
                     Next_cursor = result.getNextCursor();
-                    MainActivity.dismissProcessDialog();
                 }else{
                     showDialog(exception);
                 }
@@ -160,7 +159,6 @@ public class UserFollowActivity extends ListActivity {
                         break;
                     case 1:
                         NewReloadFulg = false;
-                        MainActivity.showProcessDialog();
                         getFriendsList();
                         break;
                 }
@@ -169,7 +167,7 @@ public class UserFollowActivity extends ListActivity {
     }
 
     private void showDialog(String text){
-        AlertDialog.Builder alertDialog=new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Error!");
         alertDialog.setMessage(text);
 

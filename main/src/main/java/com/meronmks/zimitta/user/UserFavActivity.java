@@ -3,8 +3,10 @@ package com.meronmks.zimitta.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.support.v7.app.ActionBarActivity;
 import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
+import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.MainActivity;
 import com.meronmks.zimitta.core.TwitterUtils;
 import com.meronmks.zimitta.menu.List_Menu;
@@ -14,7 +16,6 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -27,7 +28,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class UserFavActivity extends ListActivity {
+public class UserFavActivity extends ActionBarActivity {
 
     private TweetAdapter mAdapter;
     private Twitter mTwitter;
@@ -40,7 +41,7 @@ public class UserFavActivity extends ListActivity {
     private SharedPreferences sp;
     private boolean NewReloadFulg = true;
     private List<Status> StatusIDs = new ArrayList<Status>();
-    private ListView lv;
+    private ListView listView;
     //private Boolean TL_load_lock = true;
     private Status Tweet;
     private  SharedPreferences accountIDCount;
@@ -61,9 +62,10 @@ public class UserFavActivity extends ListActivity {
             startActivity(intent);
             finish();
         }else {
-            lv = getListView();
             mAdapter = new TweetAdapter(this);
-            setListAdapter(mAdapter);
+            setContentView(R.layout.listview_base);
+            listView = (ListView)findViewById(R.id.listView_base);
+            listView.setAdapter(mAdapter);
             mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong("ID_Num_Now", 0));
             Intent Intent = getIntent();
             UserID_Fav = Intent.getLongExtra("UserID_Fav", BIND_ABOVE_CLIENT);
@@ -84,11 +86,11 @@ public class UserFavActivity extends ListActivity {
         final boolean LongTap = sp.getBoolean("Tap_Setting", true);
 
         //ListViewのクリックリスナー登録
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             //通常押し
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                if(LongTap == false){
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (LongTap == false) {
                     try {
                         Tweet = mAdapter.getItem(position);
                         List_Menu list = new List_Menu();
@@ -100,13 +102,13 @@ public class UserFavActivity extends ListActivity {
                 }
 
                 //フッターがクリックされた
-                if(position != 0 && mAdapter.getItem(position) == null) {
+                if (position != 0 && mAdapter.getItem(position) == null) {
                     NewReloadFulg = false;
                     StatusIDs.remove(position);
                     reloadUserFavTimeLine();
                 }
                 //ヘッダーがクリックされた
-                if(position == 0 && mAdapter.getItem(position) == null) {
+                if (position == 0 && mAdapter.getItem(position) == null) {
                     NewReloadFulg = true;
                     StatusIDs.remove(0);
                     reloadUserFavTimeLine();
@@ -115,11 +117,11 @@ public class UserFavActivity extends ListActivity {
 
         });
 
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             //長押し
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
-                if(LongTap == true){
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (LongTap == true) {
                     try {
                         Tweet = mAdapter.getItem(position);
                         List_Menu list = new List_Menu();
@@ -156,8 +158,8 @@ public class UserFavActivity extends ListActivity {
                     }
                 }else if((NewStatus != 0) && (NewReloadFulg)){	//ツイートの読み込み数が0以上で新たに更新するとき
                     try {
-                        listposition = getListView().getFirstVisiblePosition();
-                        listposition_y = getListView().getChildAt(0).getTop();
+                        listposition = listView.getFirstVisiblePosition();
+                        listposition_y = listView.getChildAt(0).getTop();
                         Paging p = new Paging();
                         p.setSinceId(NewStatus);
                         p.count(200);
@@ -191,10 +193,10 @@ public class UserFavActivity extends ListActivity {
             @Override
             protected void onPostExecute(List<twitter4j.Status> result) {
                 if (result != null) {
-                    position = lv.getFirstVisiblePosition();
+                    position = listView.getFirstVisiblePosition();
 
                     try{
-                        y = lv.getChildAt(0).getTop();
+                        y = listView.getChildAt(0).getTop();
                     }catch(Exception e){
                         y = 0;
                     }
@@ -212,7 +214,7 @@ public class UserFavActivity extends ListActivity {
                         if(NewStatus != 0){
                             listposition = listposition + count;
                         }
-                        getListView().setSelectionFromTop(listposition, listposition_y);
+                        listView.setSelectionFromTop(listposition, listposition_y);
                     }else{
                         for (twitter4j.Status status : result) {
                             if(count == 0)
@@ -237,12 +239,12 @@ public class UserFavActivity extends ListActivity {
                     }
 
                     if(NewStatus != 0 && NewReloadFulg){
-                        lv.setSelectionFromTop(position + count + 1, y);	//ListViewの表示位置をずらす
+                        listView.setSelectionFromTop(position + count + 1, y);	//ListViewの表示位置をずらす
                     }
                     NewStatus = StatusIDs.get(1).getId();
                     OldStatus = StatusIDs.get(mAdapter.getCount() - 2).getId();
                 } else {
-                    MainActivity.showToast("ツイートの取得に失敗しました。。。\r\n" + exception);
+                    MainActivity.showToast("お気に入りの取得に失敗しました。。。\r\n" + exception);
                 }
             }
         };
