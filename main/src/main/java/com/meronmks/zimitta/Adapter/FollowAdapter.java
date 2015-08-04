@@ -41,9 +41,9 @@ public class FollowAdapter extends ArrayAdapter<User> {
 
             ImageView Icon = (ImageView) convertView.findViewById(R.id.icon);
             TextView Name = (TextView) convertView.findViewById(R.id.name);
-            TextView ScreenName = (TextView) convertView.findViewById(R.id.screen_name);
+            TextView ScreenName = (TextView) convertView.findViewById(R.id.screenName);
             TextView Text = (TextView) convertView.findViewById(R.id.text);
-            RelativeLayout RelativeLayout = (RelativeLayout) convertView.findViewById(R.id.Tweet_List);
+            RelativeLayout RelativeLayout = (RelativeLayout) convertView.findViewById(R.id.tweetList);
 
             holder = new ViewHolder();
             holder.icon = Icon;

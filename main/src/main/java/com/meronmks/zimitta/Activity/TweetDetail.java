@@ -55,7 +55,7 @@ public class TweetDetail extends Activity implements OnClickListener {
   		//テキスト等の設定変更準備
   		ImageView icon = (ImageView)findViewById(R.id.icon);
   		TextView name = (TextView) findViewById(R.id.name);		//名前View
-        TextView screenName = (TextView) findViewById(R.id.screen_name);	//ＩＤView
+        TextView screenName = (TextView) findViewById(R.id.screenName);	//ＩＤView
         TextView text = (TextView) findViewById(R.id.text);		//ツイート本文View
         TextView Time =(TextView) findViewById(R.id.time);	//投稿時間View
         TextView RT_To = (TextView) findViewById(R.id.RT_to);	//ＲＴした人View

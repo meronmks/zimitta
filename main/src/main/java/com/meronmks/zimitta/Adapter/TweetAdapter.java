@@ -9,13 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
+import twitter4j.ExtendedMediaEntity;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
 import twitter4j.URLEntity;
@@ -28,12 +26,10 @@ public class TweetAdapter extends ArrayAdapter<Status> {
 	private LayoutInflater mInflater;
 	private String TweetText;
     private ViewHolder holder;
-    private String hostClassName;
 
     public TweetAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_1);
         mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        hostClassName = context.getClass().getName();
     }
 
     static class ViewHolder {
@@ -50,6 +46,18 @@ public class TweetAdapter extends ArrayAdapter<Status> {
         ImageView lockedImageView;
         ImageView deletedTweetImageView;
         RelativeLayout relativeLayout;
+
+        RelativeLayout quoteTweetLayout;
+        TextView quoteName;
+        TextView quoteScreenName;
+        TextView quoteText;
+
+        LinearLayout previewImageLinearLayout;
+        ImageView previewImageView1;
+        ImageView previewImageView2;
+        ImageView previewImageView3;
+        ImageView previewImageView4;
+
     }
 
     @Override
@@ -58,9 +66,6 @@ public class TweetAdapter extends ArrayAdapter<Status> {
         final Status item = getItem(position);
         if(item != null) {
             Date TimeStatusNow = null;
-            Date TimeStatusTweet = null;
-            Calendar cal1 = Calendar.getInstance();
-            Calendar cal2 = Calendar.getInstance();
             Long My_ID = CoreVariable.Userid;	//共有変数の呼び出し
             TimeStatusNow = new Date();
             if(convertView == null) {
@@ -73,6 +78,7 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                 convertView = iniHolder();
                 convertView.setTag(holder);
             }
+
             holder.icon.setVisibility(View.VISIBLE);
             holder.name.setVisibility(View.VISIBLE);
             holder.screenName.setVisibility(View.VISIBLE);
@@ -84,6 +90,14 @@ public class TweetAdapter extends ArrayAdapter<Status> {
             holder.via.setVisibility(View.VISIBLE);
             holder.tweetStatus.setVisibility(View.INVISIBLE);
             holder.deletedTweetImageView.setVisibility(View.GONE);
+            holder.quoteTweetLayout.setVisibility(View.GONE);
+            holder.rticon.setVisibility(View.GONE);
+            holder.previewImageLinearLayout.setVisibility(View.GONE);
+            holder.previewImageView1.setVisibility(View.GONE);
+            holder.previewImageView2.setVisibility(View.GONE);
+            holder.previewImageView3.setVisibility(View.GONE);
+            holder.previewImageView4.setVisibility(View.GONE);
+
             //ツイートが削除済みか
             if(CoreVariable.runStream) {
                 if (CoreVariable.deleteTweet.indexOf(item.getId()) != -1) {
@@ -97,6 +111,14 @@ public class TweetAdapter extends ArrayAdapter<Status> {
             //RTされたツイートかどうか
             if (item.getRetweetedStatus() == null) {
                 //RTされてないツイートだったら
+                //引用されていたら
+                if(item.getQuotedStatus() != null){
+                    Status quoteedItem = item.getQuotedStatus();
+                    holder.quoteTweetLayout.setVisibility(View.VISIBLE);
+                    holder.quoteName.setText(quoteedItem.getUser().getName());
+                    holder.quoteScreenName.setText("@" + quoteedItem.getUser().getScreenName());
+                    holder.quoteText.setText(quoteedItem.getText());
+                }
                 //鍵垢じゃなかったら
                 if(!item.getUser().isProtected()){
                     holder.lockedImageView.setVisibility(View.GONE);
@@ -114,56 +136,17 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                 holder.name.setText(item.getUser().getName().replaceAll("\n", ""));
                 holder.screenName.setText("@" + item.getUser().getScreenName());
                 TweetText = item.getText();
-                //短縮URL置換
-                MediaEntity[] ImgLink = null;
-                if (item.getMediaEntities() != null) {
-                    ImgLink = item.getMediaEntities();
-                } else if (item.getExtendedMediaEntities() != null) {
-                    ImgLink = item.getExtendedMediaEntities();
-                }
-                if (ImgLink.length != 0) {
-                    for (int i = 0; i < ImgLink.length; i++) {
-                        TweetText = TweetText.replaceAll(ImgLink[i].getURL(), ImgLink[i].getMediaURL());
-                    }
-                }
 
-                URLEntity[] UrlLink = null;
-                if (item.getURLEntities() != null) {
-                    UrlLink = item.getURLEntities();
-                } else if (item.getExtendedMediaEntities() != null) {
-                    UrlLink = item.getURLEntities();
-                }
-                for (int i = 0; i < UrlLink.length; i++) {
-                    TweetText = TweetText.replaceAll(UrlLink[i].getURL(), UrlLink[i].getExpandedURL());
-                }
+                replaceMediaURL(item.getMediaEntities());
+                replaceMediaURL(item.getExtendedMediaEntities());
+                replaceURLEntities(item.getURLEntities());
+
                 replaceLoopText();
                 //テキストを反映
                 holder.text.setText(TweetText);
-                TimeStatusTweet = item.getCreatedAt();
-                cal1.setTime(TimeStatusTweet);
-                cal2.setTime(TimeStatusNow);
-                long date1 = cal1.getTimeInMillis();
-                long date2 = cal2.getTimeInMillis();
-                long time = (date2 - date1) / 1000;
-                if (time <= 59) {
-                    if (9 < time) {
-                        holder.time.setText(time + "s前");
-                    } else {
-                        holder.time.setText("now");
-                    }
-                }
-                time = time / 60;
-                if ((time <= 59) && (time >= 1)) {
-                    holder.time.setText(time + "m前");
-                }
-                time = time / 60;
-                if ((time <= 23) && (time >= 1)) {
-                    holder.time.setText(time + "h前");
-                }
-                time = time / 24;
-                if (time != 0) {
-                    holder.time.setText(DateFormat.getDateTimeInstance().format(item.getCreatedAt()));
-                }
+
+                replacrTimeAt(TimeStatusNow, item.getCreatedAt());
+
                 holder.rt_To.setVisibility(View.GONE);    //RTした人の名前を非表示
                 holder.rticon.setVisibility(View.GONE);
             } else {
@@ -185,53 +168,18 @@ public class TweetAdapter extends ArrayAdapter<Status> {
 
                 holder.name.setText(item.getRetweetedStatus().getUser().getName().replaceAll("\n", ""));
                 holder.screenName.setText("@" + item.getRetweetedStatus().getUser().getScreenName());
-                //短縮URL置換
-                MediaEntity[] ImgLink = null;
-                if (item.getRetweetedStatus().getMediaEntities() != null) {
-                    ImgLink = item.getRetweetedStatus().getMediaEntities();
-                } else if (item.getRetweetedStatus().getExtendedMediaEntities() != null) {
-                    ImgLink = item.getRetweetedStatus().getExtendedMediaEntities();
-                }
                 TweetText = item.getRetweetedStatus().getText();
-                if (ImgLink.length != 0) {
-                    for (int i = 0; i < ImgLink.length; i++) {
-                        TweetText = TweetText.replaceAll(ImgLink[i].getURL(), ImgLink[i].getMediaURL());
-                    }
-                }
 
-                URLEntity[] UrlLink = null;
-                if (item.getRetweetedStatus().getURLEntities() != null) {
-                    UrlLink = item.getRetweetedStatus().getURLEntities();
-                } else if (item.getRetweetedStatus().getExtendedMediaEntities() != null) {
-                    UrlLink = item.getRetweetedStatus().getURLEntities();
-                }
-                for (int i = 0; i < UrlLink.length; i++) {
-                    TweetText = TweetText.replaceAll(UrlLink[i].getURL(), UrlLink[i].getExpandedURL());
-                }
+                replaceMediaURL(item.getRetweetedStatus().getMediaEntities());
+                replaceMediaURL(item.getRetweetedStatus().getExtendedMediaEntities());
+                replaceURLEntities(item.getRetweetedStatus().getURLEntities());
+
                 replaceLoopText();
                 //テキストを反映
                 holder.text.setText(TweetText);
-                TimeStatusTweet = item.getRetweetedStatus().getCreatedAt();
-                cal1.setTime(TimeStatusTweet);
-                cal2.setTime(TimeStatusNow);
-                long date1 = cal1.getTimeInMillis();
-                long date2 = cal2.getTimeInMillis();
-                long time = (date2 - date1) / 1000;
-                if (time <= 59) {
-                    holder.time.setText(time + "s前");
-                }
-                time = time / 60;
-                if ((time <= 59) && (time >= 1)) {
-                    holder.time.setText(time + "m前");
-                }
-                time = time / 60;
-                if ((time <= 23) && (time >= 1)) {
-                    holder.time.setText(time + "h前");
-                }
-                time = time / 24;
-                if (time != 0) {
-                    holder.time.setText(DateFormat.getDateTimeInstance().format(item.getRetweetedStatus().getCreatedAt()));
-                }
+
+                replacrTimeAt(TimeStatusNow, item.getRetweetedStatus().getCreatedAt());
+
                 holder.rt_To.setVisibility(View.VISIBLE);
                 holder.rt_To.setText(item.getUser().getName() + " さんがリツイート");
                 holder.tweetStatus.setVisibility(View.VISIBLE);
@@ -299,25 +247,135 @@ public class TweetAdapter extends ArrayAdapter<Status> {
     }
 
     /**
+     * 画像URLの置換
+     * @param mediaEntity
+     */
+    protected void replaceMediaURL(MediaEntity[] mediaEntity){
+        if(mediaEntity == null || mediaEntity.length == 0) return;
+
+        holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
+
+        for (int i = 0; i < mediaEntity.length; i++) {
+            TweetText = TweetText.replaceAll(mediaEntity[i].getURL(), mediaEntity[i].getMediaURL());
+        }
+        switch (mediaEntity.length){
+            case 4:
+                holder.previewImageView4 = setPreviewImage(holder.previewImageView4, mediaEntity[3].getMediaURL());
+            case 3:
+                holder.previewImageView3 = setPreviewImage(holder.previewImageView3, mediaEntity[2].getMediaURL());
+            case 2:
+                holder.previewImageView2 = setPreviewImage(holder.previewImageView2, mediaEntity[1].getMediaURL());
+            case 1:
+                holder.previewImageView1 = setPreviewImage(holder.previewImageView1, mediaEntity[0].getMediaURL());
+        }
+    }
+
+    /**
+     * 画像URLの置換
+     * @param extendedMediaEntity
+     */
+    protected void replaceMediaURL(ExtendedMediaEntity[] extendedMediaEntity){
+        if(extendedMediaEntity == null || extendedMediaEntity.length == 0) return;
+
+        holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
+
+        for (int i = 0; i < extendedMediaEntity.length; i++) {
+            TweetText = TweetText.replaceAll(extendedMediaEntity[i].getURL(), extendedMediaEntity[i].getMediaURL());
+        }
+        switch (extendedMediaEntity.length) {
+            case 4:
+                holder.previewImageView4 = setPreviewImage(holder.previewImageView4,extendedMediaEntity[3].getMediaURL());
+            case 3:
+                holder.previewImageView3 = setPreviewImage(holder.previewImageView3,extendedMediaEntity[2].getMediaURL());
+            case 2:
+                holder.previewImageView2 = setPreviewImage(holder.previewImageView2,extendedMediaEntity[1].getMediaURL());
+            case 1:
+                holder.previewImageView1 = setPreviewImage(holder.previewImageView1,extendedMediaEntity[0].getMediaURL());
+        }
+    }
+
+    /**
+     * プレビュー画像のセット
+     * @param previewImageView
+     * @param URL
+     */
+    protected ImageView setPreviewImage(ImageView previewImageView, String URL){
+        previewImageView.setVisibility(View.VISIBLE);
+        Glide.with(getContext()).load(URL).into(previewImageView);
+        return  previewImageView;
+    }
+
+    /**
+     * URLの置換
+     * @param urlEntities
+     */
+    protected void replaceURLEntities(URLEntity[] urlEntities){
+        if(urlEntities == null || urlEntities.length == 0) return;
+
+        for (int i = 0; i < urlEntities.length; i++) {
+            TweetText = TweetText.replaceAll(urlEntities[i].getURL(), urlEntities[i].getExpandedURL());
+        }
+    }
+
+    /**
+     * 時間を変換するやつ
+     * @param TimeStatusNow
+     * @param CreatedAt
+     */
+    protected void replacrTimeAt(Date TimeStatusNow, Date CreatedAt){
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(CreatedAt);
+        cal2.setTime(TimeStatusNow);
+        long date1 = cal1.getTimeInMillis();
+        long date2 = cal2.getTimeInMillis();
+        long time = (date2 - date1) / 1000;
+        if (time <= 59) {
+            holder.time.setText(time + "s前");
+        }
+        time = time / 60;
+        if ((time <= 59) && (time >= 1)) {
+            holder.time.setText(time + "m前");
+        }
+        time = time / 60;
+        if ((time <= 23) && (time >= 1)) {
+            holder.time.setText(time + "h前");
+        }
+        time = time / 24;
+        if (time != 0) {
+            holder.time.setText(DateFormat.getDateTimeInstance().format(CreatedAt));
+        }
+    }
+
+    /**
      * holder初期化等々のメソッド
      */
     protected View iniHolder(){
         View convertView = mInflater.inflate(R.layout.list_item_tweet, null);
         holder = new ViewHolder();
         holder.icon = (ImageView) convertView.findViewById(R.id.icon);    //画像View
-        holder.rticon = (ImageView) convertView.findViewById(R.id.rticon);    //画像View
+        holder.rticon = (ImageView) convertView.findViewById(R.id.rtIcon);    //画像View
         holder.name = (TextView) convertView.findViewById(R.id.name);        //名前View
-        holder.screenName = (TextView) convertView.findViewById(R.id.screen_name);    //ＩＤView
+        holder.screenName = (TextView) convertView.findViewById(R.id.screenName);    //ＩＤView
         holder.text = (TextView) convertView.findViewById(R.id.text);        //ツイート本文View
         holder.time = (TextView) convertView.findViewById(R.id.time);    //投稿時間View
         holder.rt_To = (TextView) convertView.findViewById(R.id.RT_to);    //ＲＴした人View
         holder.rt = (TextView) convertView.findViewById(R.id.RT);        //RT数View
         holder.fav = (TextView) convertView.findViewById(R.id.Fav);    //お気に入り数View
         holder.via = (TextView) convertView.findViewById(R.id.via);    //投稿されたクライアント名View
-        holder.tweetStatus = (ImageView) convertView.findViewById(R.id.TweetStatus);    //右の帯View
+        holder.tweetStatus = (ImageView) convertView.findViewById(R.id.tweetStatus);    //右の帯View
         holder.lockedImageView = (ImageView) convertView.findViewById(R.id.lockedImageView);
         holder.deletedTweetImageView = (ImageView) convertView.findViewById(R.id.deletedTweetImageView);
-        holder.relativeLayout = (android.widget.RelativeLayout) convertView.findViewById(R.id.Tweet_List);
+        holder.relativeLayout = (android.widget.RelativeLayout) convertView.findViewById(R.id.tweetList);
+        holder.quoteTweetLayout = (android.widget.RelativeLayout) convertView.findViewById(R.id.quoteTweet);
+        holder.quoteName = (TextView) convertView.findViewById(R.id.quoteName);
+        holder.quoteScreenName = (TextView) convertView.findViewById(R.id.quoteScreenName);
+        holder.quoteText = (TextView) convertView.findViewById(R.id.quoteText);
+        holder.previewImageLinearLayout = (LinearLayout) convertView.findViewById(R.id.previewImageLinearLayout);
+        holder.previewImageView1 = (ImageView) convertView.findViewById(R.id.previewImageView1);
+        holder.previewImageView2 = (ImageView) convertView.findViewById(R.id.previewImageView2);
+        holder.previewImageView3 = (ImageView) convertView.findViewById(R.id.previewImageView3);
+        holder.previewImageView4 = (ImageView) convertView.findViewById(R.id.previewImageView4);
         return convertView;
     }
 }

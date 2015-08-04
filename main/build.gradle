@@ -12,7 +12,7 @@ repositories {
     jcenter()
 }
 
-def VERSION_NAME = "3.1.0"
+def VERSION_NAME = "3.2.0"
 
 android {
     compileSdkVersion 22
@@ -22,7 +22,7 @@ android {
         applicationId "com.meronmks.zimitta"
         minSdkVersion 8
         targetSdkVersion 22
-        versionCode 34
+        versionCode 35
         versionName VERSION_NAME
     }
 
@@ -53,7 +53,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:appcompat-v7:+'
     compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
     compile 'com.nineoldandroids:library:2.4.0+'
+    compile 'com.github.bumptech.glide:glide:+'
+    compile 'com.android.support:support-v4:+'
 }

@@ -5,10 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import twitter4j.DirectMessage;
@@ -46,6 +43,8 @@ public class DMAdapter extends ArrayAdapter<DirectMessage> {
         ImageView lockedImageView;
         ImageView deletedTweetImageView;
         RelativeLayout relativeLayout;
+        RelativeLayout quoteTweetLayout;
+        LinearLayout previewImageLinearLayout;
     }
 
     @Override
@@ -79,6 +78,8 @@ public class DMAdapter extends ArrayAdapter<DirectMessage> {
             holder.via.setVisibility(View.GONE);
             holder.tweetStatus.setVisibility(View.GONE);
             holder.deletedTweetImageView.setVisibility(View.GONE);
+            holder.quoteTweetLayout.setVisibility(View.GONE);
+            holder.previewImageLinearLayout.setVisibility(View.GONE);
             Glide.with(getContext()).load(item.getSender().getProfileImageURLHttps()).into(holder.icon);
             holder.name.setText(item.getSender().getName());
             holder.screenName.setText("@" + item.getSender().getScreenName());
@@ -156,19 +157,21 @@ public class DMAdapter extends ArrayAdapter<DirectMessage> {
         View convertView = mInflater.inflate(R.layout.list_item_tweet, null);
         holder = new ViewHolder();
         holder.icon = (ImageView) convertView.findViewById(R.id.icon);    //画像View
-        holder.rticon = (ImageView) convertView.findViewById(R.id.rticon);    //画像View
+        holder.rticon = (ImageView) convertView.findViewById(R.id.rtIcon);    //画像View
         holder.name = (TextView) convertView.findViewById(R.id.name);        //名前View
-        holder.screenName = (TextView) convertView.findViewById(R.id.screen_name);    //ＩＤView
+        holder.screenName = (TextView) convertView.findViewById(R.id.screenName);    //ＩＤView
         holder.text = (TextView) convertView.findViewById(R.id.text);        //ツイート本文View
         holder.time = (TextView) convertView.findViewById(R.id.time);    //投稿時間View
         holder.rt_To = (TextView) convertView.findViewById(R.id.RT_to);    //ＲＴした人View
         holder.rt = (TextView) convertView.findViewById(R.id.RT);        //RT数View
         holder.fav = (TextView) convertView.findViewById(R.id.Fav);    //お気に入り数View
         holder.via = (TextView) convertView.findViewById(R.id.via);    //投稿されたクライアント名View
-        holder.tweetStatus = (ImageView) convertView.findViewById(R.id.TweetStatus);    //右の帯View
+        holder.tweetStatus = (ImageView) convertView.findViewById(R.id.tweetStatus);    //右の帯View
         holder.lockedImageView = (ImageView) convertView.findViewById(R.id.lockedImageView);
         holder.deletedTweetImageView = (ImageView) convertView.findViewById(R.id.deletedTweetImageView);
-        holder.relativeLayout = (android.widget.RelativeLayout) convertView.findViewById(R.id.Tweet_List);
+        holder.relativeLayout = (android.widget.RelativeLayout) convertView.findViewById(R.id.tweetList);
+        holder.quoteTweetLayout = (android.widget.RelativeLayout) convertView.findViewById(R.id.quoteTweet);
+        holder.previewImageLinearLayout = (LinearLayout) convertView.findViewById(R.id.previewImageLinearLayout);
         return convertView;
     }
 
