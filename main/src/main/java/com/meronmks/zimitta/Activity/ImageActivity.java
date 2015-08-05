@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
+import android.widget.ImageView;
 import com.meronmks.zimitta.R;
 import sukohi.ZoomImageView;
 
@@ -21,7 +22,7 @@ import java.net.URL;
 
 public class ImageActivity extends Activity {
 
-	public static ZoomImageView icon;
+	public static ZoomImageView imageView;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class ImageActivity extends Activity {
         setContentView(R.layout.activity_image);
         Intent intent = getIntent();
         String Image = intent.getStringExtra("Imeges");
-        icon = (ZoomImageView) this.findViewById(R.id.T_Image);
+        imageView = (ZoomImageView) this.findViewById(R.id.T_Image);
         getBitmapFromURL(Image);
     }
 
@@ -64,14 +65,14 @@ public class ImageActivity extends Activity {
 	        protected void onPostExecute(Bitmap result) {
 	        	if(result != null)
 	        	{
-	        		icon.setMaxScale(5F);
-	        		icon.setMinScale(0.3F);
-	        		icon.setImageBitmap(result);
+	        		imageView.setMaxScale(5F);
+	        		imageView.setMinScale(0.3F);
+	        		imageView.setImageBitmap(result);
 					if(Build.VERSION.SDK_INT >= 11) {
-						icon.setScaleY(result.getHeight() / 600.0f);
-						icon.setScaleX(result.getWidth() / 600.0f);
+						imageView.setScaleY(result.getHeight() / 600.0f);
+						imageView.setScaleX(result.getWidth() / 600.0f);
 					}
-	        		icon.invalidate();
+	        		imageView.invalidate();
 	        	}else
 	        	{
 	        		showDialog("画像取得エラー");

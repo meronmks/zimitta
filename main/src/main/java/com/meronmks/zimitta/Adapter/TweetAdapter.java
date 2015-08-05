@@ -2,6 +2,7 @@ package com.meronmks.zimitta.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.bumptech.glide.Glide;
+import com.meronmks.zimitta.Activity.ImageActivity;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import twitter4j.ExtendedMediaEntity;
@@ -26,10 +28,12 @@ public class TweetAdapter extends ArrayAdapter<Status> {
 	private LayoutInflater mInflater;
 	private String TweetText;
     private ViewHolder holder;
+    private Context mContext;
 
     public TweetAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_1);
         mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        mContext = context;
     }
 
     static class ViewHolder {
@@ -295,13 +299,21 @@ public class TweetAdapter extends ArrayAdapter<Status> {
     }
 
     /**
-     * プレビュー画像のセット
+     * プレビュー画像のセットとImageViewの設定
      * @param previewImageView
      * @param URL
      */
-    protected ImageView setPreviewImage(ImageView previewImageView, String URL){
+    protected ImageView setPreviewImage(ImageView previewImageView, final String URL){
         previewImageView.setVisibility(View.VISIBLE);
         Glide.with(getContext()).load(URL).into(previewImageView);
+
+        previewImageView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent image = new Intent(mContext, ImageActivity.class);
+                image.putExtra("Imeges", URL);
+                mContext.startActivity(image);
+            }
+        });
         return  previewImageView;
     }
 

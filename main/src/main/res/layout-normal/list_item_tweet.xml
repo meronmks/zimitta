@@ -158,7 +158,7 @@
     <LinearLayout
             android:id="@+id/previewImageLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="100sp"
+            android:layout_height="80sp"
             android:orientation="horizontal"
             android:layout_below="@+id/RT_to"
             android:layout_alignLeft="@+id/RT"
