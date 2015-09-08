@@ -15,10 +15,7 @@ import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Activity.ImageActivity;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
-import twitter4j.ExtendedMediaEntity;
-import twitter4j.MediaEntity;
-import twitter4j.Status;
-import twitter4j.URLEntity;
+import twitter4j.*;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -201,14 +198,15 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                 holder.tweetStatus.setBackgroundColor(Color.CYAN);
             }
             //自分宛てのツイートか
-            if (item.getUserMentionEntities() != null) {
-                for (int i = 0; i < item.getUserMentionEntities().length; i++) {
-                    if (item.getUserMentionEntities()[i].getScreenName().equals(CoreVariable.userName)) {
-                        holder.tweetStatus.setVisibility(View.VISIBLE);
-                        holder.tweetStatus.setBackgroundColor(Color.RED);
-                    }
+            for (UserMentionEntity UrlLink : item.getUserMentionEntities()) {
+                if(UrlLink.getScreenName().equals(CoreVariable.userName) && !item.getUser().getScreenName().equals(CoreVariable.userName))
+                {
+                    holder.tweetStatus.setVisibility(View.VISIBLE);
+                    holder.tweetStatus.setBackgroundColor(Color.RED);
+                    break;
                 }
             }
+
             holder.relativeLayout.setBackgroundResource(R.drawable.listitem_color);
         }else{
             convertView = mInflater.inflate(R.layout.list_item_null, null);
@@ -227,7 +225,7 @@ public class TweetAdapter extends ArrayAdapter<Status> {
             TweetText = TweetText.replaceAll("\r\n", "\n");
             //一行ずつ取り出し
             String[] loopStrings = TweetText.split("\n");
-            //ループしてるか判定ししていたら文字を消す
+            //ループしてるか判定し、していたら文字を消す
             //ただし最初に一致しているのを発見した場合「Following text looped」に置き換える
             for (int i = 1; i < loopStrings.length; i++) {
                 if (loopStrings[0].equals(loopStrings[i]) && !loopTextFound) {
@@ -237,7 +235,7 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                     loopStrings[i] = loopStrings[i].replace(loopStrings[0], "");
                 }
             }
-            //分解して処理が終わったテキストを合成
+            //処理が終わったテキストを合成
             StringBuffer buf = new StringBuffer();
             for (int i = 0; i < loopStrings.length; i++) {
                 if (i + 1 != loopStrings.length && !loopStrings[i].equals("")) {
@@ -259,9 +257,10 @@ public class TweetAdapter extends ArrayAdapter<Status> {
 
         holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
 
-        for (int i = 0; i < mediaEntity.length; i++) {
-            TweetText = TweetText.replaceAll(mediaEntity[i].getURL(), mediaEntity[i].getMediaURL());
+        for(MediaEntity media : mediaEntity){
+            TweetText = TweetText.replaceAll(media.getURL(), media.getMediaURL());
         }
+
         switch (mediaEntity.length){
             case 4:
                 holder.previewImageView4 = setPreviewImage(holder.previewImageView4, mediaEntity[3].getMediaURL());
@@ -283,9 +282,10 @@ public class TweetAdapter extends ArrayAdapter<Status> {
 
         holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
 
-        for (int i = 0; i < extendedMediaEntity.length; i++) {
-            TweetText = TweetText.replaceAll(extendedMediaEntity[i].getURL(), extendedMediaEntity[i].getMediaURL());
+        for(MediaEntity media : extendedMediaEntity){
+            TweetText = TweetText.replaceAll(media.getURL(), media.getMediaURL());
         }
+
         switch (extendedMediaEntity.length) {
             case 4:
                 holder.previewImageView4 = setPreviewImage(holder.previewImageView4,extendedMediaEntity[3].getMediaURL());
