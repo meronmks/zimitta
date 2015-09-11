@@ -12,9 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.meronmks.zimitta.Activity.ImageActivity;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
+import com.meronmks.zimitta.core.MainActivity;
 import twitter4j.*;
 
 import java.text.DateFormat;
@@ -304,13 +308,43 @@ public class TweetAdapter extends ArrayAdapter<Status> {
      * @param URL
      */
     protected ImageView setPreviewImage(ImageView previewImageView, final String URL){
+
+        Log.d("setPreviewImage","URL:" + URL);
+
         previewImageView.setVisibility(View.VISIBLE);
-        Glide.with(getContext()).load(URL).into(previewImageView);
+        Glide.with(getContext())
+                .load(URL)
+                .listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String s, Target<GlideDrawable> glideDrawableTarget, boolean b) {
+                        Log.e("Glide", "Error in Glide listener");
+                        if (e != null) {
+                            e.printStackTrace();
+                        }
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(GlideDrawable glideDrawable, String s, Target<GlideDrawable> glideDrawableTarget, boolean b, boolean b2) {
+                        return false;
+                    }
+                })
+                .placeholder(R.drawable.ic_action_refresh)
+                .error(R.drawable.x_c)
+                .into(previewImageView);
 
         previewImageView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                String imageURL = URL;
                 Intent image = new Intent(mContext, ImageActivity.class);
-                image.putExtra("Imeges", URL);
+                if (MainActivity.isTwitpic(imageURL)){
+                    imageURL = imageURL.replace("thumb/", "full/");
+                }else if (MainActivity.isPtwipple(imageURL)){
+                    imageURL = imageURL.replace("thumb/", "large/");
+                }else if (MainActivity.isTwipple(imageURL)){
+                    imageURL = imageURL.replace("thumb/", "large/");
+                }
+                image.putExtra("Imeges", imageURL);
                 mContext.startActivity(image);
             }
         });
@@ -324,8 +358,52 @@ public class TweetAdapter extends ArrayAdapter<Status> {
     protected void replaceURLEntities(URLEntity[] urlEntities){
         if(urlEntities == null || urlEntities.length == 0) return;
 
+        int count = 1;
         for (int i = 0; i < urlEntities.length; i++) {
             TweetText = TweetText.replaceAll(urlEntities[i].getURL(), urlEntities[i].getExpandedURL());
+            if(MainActivity.isTwitpic(urlEntities[i].getExpandedURL())){
+                holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
+                String url = urlEntities[i].getExpandedURL().replace("twitpic.com/", "twitpic.com/show/thumb/");
+                switch (count){
+                    case 4:
+                        holder.previewImageView4 = setPreviewImage(holder.previewImageView4,url);
+                    case 3:
+                        holder.previewImageView3 = setPreviewImage(holder.previewImageView3,url);
+                    case 2:
+                        holder.previewImageView2 = setPreviewImage(holder.previewImageView2,url);
+                    case 1:
+                        holder.previewImageView1 = setPreviewImage(holder.previewImageView1,url);
+                }
+                count++;
+            }else if(MainActivity.isPtwipple(urlEntities[i].getExpandedURL())){
+                holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
+                String url = urlEntities[i].getExpandedURL().replace("p.twipple.jp/", "p.twipple.jp/show/thumb/");
+                switch (count){
+                    case 4:
+                        holder.previewImageView4 = setPreviewImage(holder.previewImageView4,url);
+                    case 3:
+                        holder.previewImageView3 = setPreviewImage(holder.previewImageView3,url);
+                    case 2:
+                        holder.previewImageView2 = setPreviewImage(holder.previewImageView2,url);
+                    case 1:
+                        holder.previewImageView1 = setPreviewImage(holder.previewImageView1,url);
+                }
+                count++;
+            }else if(MainActivity.isTwitpic(urlEntities[i].getExpandedURL())){
+                holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
+                String url = urlEntities[i].getExpandedURL().replace("twipple.jp/", "twipple.jp/show/thumb/");
+                switch (count){
+                    case 4:
+                        holder.previewImageView4 = setPreviewImage(holder.previewImageView4,url);
+                    case 3:
+                        holder.previewImageView3 = setPreviewImage(holder.previewImageView3,url);
+                    case 2:
+                        holder.previewImageView2 = setPreviewImage(holder.previewImageView2,url);
+                    case 1:
+                        holder.previewImageView1 = setPreviewImage(holder.previewImageView1,url);
+                }
+                count++;
+            }
         }
     }
 

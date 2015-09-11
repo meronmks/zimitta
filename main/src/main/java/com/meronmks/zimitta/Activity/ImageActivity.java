@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
-import android.widget.ImageView;
 import com.meronmks.zimitta.R;
 import sukohi.ZoomImageView;
 

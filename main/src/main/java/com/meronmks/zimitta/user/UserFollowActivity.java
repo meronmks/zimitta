@@ -70,6 +70,19 @@ public class UserFollowActivity extends ActionBarActivity {
                     if (LongTap == false) {
                         List_Menu(position);
                     }
+
+                    //フッターがクリックされた
+                    if (position != 0 && mAdapter.getItem(position) == null) {
+                        NewReloadFulg = false;
+                        StatusIDs.remove(position);
+                        getFriendsList();
+                    }
+                    //ヘッダーがクリックされた
+                    if (position == 0 && mAdapter.getItem(position) == null) {
+                        NewReloadFulg = true;
+                        StatusIDs.remove(0);
+                        getFriendsList();
+                    }
                 }
             });
 
@@ -126,6 +139,7 @@ public class UserFollowActivity extends ActionBarActivity {
             @Override
             protected void onPostExecute(PagableResponseList<User> result) {
                 if (result != null) {
+                    int count = 0;
                     for (User status : result) {
                         StatusIDs.add(status);
                         mAdapter.add(status);

@@ -150,6 +150,33 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
+     * Twitpicか判定
+     * @param URL
+     * @return
+     */
+    public static boolean isTwitpic(String URL){
+        return URL.indexOf("twitpic") != -1 ? true : false;
+    }
+
+    /**
+     * モバイル版？ついっぷるフォトか判定
+     * @param URL
+     * @return
+     */
+    public static boolean isPtwipple(String URL){
+        return URL.indexOf("p.twipple") != -1 ? true : false;
+    }
+
+    /**
+     * デスクトップ版？ついっぷるフォトか判定
+     * @param URL
+     * @return
+     */
+    public static  boolean isTwipple(String URL){
+        return URL.indexOf("twipple") != -1 ? true : false;
+    }
+
+    /**
      * アプリ終了時
      */
     @Override
