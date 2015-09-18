@@ -267,13 +267,13 @@ public class TweetAdapter extends ArrayAdapter<Status> {
 
         switch (mediaEntity.length){
             case 4:
-                holder.previewImageView4 = setPreviewImage(holder.previewImageView4, mediaEntity[3].getMediaURL());
+                holder.previewImageView4 = setPreviewImage(holder.previewImageView4, mediaEntity[3].getMediaURL() + ":small");
             case 3:
-                holder.previewImageView3 = setPreviewImage(holder.previewImageView3, mediaEntity[2].getMediaURL());
+                holder.previewImageView3 = setPreviewImage(holder.previewImageView3, mediaEntity[2].getMediaURL() + ":small");
             case 2:
-                holder.previewImageView2 = setPreviewImage(holder.previewImageView2, mediaEntity[1].getMediaURL());
+                holder.previewImageView2 = setPreviewImage(holder.previewImageView2, mediaEntity[1].getMediaURL() + ":small");
             case 1:
-                holder.previewImageView1 = setPreviewImage(holder.previewImageView1, mediaEntity[0].getMediaURL());
+                holder.previewImageView1 = setPreviewImage(holder.previewImageView1, mediaEntity[0].getMediaURL() + ":small");
         }
     }
 
@@ -292,13 +292,13 @@ public class TweetAdapter extends ArrayAdapter<Status> {
 
         switch (extendedMediaEntity.length) {
             case 4:
-                holder.previewImageView4 = setPreviewImage(holder.previewImageView4,extendedMediaEntity[3].getMediaURL());
+                holder.previewImageView4 = setPreviewImage(holder.previewImageView4,extendedMediaEntity[3].getMediaURL() + ":small");
             case 3:
-                holder.previewImageView3 = setPreviewImage(holder.previewImageView3,extendedMediaEntity[2].getMediaURL());
+                holder.previewImageView3 = setPreviewImage(holder.previewImageView3,extendedMediaEntity[2].getMediaURL() + ":small");
             case 2:
-                holder.previewImageView2 = setPreviewImage(holder.previewImageView2,extendedMediaEntity[1].getMediaURL());
+                holder.previewImageView2 = setPreviewImage(holder.previewImageView2,extendedMediaEntity[1].getMediaURL() + ":small");
             case 1:
-                holder.previewImageView1 = setPreviewImage(holder.previewImageView1,extendedMediaEntity[0].getMediaURL());
+                holder.previewImageView1 = setPreviewImage(holder.previewImageView1,extendedMediaEntity[0].getMediaURL() + ":small");
         }
     }
 
@@ -308,8 +308,6 @@ public class TweetAdapter extends ArrayAdapter<Status> {
      * @param URL
      */
     protected ImageView setPreviewImage(ImageView previewImageView, final String URL){
-
-        Log.d("setPreviewImage","URL:" + URL);
 
         previewImageView.setVisibility(View.VISIBLE);
         Glide.with(getContext())
@@ -343,6 +341,8 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                     imageURL = imageURL.replace("thumb/", "large/");
                 }else if (MainActivity.isTwipple(imageURL)){
                     imageURL = imageURL.replace("thumb/", "large/");
+                }else{
+                    imageURL = imageURL.replace(":small", ":orig");
                 }
                 image.putExtra("Imeges", imageURL);
                 mContext.startActivity(image);
