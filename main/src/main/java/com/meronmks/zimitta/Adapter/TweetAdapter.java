@@ -71,7 +71,7 @@ public class TweetAdapter extends ArrayAdapter<Status> {
         final Status item = getItem(position);
         if(item != null) {
             Date TimeStatusNow = null;
-            Long My_ID = CoreVariable.Userid;	//共有変数の呼び出し
+            Long My_ID = CoreVariable.userID;	//共有変数の呼び出し
             TimeStatusNow = new Date();
             if(convertView == null) {
                 convertView = iniHolder();

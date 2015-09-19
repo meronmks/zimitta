@@ -65,7 +65,7 @@ public class CoreActivity extends ActionBarActivity {
             if(CoreVariable.userName == "") {
                 mtAction.getMyID();
             }
-            if(CoreVariable.mutelist == null) {
+            if(CoreVariable.muteList == null) {
                 mtAction.getMyMuteList();
             }
             progres = (ProgressBarIndeterminate) findViewById(R.id.progressBar);
@@ -91,7 +91,7 @@ public class CoreActivity extends ActionBarActivity {
                 public void onClick(View v) {
                     // クリックの処理を実行する
                     List_Menu list = new List_Menu();
-                    list.Main_menu(CoreActivity.this, CoreActivity.this, DebugMode, CoreVariable.Userid);
+                    list.Main_menu(CoreActivity.this, CoreActivity.this, DebugMode, CoreVariable.userID);
                 }
 
             });

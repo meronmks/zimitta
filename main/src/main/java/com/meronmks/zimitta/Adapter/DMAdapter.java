@@ -55,7 +55,7 @@ public class DMAdapter extends ArrayAdapter<DirectMessage> {
             Date TimeStatusTweet = null;
             Calendar cal1 = Calendar.getInstance();
             Calendar cal2 = Calendar.getInstance();
-            Long My_ID = CoreVariable.Userid;
+            Long My_ID = CoreVariable.userID;
             TimeStatusNow = new Date();
             if (convertView == null) {
                 convertView = iniHolder();

@@ -224,7 +224,7 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(User result) {
                 if(result != null){
-                    CoreVariable.Userid = result.getId();
+                    CoreVariable.userID = result.getId();
                     CoreVariable.userName = result.getScreenName();
                 }
             }
@@ -253,13 +253,13 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(IDs result) {
                 if(result != null){
-                    CoreVariable.mutelist = null;
-                    CoreVariable.mutelist = new long[result.getIDs().length];
-                    CoreVariable.mutelist = result.getIDs();
+                    CoreVariable.muteList = null;
+                    CoreVariable.muteList = new long[result.getIDs().length];
+                    CoreVariable.muteList = result.getIDs();
                 }else {
-                    CoreVariable.mutelist = null;
-                    CoreVariable.mutelist = new long[1];
-                    CoreVariable.mutelist[0] = 0;
+                    CoreVariable.muteList = null;
+                    CoreVariable.muteList = new long[1];
+                    CoreVariable.muteList[0] = 0;
                 }
             }
         };
@@ -586,9 +586,9 @@ public class TwitterActionClass {
      * @return
      */
     protected boolean isTweetMute(twitter4j.Status tweet){
-        if(CoreVariable.mutelist == null) return false;
+        if(CoreVariable.muteList == null) return false;
 
-        for(long ID : CoreVariable.mutelist)
+        for(long ID : CoreVariable.muteList)
         {
             if((tweet.getUser().getId() == ID) && (sp.getBoolean("mute_flag", false)))
             {
@@ -1062,7 +1062,7 @@ public class TwitterActionClass {
                 mNotificationManager.cancelAll();
                 CoreActivity.sendRepNotification("新しいリプライがあります。");
             }
-            if(status.getRetweetedStatus().getUser().getId() == CoreVariable.Userid && sp.getBoolean("NotificationRT", false)){
+            if(status.getRetweetedStatus().getUser().getId() == CoreVariable.userID && sp.getBoolean("NotificationRT", false)){
                 NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancelAll();
                 CoreActivity.sendRepNotification("リツイートされました。");
@@ -1240,7 +1240,7 @@ public class TwitterActionClass {
                     for(long ID :ids.getIDs()){
                         if(ID == user.getId()){
                             machID = true;
-                        }else if(CoreVariable.Userid == user.getId()){
+                        }else if(CoreVariable.userID == user.getId()){
                             myID = true;
                         }
                     }

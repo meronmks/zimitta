@@ -15,8 +15,8 @@ import java.util.ArrayList;
  * アプリ内で共有するフィールド定義と初期化等
  */
 public class CoreVariable {
-    public static long Userid;
-    public static long[] mutelist;
+    public static long userID;
+    public static long[] muteList;
     public static String userName;
     public static ResponseList<UserList> userLists;
     public static TwitterStream twitterStream;
@@ -43,10 +43,10 @@ public class CoreVariable {
     }
 
     public static void Destroy(){
-        Userid = 0;
+        userID = 0;
         userName = "";
         userLists = null;
-        mutelist = null;
+        muteList = null;
         twitterStream = null;
         runStream = false;
         searchTweet = null;
