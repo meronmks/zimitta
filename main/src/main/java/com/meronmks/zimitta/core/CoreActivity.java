@@ -19,6 +19,7 @@ import com.meronmks.zimitta.Activity.TweetActivity;
 import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
 import com.meronmks.zimitta.Adapter.MainTabFragmentPagerAdapter;
 import com.meronmks.zimitta.BuildConfig;
+import com.meronmks.zimitta.Fragments.TimeLineFragment;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.menu.List_Menu;
@@ -194,9 +195,7 @@ public class CoreActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mtAction != null) {
-            mtAction.stopStreaming();
-        }
+        TimeLineFragment.StreamingStop();
         CoreVariable.Destroy();
     }
 }

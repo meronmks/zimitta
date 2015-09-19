@@ -20,7 +20,7 @@ import java.util.Timer;
 public class TimeLineFragment extends Fragment {
 
     private Context Activity;
-    private TwitterActionClass mtAction;
+    private static TwitterActionClass mtAction;
     private Timer timer;
     private ListView lv;
 
@@ -61,7 +61,7 @@ public class TimeLineFragment extends Fragment {
         invalidat.invalidate(timer, CoreVariable.TLmAdapter, "TL",sp.getBoolean("Streeming_stok", false));
 
         if(sp.getBoolean("Streem_Flug",false)){
-            mtAction.startStreaming();
+            StreamingStart();
         }
     }
 
@@ -69,5 +69,17 @@ public class TimeLineFragment extends Fragment {
     public void onPause() {
         super.onPause();
         timer.cancel();
+    }
+
+    public static void StreamingStart(){
+        if(mtAction!=null) {
+            mtAction.startStreaming();
+        }
+    }
+
+    public static void StreamingStop(){
+        if(mtAction!=null) {
+            mtAction.stopStreaming();
+        }
     }
 }

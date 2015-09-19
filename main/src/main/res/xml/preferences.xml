@@ -7,12 +7,12 @@
             android:entryValues="@array/entryvalues_list_preference"
             android:defaultValue="20"/>
     <CheckBoxPreference
-            android:title="ツイート長押しで\nメニュー表示"
+            android:title="ツイート長押しでメニュー表示"
             android:key="Tap_Setting"
             android:summary=""
             android:defaultValue="true"/>
     <CheckBoxPreference
-            android:title="ツイート圧縮"
+            android:title="ループしてるツイートの圧縮"
             android:key="zipTweet"
             android:summary="ループしている内容を圧縮します"
             android:defaultValue="false"/>
@@ -28,22 +28,22 @@
                 android:summary="更新を押すと反映されます（要再起動）"
                 android:key="Streeming_stok"/>
         <CheckBoxPreference
-                android:title="更新可能時通知"
+                android:title="ツイートが貯まったら通知"
                 android:summary="トーストで通知します"
                 android:key="Streeming_Nof_Tost"/>
         <CheckBoxPreference
-                android:title="FF外のリプライを取得する"
-                android:summary="反映には再起動必須"
+                android:title="フォロー外のリプライを取得する"
+                android:summary="フォローしていない人へのリプを取得します（要再起動）"
                 android:key="Streeming_FF_Mention"/>
         <CheckBoxPreference
-                android:title="Wi-Fiのみで有効（予定）"
-                android:summary="Wi-Fi接続時のみでStreamingします"
+                android:title="Wi-Fiのみで有効"
+                android:summary="Wi-Fi接続時のみでStreamingを有効にします"
                 android:key="Streeming_Wifi"/>
     </PreferenceScreen>
     <PreferenceScreen
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:title="通知設定"
-            android:summary="Streaming時のみ適用">
+            android:summary="Streaming有効時のみ">
         <CheckBoxPreference
                 android:title="Mention通知"
                 android:key="NotificationMen"
@@ -76,7 +76,7 @@
                 android:selectable="true" />
     </PreferenceScreen>
     <CheckBoxPreference
-            android:title="公式ミュート機能を使う"
+            android:title="公式のミュートリストを使う"
             android:key="mute_flag"/>
     <PreferenceScreen
             android:title="About"

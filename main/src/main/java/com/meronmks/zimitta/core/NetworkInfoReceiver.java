@@ -3,9 +3,12 @@ package com.meronmks.zimitta.core;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import com.meronmks.zimitta.Fragments.TimeLineFragment;
 import com.meronmks.zimitta.Variable.CoreVariable;
 
 import java.util.Observer;
@@ -27,12 +30,14 @@ public class NetworkInfoReceiver extends BroadcastReceiver {
 
         boolean isConnected = (networkInfo != null && networkInfo.isConnected());
         if (isConnected) {
-            // 接続状態
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            TwitterActionClass mtAction = new TwitterActionClass(context);
             CoreVariable.nowNetworkStatus = networkInfo.getType();
             Log.d("NetworkInfoReceiver","TypeID:" + CoreVariable.nowNetworkStatus);
             switch (CoreVariable.nowNetworkStatus){
                 case ConnectivityManager.TYPE_WIFI:
                     Log.d("NetworkInfoReceiver","ConnectToWiFi");
+                    TimeLineFragment.StreamingStart();
                     return;
                 case ConnectivityManager.TYPE_MOBILE_DUN:
                     Log.d("NetworkInfoReceiver","ConnectToMobileDUN");
@@ -48,6 +53,12 @@ public class NetworkInfoReceiver extends BroadcastReceiver {
                     return;
                 case ConnectivityManager.TYPE_MOBILE:
                     Log.d("NetworkInfoReceiver","ConnectToMobile");
+                    if(sharedPreferences.getBoolean("Streeming_Wifi",false)) {
+                        CoreActivity.showToast("WiFiから切断されました。\nストリーミングをOFFにします。");
+                        TimeLineFragment.StreamingStop();
+                    }else{
+                        TimeLineFragment.StreamingStart();
+                    }
                     return;
                 case ConnectivityManager.TYPE_BLUETOOTH:
                     Log.d("NetworkInfoReceiver","ConnectToBLUETOOTH");
@@ -60,10 +71,10 @@ public class NetworkInfoReceiver extends BroadcastReceiver {
                     return;
             }
         } else {
-            // 切断状態
             CoreActivity.showToast("ネットワークから切断されました");
             Log.d("NetworkInfoReceiver", "NetworkDisconnect");
             CoreVariable.nowNetworkStatus = -1;
+            TimeLineFragment.StreamingStop();
             return;
         }
     }

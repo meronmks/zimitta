@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.meronmks.zimitta.Adapter.DMAdapter;
@@ -37,7 +38,7 @@ public class TwitterActionClass {
     protected Spinner spinner;
     protected MyUserStreamAdapter mMyUserStreamAdapter;
     protected ListPositionVariable listPosition;
-    protected SharedPreferences sp;
+    protected SharedPreferences sharedPreferences;
     protected AsyncTwitter asyncTwitter;
 
     /**
@@ -57,7 +58,7 @@ public class TwitterActionClass {
         menu = new List_Menu();
         spinner = spinnerArgument;
         listPosition = new ListPositionVariable();
-        sp = PreferenceManager.getDefaultSharedPreferences(activity);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         //アカウント情報を読み込む
         SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
         SharedPreferences spOauth = activity.getSharedPreferences(activity.getString(R.string.PREF_NAME) + accountIDCount.getLong("ID_Num_Now", 0), Context.MODE_PRIVATE);
@@ -76,7 +77,7 @@ public class TwitterActionClass {
             builder.setHttpConnectionTimeout(10000);
             builder.setJSONStoreEnabled(true);
             //ストリーミング時にリプも表示するかどうか？
-            if(sp.getBoolean("Streeming_FF_Mention", false)) {
+            if(sharedPreferences.getBoolean("Streeming_FF_Mention", false)) {
                 builder.setUserStreamRepliesAllEnabled(true);
             }else{
                 builder.setUserStreamRepliesAllEnabled(false);
@@ -122,7 +123,7 @@ public class TwitterActionClass {
         menu = new List_Menu();
         spinner = spinnerArgument;
         listPosition = new ListPositionVariable();
-        sp = PreferenceManager.getDefaultSharedPreferences(activity);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         //アカウント情報を読み込む
         SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
         SharedPreferences spOauth = activity.getSharedPreferences(activity.getString(R.string.PREF_NAME) + accountIDCount.getLong("ID_Num_Now", 0), Context.MODE_PRIVATE);
@@ -166,7 +167,7 @@ public class TwitterActionClass {
         activity = context;
         menu = new List_Menu();
         listPosition = new ListPositionVariable();
-        sp = PreferenceManager.getDefaultSharedPreferences(activity);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         //アカウント情報を読み込む
         SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
         SharedPreferences spOauth = activity.getSharedPreferences(activity.getString(R.string.PREF_NAME) + accountIDCount.getLong("ID_Num_Now", 0), Context.MODE_PRIVATE);
@@ -185,7 +186,7 @@ public class TwitterActionClass {
             builder.setHttpConnectionTimeout(10000);
             builder.setJSONStoreEnabled(true);
             //ストリーミング時にリプも表示するかどうか？
-            if(sp.getBoolean("Streeming_FF_Mention", false)) {
+            if(sharedPreferences.getBoolean("Streeming_FF_Mention", false)) {
                 builder.setUserStreamRepliesAllEnabled(true);
             }else{
                 builder.setUserStreamRepliesAllEnabled(false);
@@ -307,7 +308,7 @@ public class TwitterActionClass {
                 try {
                     getListViewPosition();
                     Paging paging = new Paging();
-                    paging.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+                    paging.count(Integer.parseInt(sharedPreferences.getString("Load_Tweet", "20")));
                     if(ID != null) {
                         paging.setMaxId(ID);
                     }
@@ -342,7 +343,7 @@ public class TwitterActionClass {
                     if(ID != null) {
                         paging.setMaxId(ID);
                     }
-                    paging.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+                    paging.count(Integer.parseInt(sharedPreferences.getString("Load_Tweet", "20")));
                     return mTwitter.getMentionsTimeline(paging);
                 } catch (TwitterException e) {
                     e.printStackTrace();
@@ -377,7 +378,7 @@ public class TwitterActionClass {
                     if(ID != null) {
                         paging.maxId(ID);
                     }
-                    paging.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+                    paging.count(Integer.parseInt(sharedPreferences.getString("Load_Tweet", "20")));
                     return mTwitter.getUserListStatuses(timeLineID,paging);
                 } catch (TwitterException e) {
                     e.printStackTrace();
@@ -406,7 +407,7 @@ public class TwitterActionClass {
                 try {
                     getListViewPosition();
                     Paging p = new Paging();
-                    p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+                    p.count(Integer.parseInt(sharedPreferences.getString("Load_Tweet", "20")));
                     if(tweetID != null){
                         p.maxId(tweetID);
                     }
@@ -438,7 +439,7 @@ public class TwitterActionClass {
                 try {
                     getListViewPosition();
                     Paging p = new Paging();
-                    p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+                    p.count(Integer.parseInt(sharedPreferences.getString("Load_Tweet", "20")));
                     if(ID != null) {
                         p.setMaxId(ID);
                     }
@@ -470,7 +471,7 @@ public class TwitterActionClass {
                 try {
                     getListViewPosition();
                     Query query = new Query();
-                    query.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+                    query.count(Integer.parseInt(sharedPreferences.getString("Load_Tweet", "20")));
                     query.setQuery(searchText);
                     if(ID != null) {
                         query.setMaxId(ID);
@@ -590,7 +591,7 @@ public class TwitterActionClass {
 
         for(long ID : CoreVariable.muteList)
         {
-            if((tweet.getUser().getId() == ID) && (sp.getBoolean("mute_flag", false)))
+            if((tweet.getUser().getId() == ID) && (sharedPreferences.getBoolean("mute_flag", false)))
             {
                 return true;
             }
@@ -1036,11 +1037,11 @@ public class TwitterActionClass {
         public void onStatus(final Status status) {
             super.onStatus(status);
 
-            if(sp.getBoolean("Streeming_stok", false) == false) {
+            if(sharedPreferences.getBoolean("Streeming_stok", false) == false) {
                 setItemtoAdapter(status, 1);
             }else{
                 CoreVariable.stockTweet.add(status);
-                if(sp.getBoolean("Streeming_Nof_Tost", false)) {
+                if(sharedPreferences.getBoolean("Streeming_Nof_Tost", false)) {
                     CoreActivity.showToast("新しいツイートがあるみたい");
                 }
             }
@@ -1057,12 +1058,12 @@ public class TwitterActionClass {
                     }
                 }
             }
-            if(RepNotifFlag && !ReoNotifNotFlag && sp.getBoolean("NotificationMen", false)){
+            if(RepNotifFlag && !ReoNotifNotFlag && sharedPreferences.getBoolean("NotificationMen", false)){
                 NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancelAll();
                 CoreActivity.sendRepNotification("新しいリプライがあります。");
             }
-            if(status.getRetweetedStatus().getUser().getId() == CoreVariable.userID && sp.getBoolean("NotificationRT", false)){
+            if(status.getRetweetedStatus().getUser().getId() == CoreVariable.userID && sharedPreferences.getBoolean("NotificationRT", false)){
                 NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancelAll();
                 CoreActivity.sendRepNotification("リツイートされました。");
@@ -1077,7 +1078,7 @@ public class TwitterActionClass {
         @Override
         public void onFollow(User source, User followedUser) {
             super.onFollow(source, followedUser);
-            if(sp.getBoolean("NotificationFol", false)){
+            if(sharedPreferences.getBoolean("NotificationFol", false)){
                 NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancelAll();
                 CoreActivity.sendRepNotification("@" + source.getScreenName() + " さんにフォローされました。");
@@ -1091,7 +1092,7 @@ public class TwitterActionClass {
         @Override
         public void onDirectMessage(DirectMessage directMessage) {
             super.onDirectMessage(directMessage);
-            if(sp.getBoolean("NotificationDM", false)){
+            if(sharedPreferences.getBoolean("NotificationDM", false)){
                 NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancelAll();
                 CoreActivity.sendRepNotification("@" + directMessage.getSenderScreenName() + " さんからのDMがあります。");
@@ -1286,10 +1287,11 @@ public class TwitterActionClass {
     public void startStreaming()
     {
         //CoreActivity.twitterStreamがnull（未定義）でなくMainActivity.runStreamがfalseなら
-        if(CoreVariable.twitterStream != null && !CoreVariable.runStream) {
+        if(CoreVariable.twitterStream != null && CoreVariable.runStream == false) {
             //TwitterStream#user() を呼び出し、ユーザーストリームを開始する
             CoreVariable.twitterStream.user();
             CoreVariable.runStream = true;  //ストリーミング実行中フラグを立てる
+            Log.d("StreamingStatus", "StartStreaming");
         }
     }
 
@@ -1297,9 +1299,10 @@ public class TwitterActionClass {
      * Streaming停止
      */
     public void stopStreaming(){
-        if(CoreVariable.twitterStream != null) {
+        if(CoreVariable.twitterStream != null &&  CoreVariable.runStream == true) {
             CoreVariable.twitterStream.shutdown();
             CoreVariable.runStream = false;
+            Log.d("StreamingStatus", "ShutdownStreaming");
         }
     }
 
