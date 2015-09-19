@@ -24,7 +24,7 @@ import android.view.View;
 import android.widget.*;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 import com.meronmks.zimitta.core.TwitterUtils;
 import twitter4j.Twitter;
@@ -276,7 +276,7 @@ public class TweetActivity extends ActionBarActivity {
                     mtAction.sendTweet(sb.toString(), path);
                     finish();
                 }else{
-                    MainActivity.showToast("テキスト又は画像を入力してください");
+                    CoreActivity.showToast("テキスト又は画像を入力してください");
                 }
 				return true;
 		}

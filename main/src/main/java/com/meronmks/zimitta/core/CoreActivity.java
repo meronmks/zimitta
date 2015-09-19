@@ -21,7 +21,7 @@ import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.menu.List_Menu;
 
-public class MainActivity extends ActionBarActivity {
+public class CoreActivity extends ActionBarActivity {
 
     private SharedPreferences accountIDCount;
 //    private ShowRateLimit limit;
@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
         MainContext = this;
 
         //初期化
-        CoreVariable.iniVariable(MainContext);
+        CoreVariable.initializationVariable(MainContext);
         DebugMode = BuildConfig.DebugFlag;
 
         //アカウント情報を読み込む
@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     // クリックの処理を実行する
-                    Intent intent = new Intent(MainActivity.this, TweetActivity.class);
+                    Intent intent = new Intent(CoreActivity.this, TweetActivity.class);
                     startActivity(intent);
                 }
 
@@ -91,7 +91,7 @@ public class MainActivity extends ActionBarActivity {
                 public void onClick(View v) {
                     // クリックの処理を実行する
                     List_Menu list = new List_Menu();
-                    list.Main_menu(MainActivity.this, MainActivity.this, DebugMode, CoreVariable.Userid);
+                    list.Main_menu(CoreActivity.this, CoreActivity.this, DebugMode, CoreVariable.Userid);
                 }
 
             });
@@ -108,7 +108,7 @@ public class MainActivity extends ActionBarActivity {
      * 読み込み表示
      */
     public static void progresRun() {
-        Log.d("Debug", "MainActivity:progresRun");
+        Log.d("Debug", "CoreActivity:progresRun");
         progres.setVisibility(View.VISIBLE);
     }
 
@@ -125,7 +125,7 @@ public class MainActivity extends ActionBarActivity {
     public static void sendRepNotification(String text) {
         Notification.Builder n; // Notificationの生成
 
-        Intent i = new Intent(MainContext.getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(MainContext.getApplicationContext(), CoreActivity.class);
         PendingIntent pi = PendingIntent.getActivity(MainContext, 0, i, 0);
 
         n = new Notification.Builder(MainContext)

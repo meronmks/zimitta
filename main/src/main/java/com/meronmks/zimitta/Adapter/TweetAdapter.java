@@ -18,7 +18,7 @@ import com.bumptech.glide.request.target.Target;
 import com.meronmks.zimitta.Activity.ImageActivity;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import twitter4j.*;
 
 import java.text.DateFormat;
@@ -335,11 +335,11 @@ public class TweetAdapter extends ArrayAdapter<Status> {
             public void onClick(View v) {
                 String imageURL = URL;
                 Intent image = new Intent(mContext, ImageActivity.class);
-                if (MainActivity.isTwitpic(imageURL)){
+                if (CoreActivity.isTwitpic(imageURL)){
                     imageURL = imageURL.replace("thumb/", "full/");
-                }else if (MainActivity.isPtwipple(imageURL)){
+                }else if (CoreActivity.isPtwipple(imageURL)){
                     imageURL = imageURL.replace("thumb/", "large/");
-                }else if (MainActivity.isTwipple(imageURL)){
+                }else if (CoreActivity.isTwipple(imageURL)){
                     imageURL = imageURL.replace("thumb/", "large/");
                 }else{
                     imageURL = imageURL.replace(":small", ":orig");
@@ -361,7 +361,7 @@ public class TweetAdapter extends ArrayAdapter<Status> {
         int count = 1;
         for (int i = 0; i < urlEntities.length; i++) {
             TweetText = TweetText.replaceAll(urlEntities[i].getURL(), urlEntities[i].getExpandedURL());
-            if(MainActivity.isTwitpic(urlEntities[i].getExpandedURL())){
+            if(CoreActivity.isTwitpic(urlEntities[i].getExpandedURL())){
                 holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
                 String url = urlEntities[i].getExpandedURL().replace("twitpic.com/", "twitpic.com/show/thumb/");
                 switch (count){
@@ -375,7 +375,7 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                         holder.previewImageView1 = setPreviewImage(holder.previewImageView1,url);
                 }
                 count++;
-            }else if(MainActivity.isPtwipple(urlEntities[i].getExpandedURL())){
+            }else if(CoreActivity.isPtwipple(urlEntities[i].getExpandedURL())){
                 holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
                 String url = urlEntities[i].getExpandedURL().replace("p.twipple.jp/", "p.twipple.jp/show/thumb/");
                 switch (count){
@@ -389,7 +389,7 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                         holder.previewImageView1 = setPreviewImage(holder.previewImageView1,url);
                 }
                 count++;
-            }else if(MainActivity.isTwitpic(urlEntities[i].getExpandedURL())){
+            }else if(CoreActivity.isTwitpic(urlEntities[i].getExpandedURL())){
                 holder.previewImageLinearLayout.setVisibility(View.VISIBLE);
                 String url = urlEntities[i].getExpandedURL().replace("twipple.jp/", "twipple.jp/show/thumb/");
                 switch (count){

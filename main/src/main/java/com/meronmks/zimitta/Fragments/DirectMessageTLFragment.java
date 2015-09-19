@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 
 import java.util.Timer;
@@ -34,7 +34,7 @@ public class DirectMessageTLFragment extends Fragment {
         mtAction = new TwitterActionClass(Activity, CoreVariable.DMAdapter,lv,"DM",null);
 
         if(CoreVariable.DMAdapter.getCount() == 0){
-            MainActivity.progresRun();
+            CoreActivity.progresRun();
             mtAction.getDirectMessage(null);
         }
     }

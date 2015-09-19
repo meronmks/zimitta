@@ -13,7 +13,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.meronmks.zimitta.Activity.*;
 import com.meronmks.zimitta.AppCooperation.WebTwitterLoginActivity;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 import com.meronmks.zimitta.settings.SettingActivity;
 import com.meronmks.zimitta.user.Prof_Activity;
@@ -48,9 +48,9 @@ public class List_Menu {
 							@Override
 							protected void onPostExecute(Boolean result) {
 								if (result != false) {
-									MainActivity.showToast("ブロックしました。");
+									CoreActivity.showToast("ブロックしました。");
 								} else {
-									MainActivity.showToast("ブロック失敗・・・");
+									CoreActivity.showToast("ブロック失敗・・・");
 								}
 							}
 						};
@@ -87,13 +87,13 @@ public class List_Menu {
 							@Override
 							public void onSuccess(String response) {
 								// 通信成功時の処理
-								MainActivity.showToast("連携解除しました");
+								CoreActivity.showToast("連携解除しました");
 							}
 
 							@Override
 							public void onFailure(Throwable e, String response) {
 								// 通信失敗時の処理
-								MainActivity.showToast("解除失敗・・");
+								CoreActivity.showToast("解除失敗・・");
 							}
 
 							@Override
@@ -112,7 +112,7 @@ public class List_Menu {
 	public void Tweet_Menu(final Context context, final Status Tweet)
 	{
 		String[] dialogItem;
-		if(MainActivity.DebugMode){
+		if(CoreActivity.DebugMode){
 			dialogItem = new String[]{"詳細","返信", "リツイート", "ふぁぼ","ユーザー詳細","リンク先処理","DM送信","共有","ShowData"};	//メニューの項目作り
 		}else {
 			dialogItem = new String[]{"詳細", "返信", "リツイート", "ふぁぼ", "ユーザー詳細", "リンク先処理", "DM送信", "共有"};    //メニューの項目作り
@@ -233,7 +233,7 @@ public class List_Menu {
 						ShowDebugStatusAll(context,Tweet);
 						break;
 					default:
-						MainActivity.showToast("Tweetメニューで例外発生");
+						CoreActivity.showToast("Tweetメニューで例外発生");
 						break;
             	}
 			}
@@ -260,7 +260,7 @@ public class List_Menu {
                         context.startActivity(My_Prof_Intent);
                         break;
 					default:
-						MainActivity.showToast("DMメニューにて例外発生");
+						CoreActivity.showToast("DMメニューにて例外発生");
 						break;
 				}
 			}
@@ -282,7 +282,7 @@ public class List_Menu {
 						//クリップボードにデータを格納
 						ClipboardManager cmTweet = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 						cmTweet.setText(cdTweet);
-						MainActivity.showToast("ツイートをコピーしました");
+						CoreActivity.showToast("ツイートをコピーしました");
 						break;
 					case 1:	//ユーザ詳細
 						Intent My_Prof_Intent = new Intent(context, Prof_Activity.class);
@@ -298,10 +298,10 @@ public class List_Menu {
 						//クリップボードにデータを格納
 						ClipboardManager cmlink = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
 						cmlink.setText(cdlink);
-						MainActivity.showToast("ツイートへのリンクをコピーしました");
+						CoreActivity.showToast("ツイートへのリンクをコピーしました");
 						break;
 					default:
-						MainActivity.showToast("Detailメニューにて例外発生");
+						CoreActivity.showToast("Detailメニューにて例外発生");
 						break;
             	}
         	}
@@ -348,7 +348,7 @@ public class List_Menu {
 						mtAction.debugMode();
 						break;
 					default:
-						MainActivity.showToast("Menuで例外発生");
+						CoreActivity.showToast("Menuで例外発生");
 						break;
 				}
 			}

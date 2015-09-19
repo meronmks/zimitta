@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 /**
  * Created by p-user on 2015/06/01.
+ * アプリ内で共有するフィールド定義と初期化等
  */
 public class CoreVariable {
     public static long Userid;
@@ -30,7 +31,7 @@ public class CoreVariable {
     public static final int REQUEST_PICK_CONTENT = 0;
     public static final int REQUEST_KITKAT_PICK_CONTENT = 1;
 
-    public static void iniVariable(Context context){
+    public static void initializationVariable(Context context){
         Destroy();
         TLmAdapter = new TweetAdapter(context);
         listTLmAdapter = new TweetAdapter(context);

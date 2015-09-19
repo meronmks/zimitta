@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 
 import java.util.Timer;
@@ -57,7 +57,7 @@ public class SearchTweetFramgent extends Fragment {
             public void onClick(View v) {
                 if(searchText.getText().length() == 0) return;
                 CoreVariable.searchTweet.clear();
-                MainActivity.progresRun();
+                CoreActivity.progresRun();
                 mtAction.searchToTweet(searchText.getText().toString(), null);
             }
         });

@@ -5,14 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 
 import java.util.Timer;
@@ -36,7 +35,7 @@ public class TimeLineFragment extends Fragment {
         mtAction = new TwitterActionClass(Activity, CoreVariable.TLmAdapter,lv,"TL",null);
 
         if(CoreVariable.TLmAdapter.getCount() == 0){
-            MainActivity.progresRun();
+            CoreActivity.progresRun();
             mtAction.getTimeLine(null);
         }
 	}

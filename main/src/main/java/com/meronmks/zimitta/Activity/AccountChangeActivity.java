@@ -11,7 +11,7 @@ import android.widget.ListView;
 import com.meronmks.zimitta.Adapter.AccountListAdapter;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterUtils;
 import twitter4j.Twitter;
 import twitter4j.User;
@@ -52,7 +52,7 @@ public class AccountChangeActivity extends ActionBarActivity {
                 e.putLong("ID_Num_Now", position);
                 e.commit();
                 CoreVariable.TLmAdapter = null;
-                Intent intent = new Intent(AccountChangeActivity.this, MainActivity.class);
+                Intent intent = new Intent(AccountChangeActivity.this, CoreActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -70,7 +70,7 @@ public class AccountChangeActivity extends ActionBarActivity {
     @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode== KeyEvent.KEYCODE_BACK){
             CoreVariable.TLmAdapter = null;
-            Intent intent = new Intent(AccountChangeActivity.this, MainActivity.class);
+            Intent intent = new Intent(AccountChangeActivity.this, CoreActivity.class);
             startActivity(intent);
             finish();
             return true;

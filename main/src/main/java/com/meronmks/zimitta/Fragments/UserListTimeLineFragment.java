@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 
 import java.util.Timer;
@@ -61,7 +61,7 @@ public class UserListTimeLineFragment extends Fragment {
                 // クリックの処理を実行する
                 if(spinner.getCount() == 0) return;
                 CoreVariable.listTLmAdapter.clear();
-                MainActivity.progresRun();
+                CoreActivity.progresRun();
                 mtAction.getListTimeLine(null, spinner.getSelectedItemPosition());
             }
         });

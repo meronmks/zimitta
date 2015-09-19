@@ -7,7 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
 import com.meronmks.zimitta.R;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterUtils;
 import com.meronmks.zimitta.menu.List_Menu;
 import twitter4j.Paging;
@@ -244,7 +244,7 @@ public class UserFavActivity extends ActionBarActivity {
                     NewStatus = StatusIDs.get(1).getId();
                     OldStatus = StatusIDs.get(mAdapter.getCount() - 2).getId();
                 } else {
-                    MainActivity.showToast("お気に入りの取得に失敗しました。。。\r\n" + exception);
+                    CoreActivity.showToast("お気に入りの取得に失敗しました。。。\r\n" + exception);
                 }
             }
         };

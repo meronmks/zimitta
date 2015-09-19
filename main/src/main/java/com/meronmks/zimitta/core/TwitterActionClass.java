@@ -287,10 +287,10 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(User result) {
                 if(result != null){
-                    MainActivity.showToast("ミュートしました");
+                    CoreActivity.showToast("ミュートしました");
                     getMyMuteList();
                 }else{
-                    MainActivity.showToast("ミュートに失敗しました");
+                    CoreActivity.showToast("ミュートに失敗しました");
                 }
             }
         };
@@ -320,7 +320,7 @@ public class TwitterActionClass {
 
             @Override
             protected void onPostExecute(List<twitter4j.Status> result) {
-                MainActivity.progresStop();
+                CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result,ID);
                 }
@@ -352,7 +352,7 @@ public class TwitterActionClass {
 
             @Override
             protected void onPostExecute(List<twitter4j.Status> result) {
-                MainActivity.progresStop();
+                CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result,ID);
                 }
@@ -387,7 +387,7 @@ public class TwitterActionClass {
 
             @Override
             protected void onPostExecute(List<twitter4j.Status> result) {
-                MainActivity.progresStop();
+                CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result,ID);
                 }
@@ -419,7 +419,7 @@ public class TwitterActionClass {
 
             @Override
             protected void onPostExecute(List<twitter4j.Status> result) {
-                MainActivity.progresStop();
+                CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result,tweetID);
                 }
@@ -450,7 +450,7 @@ public class TwitterActionClass {
             }
             @Override
             protected void onPostExecute(List<twitter4j.DirectMessage> result) {
-                MainActivity.progresStop();
+                CoreActivity.progresStop();
                 if(result != null){
                     setMessegetoAdapter(result, ID);
                 }
@@ -484,7 +484,7 @@ public class TwitterActionClass {
 
             @Override
             protected void onPostExecute(twitter4j.QueryResult result) {
-                MainActivity.progresStop();
+                CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result.getTweets(),ID);
                 }
@@ -524,7 +524,7 @@ public class TwitterActionClass {
             setListViewPosition(count);
         }
 
-        MainActivity.progresStop();
+        CoreActivity.progresStop();
     }
     protected void setItemtoAdapter(final twitter4j.Status tweet, final long MaxId){
         if(!isTweetMute(tweet)){
@@ -548,7 +548,7 @@ public class TwitterActionClass {
         if(listPosition.position != 0){
             setListViewPosition(1);
         }
-        MainActivity.progresStop();
+        CoreActivity.progresStop();
     }
 
     /**
@@ -577,7 +577,7 @@ public class TwitterActionClass {
                     count++;
                 }
 
-                MainActivity.progresStop();
+                CoreActivity.progresStop();
     }
 
     /**
@@ -640,9 +640,9 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(Boolean result) {
                 if (result) {
-                    MainActivity.showToast("ツイートが完了しました！");
+                    CoreActivity.showToast("ツイートが完了しました！");
                 } else {
-                    MainActivity.showToast("投稿に失敗しました・・・\n" + tmp);
+                    CoreActivity.showToast("投稿に失敗しました・・・\n" + tmp);
                 }
             }
         };
@@ -694,9 +694,9 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(Boolean result) {
                 if (result) {
-                    MainActivity.showToast("リプライが完了しました！");
+                    CoreActivity.showToast("リプライが完了しました！");
                 } else {
-                    MainActivity.showToast("投稿に失敗しました・・・");
+                    CoreActivity.showToast("投稿に失敗しました・・・");
                 }
             }
         };
@@ -724,9 +724,9 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(Boolean result) {
                 if (result) {
-                    MainActivity.showToast("DM送信完了しました！");
+                    CoreActivity.showToast("DM送信完了しました！");
                 } else {
-                    MainActivity.showToast("送信に失敗しました・・・");
+                    CoreActivity.showToast("送信に失敗しました・・・");
                 }
             }
         };
@@ -748,7 +748,7 @@ public class TwitterActionClass {
                 if(!invoker.equals("DM")) {
                     if (position != 0 && mAdapter.getItem(position) == null) {
                         //フッターがクリックされた
-                        MainActivity.progresRun();
+                        CoreActivity.progresRun();
                         if (invoker.equals("TL")) {
                             getTimeLine(mAdapter.getItem(position - 1).getId());
                         } else if (invoker.equals("Mention")) {
@@ -760,7 +760,7 @@ public class TwitterActionClass {
                         //ヘッダーがクリックされた
                         if (invoker.equals("TL")) {
                             if(sp.getBoolean("Streeming_stok", false) == false) {
-                                MainActivity.progresRun();
+                                CoreActivity.progresRun();
                                 getTimeLine(null);
                             }else{
                                 for(Status tweet : CoreVariable.stockTweet){
@@ -779,11 +779,11 @@ public class TwitterActionClass {
                     //DM専用処理
                     if (position != 0 && mDMAdapter.getItem(position) == null) {
                         //フッターがクリックされた
-                        MainActivity.progresRun();
+                        CoreActivity.progresRun();
                         getDirectMessage(mDMAdapter.getItem(position - 1).getId());
                     } else if (position == 0 && mDMAdapter.getItem(position) == null) {
                         //ヘッダーがクリックされた
-                        MainActivity.progresRun();
+                        CoreActivity.progresRun();
                         getDirectMessage(null);
                     } else if (!LongTap) {
                         menu.DM_Menu(activity, mDMAdapter.getItem(position));
@@ -834,9 +834,9 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(Boolean result) {
                 if (result != false) {
-                    MainActivity.showToast("リツイートしました。");
+                    CoreActivity.showToast("リツイートしました。");
                 } else {
-                    MainActivity.showToast("リツイートに失敗しました。。。");
+                    CoreActivity.showToast("リツイートに失敗しました。。。");
                 }
             }
         };
@@ -867,9 +867,9 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(Boolean result) {
                 if (result != false) {
-                    MainActivity.showToast("ふぁぼしました。");
+                    CoreActivity.showToast("ふぁぼしました。");
                 } else {
-                    MainActivity.showToast("ふぁぼ失敗・・・");
+                    CoreActivity.showToast("ふぁぼ失敗・・・");
                 }
             }
         };
@@ -896,9 +896,9 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(User resurt) {
                 if (resurt != null) {
-                    MainActivity.showToast("フォロー完了");
+                    CoreActivity.showToast("フォロー完了");
                 } else {
-                    MainActivity.showToast("フォロー失敗");
+                    CoreActivity.showToast("フォロー失敗");
                 }
             }
         };
@@ -925,9 +925,9 @@ public class TwitterActionClass {
             @Override
             protected void onPostExecute(User resurt) {
                 if(resurt != null){
-                    MainActivity.showToast("リムーブ完了");
+                    CoreActivity.showToast("リムーブ完了");
                 }else{
-                    MainActivity.showToast("リムーブ失敗");
+                    CoreActivity.showToast("リムーブ失敗");
                 }
             }
         };
@@ -1041,7 +1041,7 @@ public class TwitterActionClass {
             }else{
                 CoreVariable.stockTweet.add(status);
                 if(sp.getBoolean("Streeming_Nof_Tost", false)) {
-                    MainActivity.showToast("新しいツイートがあるみたい");
+                    CoreActivity.showToast("新しいツイートがあるみたい");
                 }
             }
             //自分宛てのツイートか
@@ -1060,12 +1060,12 @@ public class TwitterActionClass {
             if(RepNotifFlag && !ReoNotifNotFlag && sp.getBoolean("NotificationMen", false)){
                 NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancelAll();
-                MainActivity.sendRepNotification("新しいリプライがあります。");
+                CoreActivity.sendRepNotification("新しいリプライがあります。");
             }
             if(status.getRetweetedStatus().getUser().getId() == CoreVariable.Userid && sp.getBoolean("NotificationRT", false)){
                 NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancelAll();
-                MainActivity.sendRepNotification("リツイートされました。");
+                CoreActivity.sendRepNotification("リツイートされました。");
             }
         }
 
@@ -1080,7 +1080,7 @@ public class TwitterActionClass {
             if(sp.getBoolean("NotificationFol", false)){
                 NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancelAll();
-                MainActivity.sendRepNotification("@" + source.getScreenName() + " さんにフォローされました。");
+                CoreActivity.sendRepNotification("@" + source.getScreenName() + " さんにフォローされました。");
             }
         }
 
@@ -1094,7 +1094,7 @@ public class TwitterActionClass {
             if(sp.getBoolean("NotificationDM", false)){
                 NotificationManager mNotificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
                 mNotificationManager.cancelAll();
-                MainActivity.sendRepNotification("@" + directMessage.getSenderScreenName() + " さんからのDMがあります。");
+                CoreActivity.sendRepNotification("@" + directMessage.getSenderScreenName() + " さんからのDMがあります。");
             }
         }
 
@@ -1285,7 +1285,7 @@ public class TwitterActionClass {
      */
     public void startStreaming()
     {
-        //MainActivity.twitterStreamがnull（未定義）でなくMainActivity.runStreamがfalseなら
+        //CoreActivity.twitterStreamがnull（未定義）でなくMainActivity.runStreamがfalseなら
         if(CoreVariable.twitterStream != null && !CoreVariable.runStream) {
             //TwitterStream#user() を呼び出し、ユーザーストリームを開始する
             CoreVariable.twitterStream.user();

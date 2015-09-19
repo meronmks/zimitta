@@ -12,7 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import com.meronmks.zimitta.AppCooperation.WebTwitterLoginActivity;
 import com.meronmks.zimitta.R;
-import com.meronmks.zimitta.core.MainActivity;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterUtils;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -125,11 +125,11 @@ public class TwitterOAuthActivity extends ActionBarActivity {
             protected void onPostExecute(AccessToken accessToken) {
                 if (accessToken != null) {
                     // 認証成功！
-                    MainActivity.showToast("認証成功！");
+                    CoreActivity.showToast("認証成功！");
                     successOAuth(accessToken);
                 } else {
                     // 認証失敗。。。
-                    MainActivity.showToast("認証失敗。。。");
+                    CoreActivity.showToast("認証失敗。。。");
                 }
             }
         };
@@ -177,12 +177,12 @@ public class TwitterOAuthActivity extends ActionBarActivity {
                     String str = new String(sb);
                     e1.putString(str, user);
                     e1.commit();
-                    Intent intent = new Intent(TwitterOAuthActivity.this, MainActivity.class);
+                    Intent intent = new Intent(TwitterOAuthActivity.this, CoreActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
                     // 取得失敗。。。
-                	Intent intent = new Intent(TwitterOAuthActivity.this, MainActivity.class);
+                	Intent intent = new Intent(TwitterOAuthActivity.this, CoreActivity.class);
                     startActivity(intent);
                     finish();
                 }
