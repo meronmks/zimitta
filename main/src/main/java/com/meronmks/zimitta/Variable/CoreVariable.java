@@ -30,6 +30,7 @@ public class CoreVariable {
     public static TweetAdapter searchTweet;
     public static final int REQUEST_PICK_CONTENT = 0;
     public static final int REQUEST_KITKAT_PICK_CONTENT = 1;
+    public static int nowNetworkStatus;
 
     public static void initializationVariable(Context context){
         Destroy();
@@ -50,5 +51,6 @@ public class CoreVariable {
         twitterStream = null;
         runStream = false;
         searchTweet = null;
+        nowNetworkStatus = -1;
     }
 }

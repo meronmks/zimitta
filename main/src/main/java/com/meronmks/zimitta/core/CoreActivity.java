@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.*;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -36,6 +38,11 @@ public class CoreActivity extends ActionBarActivity {
     //デバックモードフラグ
     public static Boolean DebugMode;
 
+
+    /**
+     * Activity作成時
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +102,11 @@ public class CoreActivity extends ActionBarActivity {
                 }
 
             });
+
+            //レシーバー呼び出し
+            IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+            NetworkInfoReceiver receiver = new NetworkInfoReceiver();
+            registerReceiver(receiver, filter);
 
             //Fragment準備
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
