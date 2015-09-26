@@ -514,7 +514,7 @@ public class TwitterActionClass {
                 new UiHandler(){
                     public void run(){
                         mAdapter.insert(tweet, finalCount);
-                        mAdapter.notifyDataSetChanged();
+                       // mAdapter.notifyDataSetChanged();
                     }
                 }.post();
                 count++;
@@ -534,14 +534,14 @@ public class TwitterActionClass {
                 new UiHandler(){
                     public void run(){
                         mAdapter.insert(tweet,0);
-                        mAdapter.notifyDataSetChanged();
+                        //mAdapter.notifyDataSetChanged();
                     }
                 }.post();
             }else{
                 new UiHandler(){
                     public void run(){
                         mAdapter.add(tweet);
-                        mAdapter.notifyDataSetChanged();
+                        //mAdapter.notifyDataSetChanged();
                     }
                 }.post();
             }

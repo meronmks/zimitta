@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.*;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -215,6 +217,12 @@ public class TweetAdapter extends ArrayAdapter<Status> {
         }else{
             convertView = mInflater.inflate(R.layout.list_item_null, null);
         }
+
+        if(position == 0) {
+            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.list_item_add);
+            convertView.startAnimation(anim);
+        }
+
         return convertView;
     }
 
