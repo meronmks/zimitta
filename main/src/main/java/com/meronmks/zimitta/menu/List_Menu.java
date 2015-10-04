@@ -85,20 +85,18 @@ public class List_Menu {
 							}
 
 							@Override
-							public void onSuccess(String response) {
-								// 通信成功時の処理
+							public void onFinish() {
+								// 通信終了時の処理
+							}
+
+							@Override
+							public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes) {
 								CoreActivity.showToast("連携解除しました");
 							}
 
 							@Override
-							public void onFailure(Throwable e, String response) {
-								// 通信失敗時の処理
+							public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
 								CoreActivity.showToast("解除失敗・・");
-							}
-
-							@Override
-							public void onFinish() {
-								// 通信終了時の処理
 							}
 						});
 						break;

@@ -15,25 +15,25 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.PersistentCookieStore;
-import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.*;
 import com.meronmks.zimitta.Adapter.AppListAdapter;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.menu.List_Menu;
+import cz.msebera.android.httpclient.Header;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ApplicationsCooperationActivity extends ActionBarActivity {
 
 	private AsyncHttpClient client;
-	private PersistentCookieStore  myCookieStore;
+	private PersistentCookieStore myCookieStore;
 	private AppListAdapter mAdapter;
 	private ArrayList<String> app_oauth = new ArrayList<String>();	//アプリごとの連携解除に必要な英数字を格納しておくやつ
 	private ListView lv;
@@ -101,25 +101,30 @@ public class ApplicationsCooperationActivity extends ActionBarActivity {
 
         //連携アプリ一覧取得開始
         client.setUserAgent("Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; rv:11.0) like Gecko");	//エージェント設定、PCに設定しないと自動でスマホ扱いになる
-		client.setCookieStore ( myCookieStore );	//クッキーの使用に必要、あとは勝手にやってくれてるっぽい？
+		client.setCookieStore (myCookieStore);	//クッキーの使用に必要、あとは勝手にやってくれてるっぽい？
 		client.get("https://twitter.com/login", new AsyncHttpResponseHandler(){ // client.get を client.post にすれば、POST通信もできます
 			@Override
 			public void onStart(){
 				// 通信開始時の処理
 			}
+
 			@Override
-			public void onSuccess(String response){
-				// 通信成功時の処理
-//				textview.setText(response);
-				int index = response.indexOf("<input type=\"hidden\" value=\"");
+			public void onSuccess(int statusCode, Header[] headers, byte[] response){
+                String string = null;
+                try {
+                    string = new String(response, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                int index = string.indexOf("<input type=\"hidden\" value=\"");
 				if(index != -1){
-					response = response.substring(index+28);
-				}
-				index = response.indexOf("\" name=\"authenticity_token\"/>");
+                    string = string.substring(index + 28);
+                }
+				index = string.indexOf("\" name=\"authenticity_token\"/>");
 				if(index != -1){
-					response = response.substring(0,index);
+                    string = string.substring(0,index);
 				}
-				authenticity_token = response;
+				authenticity_token = string;
 				params.put("authenticity_token", response);
 				params.put("remember_me", "0");
 		        client.post("https://twitter.com/sessions",params, new AsyncHttpResponseHandler(){ // client.get を client.post にすれば、POST通信もできます
@@ -127,8 +132,14 @@ public class ApplicationsCooperationActivity extends ActionBarActivity {
 					public void onStart(){
 						// 通信開始時の処理
 					}
+
 					@Override
-					public void onSuccess(String response){
+					public void onFinish(){
+						// 通信終了時の処理
+					}
+
+					@Override
+					public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes) {
 						progressDialog.dismiss();
 						// プログレスダイアログのメッセージを設定します
 						progressDialog.setMessage("読み込み中");
@@ -144,70 +155,51 @@ public class ApplicationsCooperationActivity extends ActionBarActivity {
 					}
 
 					@Override
-					public void onFailure(Throwable e, String response){
-						// 通信失敗時の処理
+					public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
 						showToast("ログインエラー");
 					}
-
-					@Override
-					public void onFinish(){
-						// 通信終了時の処理
-					}
 				});
-			}
-			@Override
-			public void onFailure(Throwable e, String response){
-				// 通信失敗時の処理
 			}
 
 			@Override
 			public void onFinish(){
 				// 通信終了時の処理
+			}
+
+			@Override
+			public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
+
 			}
 		});
 	}
 
 	//アプリ一覧取得メソッド
 	protected void getapplications(){
-		client.get("https://twitter.com/settings/applications", new AsyncHttpResponseHandler(){ // client.get を client.post にすれば、POST通信もできます
+		client.get("https://twitter.com/settings/applications", new JsonHttpResponseHandler(){ // client.get を client.post にすれば、POST通信もできます
+
 			@Override
-			public void onStart(){
-				// 通信開始時の処理
-			}
-			@Override
-			public void onSuccess(String response){
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				// 通信成功時の処理
-				Document document = Jsoup.parse(response, "UTF-8");
+				Document document = Jsoup.parse(response.toString(), "UTF-8");
 				Elements elements = document.select(".stream .app");
 				for (Element element : elements) {
 					Elements elementss = element.select("strong");
 					//名前抜出
 					StringBuilder sb = new StringBuilder();
 					for (Element element2 : elementss) {
-							sb.append("アプリ名：" + element2.text());
+						sb.append("アプリ名：" + element2.text());
 						Elements elementsss = element.select("button");
 						for (Element element3 : elementsss) {
-//							sb.append(element3.id());
 							String str = new String(sb);
 							mAdapter.add(str);
 							str = element3.id().replaceAll("btn_oauth_application_", "");
 							app_oauth.add(str);
 						}
 					}
-		        }
+				}
 				progressDialog.dismiss();
 			}
 
-			@Override
-			public void onFailure(Throwable e, String response){
-				// 通信失敗時の処理
-				showToast("連携アプリ一覧取得エラー");
-			}
-
-			@Override
-			public void onFinish(){
-				// 通信終了時の処理
-			}
 		});
 	}
 

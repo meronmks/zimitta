@@ -29,7 +29,7 @@ public class CoreActivity extends ActionBarActivity {
     private SharedPreferences accountIDCount;
 //    private ShowRateLimit limit;
     //プログレスバー格納用
-    private static ProgressBarIndeterminate progres;
+    //private static ProgressBarIndeterminate progres;
     private TwitterActionClass mtAction;
     private ViewPager viewPager;
     private  MainTabFragmentPagerAdapter pagerAdapter;
@@ -76,7 +76,7 @@ public class CoreActivity extends ActionBarActivity {
             if(CoreVariable.muteList == null) {
                 mtAction.getMyMuteList();
             }
-            progres = (ProgressBarIndeterminate) findViewById(R.id.progressBar);
+            //progres = (ProgressBarIndeterminate) findViewById(R.id.progressBar);
             //ボタン準備
             ImageButton tweet = (ImageButton) findViewById(R.id.tweet);
             ImageButton menu = (ImageButton) findViewById(R.id.Menu_button);
@@ -122,14 +122,14 @@ public class CoreActivity extends ActionBarActivity {
      */
     public static void progresRun() {
         Log.d("Debug", "CoreActivity:progresRun");
-        progres.setVisibility(View.VISIBLE);
+        //progres.setVisibility(View.VISIBLE);
     }
 
     /**
      * 読み込み表示終了
      */
     public static void progresStop() {
-        progres.setVisibility(View.INVISIBLE);
+        //progres.setVisibility(View.INVISIBLE);
     }
 
     //通知のメゾット
