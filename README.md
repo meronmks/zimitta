@@ -5,20 +5,12 @@
 
 ## 使用ライブラリ ##
 android-support-v4  
-
-android-support-v7-appcompat
-
+android-support-v7-appcompat  
 [Android Smart Image View](http://loopj.com/android-smart-image-view/ "Android Smart Image View")  
-
 [jsoup](http://jsoup.org/ "jsoup")  
-
-[twitter4j](http://twitter4j.org/ja/ "twitter4j") 
-
-Glide
-
-[AsyncHttpClient](http://loopj.com/android-async-http/ "AsyncHttpClient")
-
-[MaterialDesignLibrary](https://github.com/navasmdc/MaterialDesignLibrary "MaterialDesignLibrary")
+[twitter4j](http://twitter4j.org/ja/ "twitter4j")  
+Glide  
+[AsyncHttpClient](http://loopj.com/android-async-http/ "AsyncHttpClient")  
 
 ## 直さないといけないバグ ##
 * 実機でもOutOfMemoryで落ちることがある
@@ -33,3 +25,4 @@ Glide
 * フォロー中の人の表示名を自由に変えれるようにする
 
 ## Ver3.2.0との変更点（メモしないと忘れそう） ##
+* SDK更新によって消えたクラスの影響でMaterialDesignLibraryが使用不能に
