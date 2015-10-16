@@ -6,15 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-import com.gc.materialdesign.views.ProgressBarIndeterminate;
 import com.meronmks.zimitta.Activity.TweetActivity;
 import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
 import com.meronmks.zimitta.Adapter.MainTabFragmentPagerAdapter;
@@ -29,7 +28,7 @@ public class CoreActivity extends ActionBarActivity {
     private SharedPreferences accountIDCount;
 //    private ShowRateLimit limit;
     //プログレスバー格納用
-    //private static ProgressBarIndeterminate progres;
+    private static ProgressBar progres;
     private TwitterActionClass mtAction;
     private ViewPager viewPager;
     private  MainTabFragmentPagerAdapter pagerAdapter;
@@ -76,7 +75,7 @@ public class CoreActivity extends ActionBarActivity {
             if(CoreVariable.muteList == null) {
                 mtAction.getMyMuteList();
             }
-            //progres = (ProgressBarIndeterminate) findViewById(R.id.progressBar);
+            progres = (ProgressBar) findViewById(R.id.progressBar);
             //ボタン準備
             ImageButton tweet = (ImageButton) findViewById(R.id.tweet);
             ImageButton menu = (ImageButton) findViewById(R.id.Menu_button);
@@ -121,15 +120,16 @@ public class CoreActivity extends ActionBarActivity {
      * 読み込み表示
      */
     public static void progresRun() {
-        Log.d("Debug", "CoreActivity:progresRun");
-        //progres.setVisibility(View.VISIBLE);
+        progres.setIndeterminate(true);
+        progres.setVisibility(View.VISIBLE);
     }
 
     /**
      * 読み込み表示終了
      */
     public static void progresStop() {
-        //progres.setVisibility(View.INVISIBLE);
+        progres.setIndeterminate(false);
+        progres.setVisibility(View.INVISIBLE);
     }
 
     //通知のメゾット

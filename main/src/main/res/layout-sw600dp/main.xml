@@ -62,13 +62,13 @@
                 android:src="@drawable/draw_pencil"
                 android:background="@color/Back"/>
 
-        <!--<com.gc.materialdesign.views.ProgressBarIndeterminate-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:id="@+id/progressBar"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:background="#1E88E5"/>-->
+        <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/progressBar"
+                android:layout_gravity="center_vertical"/>
 
         <ImageButton
                 android:id="@+id/Menu_button"
