@@ -218,10 +218,10 @@ public class TweetAdapter extends ArrayAdapter<Status> {
             convertView = mInflater.inflate(R.layout.list_item_null, null);
         }
 
-        if(position == 0) {
-            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.list_item_add);
-            convertView.startAnimation(anim);
-        }
+//        if(position == 0) {
+//            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.list_item_add);
+//            convertView.startAnimation(anim);
+//        }
 
         return convertView;
     }
