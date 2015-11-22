@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
+              xmlns:tools="http://schemas.android.com/tools" xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
@@ -62,13 +62,15 @@
                 android:src="@drawable/draw_pencil"
                 android:background="@color/Back"/>
 
-        <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
+        <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:indeterminate="true"
                 android:layout_weight="1"
                 android:id="@+id/progressBar"
-                android:layout_gravity="center_vertical"/>
+                app:mlpb_progress_stoke_width="3dp"
+                app:mlpb_progress_color="#566da9"
+                />
 
         <ImageButton
                 android:id="@+id/Menu_button"

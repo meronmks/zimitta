@@ -17,7 +17,9 @@ import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 import com.meronmks.zimitta.settings.SettingActivity;
 import com.meronmks.zimitta.user.Prof_Activity;
+import org.json.*;
 import twitter4j.*;
+import twitter4j.JSONObject;
 
 public class List_Menu {
 
@@ -325,7 +327,6 @@ public class List_Menu {
 						Intent My_Prof_Intent = new Intent(context, Prof_Activity.class);
 						My_Prof_Intent.putExtra("UserID", Userid);
 						context.startActivity(My_Prof_Intent);
-
 						break;
 					case 1:
 						Intent Account = new Intent(context, AccountChangeActivity.class);

@@ -11,6 +11,7 @@ android-support-v7-appcompat
 [twitter4j](http://twitter4j.org/ja/ "twitter4j")  
 Glide  
 [AsyncHttpClient](http://loopj.com/android-async-http/ "AsyncHttpClient")  
+[MaterialLoadingProgressBar](https://github.com/lsjwzh/MaterialLoadingProgressBar)  
 
 ## 直さないといけないバグ ##
 * 実機でもOutOfMemoryで落ちることがある
@@ -23,6 +24,9 @@ Glide
 * 画像表示後に戻るキーで画像一覧にもどす
 * ツイート内のリンクへの手間軽減（タップ数の軽減？）
 * フォロー中の人の表示名を自由に変えれるようにする
+* 起動時にTLを一番上へ
+* ツイートボタンを設定から選択制へ
 
 ## Ver3.2.0との変更点（メモしないと忘れそう） ##
 * SDK更新によって消えたクラスの影響でMaterialDesignLibraryが使用不能に
+* MaterialLoadingProgressBar使用にあたりAPI12以下のサポートを切ることに

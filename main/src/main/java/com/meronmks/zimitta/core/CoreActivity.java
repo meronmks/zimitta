@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.meronmks.zimitta.Activity.TweetActivity;
 import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
 import com.meronmks.zimitta.Adapter.MainTabFragmentPagerAdapter;
@@ -28,7 +29,7 @@ public class CoreActivity extends ActionBarActivity {
     private SharedPreferences accountIDCount;
 //    private ShowRateLimit limit;
     //プログレスバー格納用
-    private static ProgressBar progres;
+    private static CircleProgressBar progres;
     private TwitterActionClass mtAction;
     private ViewPager viewPager;
     private  MainTabFragmentPagerAdapter pagerAdapter;
@@ -75,7 +76,7 @@ public class CoreActivity extends ActionBarActivity {
             if(CoreVariable.muteList == null) {
                 mtAction.getMyMuteList();
             }
-            progres = (ProgressBar) findViewById(R.id.progressBar);
+            progres = (CircleProgressBar) findViewById(R.id.progressBar);
             //ボタン準備
             ImageButton tweet = (ImageButton) findViewById(R.id.tweet);
             ImageButton menu = (ImageButton) findViewById(R.id.Menu_button);
@@ -120,16 +121,22 @@ public class CoreActivity extends ActionBarActivity {
      * 読み込み表示
      */
     public static void progresRun() {
-        progres.setIndeterminate(true);
-        progres.setVisibility(View.VISIBLE);
+        new UiHandler(){
+            public void run(){
+                progres.setVisibility(View.VISIBLE);
+            }
+        }.post();
     }
 
     /**
      * 読み込み表示終了
      */
     public static void progresStop() {
-        progres.setIndeterminate(false);
-        progres.setVisibility(View.INVISIBLE);
+        new UiHandler(){
+            public void run(){
+                progres.setVisibility(View.INVISIBLE);
+            }
+        }.post();
     }
 
     //通知のメゾット

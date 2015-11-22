@@ -13,7 +13,7 @@ repositories {
     mavenCentral()
 }
 
-def VERSION_NAME = "3.3.0"
+def VERSION_NAME = "3.4.0"
 
 android {
     compileSdkVersion 23
@@ -21,9 +21,9 @@ android {
 
     defaultConfig {
         applicationId "com.meronmks.zimitta"
-        minSdkVersion 8
+        minSdkVersion 14
         targetSdkVersion 22
-        versionCode 36
+        versionCode 37
         versionName VERSION_NAME
     }
 
@@ -58,4 +58,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:design:22.2.0'
     compile 'com.android.support:support-v4:22.2.0'
+    compile('com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE')
 }
