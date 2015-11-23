@@ -17,12 +17,12 @@ def VERSION_NAME = "3.4.0"
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.meronmks.zimitta"
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 37
         versionName VERSION_NAME
     }
@@ -54,9 +54,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:22.2.0'
-    compile 'com.android.support:support-v4:22.2.0'
-    compile('com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE')
+    compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE'
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }

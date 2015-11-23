@@ -17,7 +17,7 @@
             tools:replace="android:icon">
 
         <!-- レシーバー定義 -->
-        <receiver android:name=".core.NetworkInfoReceiver" >
+        <receiver android:name=".Receiver.NetworkInfoReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

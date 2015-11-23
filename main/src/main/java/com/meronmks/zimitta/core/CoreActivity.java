@@ -9,10 +9,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.meronmks.zimitta.Activity.TweetActivity;
@@ -21,6 +19,7 @@ import com.meronmks.zimitta.Adapter.MainTabFragmentPagerAdapter;
 import com.meronmks.zimitta.BuildConfig;
 import com.meronmks.zimitta.Fragments.TimeLineFragment;
 import com.meronmks.zimitta.R;
+import com.meronmks.zimitta.Receiver.NetworkInfoReceiver;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.menu.List_Menu;
 
@@ -77,6 +76,7 @@ public class CoreActivity extends ActionBarActivity {
                 mtAction.getMyMuteList();
             }
             progres = (CircleProgressBar) findViewById(R.id.progressBar);
+            progres.setShowArrow(true);
             //ボタン準備
             ImageButton tweet = (ImageButton) findViewById(R.id.tweet);
             ImageButton menu = (ImageButton) findViewById(R.id.Menu_button);
