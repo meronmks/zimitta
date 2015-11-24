@@ -499,9 +499,11 @@ public class TwitterActionClass {
      **/
     protected void setItemtoAdapter(final List<twitter4j.Status> status, final Long ID){
         int count;
+        boolean firstLoad = false;
         getListViewPosition();
         if(mAdapter.getCount() == 0){
             count = 0;
+            firstLoad = true;
         }else if(ID != null){
             count = mAdapter.getCount() - 1;
         }else{
@@ -511,12 +513,13 @@ public class TwitterActionClass {
             if(!isTweetMute(tweet)){
                 if(mAdapter.getCount() != 0 && mAdapter.getPosition(tweet) > 0) continue;
                 final int finalCount = count;
+                final boolean finalFirstLoad = firstLoad;
                 new UiHandler(){
                     public void run(){
                         mAdapter.insert(tweet, finalCount);
                         mAdapter.notifyDataSetChanged();
                         if(ID == null) {
-                            setListViewPosition(finalCount);
+                            setListViewPosition(finalFirstLoad ? 0 : finalCount);
                         }
                     }
                 }.post();
