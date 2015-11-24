@@ -35,7 +35,7 @@ public class InvalidateFragmentClass {
                 new UiHandler() {
                     public void run() {
                         mAdapter.insert(null, 0);
-                        //mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                     }
                 }.post();
             }
@@ -44,7 +44,7 @@ public class InvalidateFragmentClass {
                 new UiHandler() {
                     public void run() {
                         mAdapter.insert(null,0);
-                        //mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                     }
                 }.post();
             }
@@ -53,7 +53,7 @@ public class InvalidateFragmentClass {
                 new UiHandler() {
                     public void run() {
                         mAdapter.remove(mAdapter.getItem(0));
-                        //mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                     }
                 }.post();
             }
@@ -62,7 +62,7 @@ public class InvalidateFragmentClass {
                 new UiHandler() {
                     public void run() {
                         mAdapter.insert(null, 0);
-                        //mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                     }
                 }.post();
             }
@@ -71,7 +71,7 @@ public class InvalidateFragmentClass {
                 new UiHandler() {
                     public void run() {
                         mAdapter.add(null);
-                        //mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                     }
                 }.post();
             }
@@ -94,7 +94,7 @@ public class InvalidateFragmentClass {
                     new UiHandler() {
                         public void run() {
                             mAdapter.insert(null, 0);
-                            //mAdapter.notifyDataSetChanged();
+                            mAdapter.notifyDataSetChanged();
                         }
                     }.post();
                 }
@@ -103,7 +103,7 @@ public class InvalidateFragmentClass {
                     new UiHandler() {
                         public void run() {
                             mAdapter.add(null);
-                            //mAdapter.notifyDataSetChanged();
+                            mAdapter.notifyDataSetChanged();
                         }
                     }.post();
                 }

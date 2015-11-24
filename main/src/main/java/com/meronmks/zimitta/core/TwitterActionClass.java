@@ -514,17 +514,15 @@ public class TwitterActionClass {
                 new UiHandler(){
                     public void run(){
                         mAdapter.insert(tweet, finalCount);
-                       // mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
+                        if(ID == null) {
+                            setListViewPosition(finalCount);
+                        }
                     }
                 }.post();
                 count++;
             }
         }
-
-        if(ID == null) {
-            setListViewPosition(count);
-        }
-
         CoreActivity.progresStop();
     }
     protected void setItemtoAdapter(final twitter4j.Status tweet, final long MaxId){
@@ -534,21 +532,22 @@ public class TwitterActionClass {
                 new UiHandler(){
                     public void run(){
                         mAdapter.insert(tweet,0);
-                        //mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
+                        if(listPosition.position != 0){
+                            setListViewPosition(1);
+                        }
                     }
                 }.post();
             }else{
                 new UiHandler(){
                     public void run(){
                         mAdapter.add(tweet);
-                        //mAdapter.notifyDataSetChanged();
+                        mAdapter.notifyDataSetChanged();
                     }
                 }.post();
             }
         }
-        if(listPosition.position != 0){
-            setListViewPosition(1);
-        }
+
         CoreActivity.progresStop();
     }
 
@@ -1167,11 +1166,7 @@ public class TwitterActionClass {
      * @param movePosition ずらしたい項目数
      */
     protected void setListViewPosition(final int movePosition){
-        new UiHandler() {
-            public void run() {
-                listView.setSelectionFromTop(listPosition.position + movePosition, listPosition.y);
-            }
-        }.post();
+        listView.setSelectionFromTop(listPosition.position + movePosition, listPosition.y);
     }
 
     /**
