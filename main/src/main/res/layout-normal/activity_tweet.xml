@@ -12,7 +12,10 @@
         android:layout_height="wrap_content"
         android:text="@string/image_select"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+        android:textSize="12sp"
+        android:textColor="@color/White"
+        android:background="@color/material_grey_850"/>
 
     <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -121,7 +124,16 @@
             android:background="@drawable/button_select_coloer"
             android:src="@drawable/x_c"
             android:visibility="gone" />
-
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ツイート"
+            android:id="@+id/TweetPostButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/White"
+            android:background="@color/material_grey_850"/>
 
 
 </RelativeLayout>

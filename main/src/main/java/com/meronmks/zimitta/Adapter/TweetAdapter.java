@@ -215,13 +215,9 @@ public class TweetAdapter extends ArrayAdapter<Status> {
 
             holder.relativeLayout.setBackgroundResource(R.drawable.listitem_color);
         }else{
+            //ツイート以外を入れる用
             convertView = mInflater.inflate(R.layout.list_item_null, null);
         }
-
-//        if(position == 0) {
-//            Animation anim = AnimationUtils.loadAnimation(getContext(), R.anim.list_item_add);
-//            convertView.startAnimation(anim);
-//        }
 
         return convertView;
     }

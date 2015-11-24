@@ -12,10 +12,17 @@
             android:summary=""
             android:defaultValue="true"/>
     <CheckBoxPreference
-            android:title="ループしてるツイートの圧縮"
-            android:key="zipTweet"
-            android:summary="ループしている内容を圧縮します"
-            android:defaultValue="false"/>
+        android:title="ループしてるツイートの圧縮"
+        android:key="zipTweet"
+        android:summary="ループしている内容を圧縮します"
+        android:defaultValue="false"/>
+
+    <CheckBoxPreference
+            android:title="ツイート送信ボタンを上に配置"
+            android:key="PostTweetTweetPosition"
+            android:summary="チェックを外すと下になります"
+            android:defaultValue="true"/>
+
     <CheckBoxPreference
             android:title="Streamingを使う"
             android:key="Streem_Flug"

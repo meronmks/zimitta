@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -38,7 +39,7 @@ public class TweetActivity extends ActionBarActivity {
     private String[] path;
     private Uri[] uri;
     private TextView textCount;
-    private SharedPreferences accountIDCount;
+    private SharedPreferences accountIDCount,appSharedPreferences;
     private ImageButton button1;
     private ImageButton button2;
     private ImageButton button3;
@@ -61,6 +62,7 @@ public class TweetActivity extends ActionBarActivity {
 
 		getSupportActionBar().setDisplayShowHomeEnabled(false);	//ActionBarからアイコンを消す
         accountIDCount = getSharedPreferences("accountidcount", 0);
+        appSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mTwitter = TwitterUtils.getTwitterInstance(this, accountIDCount.getLong("ID_Num_Now", 0));
 
         mInputText = (EditText) findViewById(R.id.input_text);
@@ -252,8 +254,34 @@ public class TweetActivity extends ActionBarActivity {
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.tweet_button, menu);
+        Button sendTweet = (Button)findViewById(R.id.TweetPostButton);
+        if(appSharedPreferences.getBoolean("PostTweetTweetPosition",true)){
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.tweet_button, menu);
+            sendTweet.setVisibility(View.GONE);
+        }else{
+            sendTweet.setVisibility(View.VISIBLE);
+            sendTweet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean imageFound = false;
+                    //画像が添付されているか
+                    for(int i = 0;i<4;i++) {
+                        if (path[i] != null) {
+                            imageFound = true;
+                        }
+                    }
+
+                    if(txtLength > 0 || imageFound) {
+                        SpannableStringBuilder sb = (SpannableStringBuilder) mInputText.getText();
+                        mtAction.sendTweet(sb.toString(), path);
+                        finish();
+                    }else{
+                        CoreActivity.showToast("テキスト又は画像を入力してください");
+                    }
+                }
+            });
+        }
 		return true;
 	}
 

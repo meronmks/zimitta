@@ -94,13 +94,14 @@
 
     <Button
         android:id="@+id/Image_button"
-        android:layout_width="133sp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/image_select"
-        android:textColor="#ffffff"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:textColor="@color/White"
+        android:background="@color/material_grey_850"/>
 
     <ImageView
         android:id="@+id/Select_Image_button"
@@ -185,5 +186,16 @@
         android:background="@drawable/button_select_coloer"
         android:src="@drawable/x_c"
         android:visibility="gone" />
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ツイート"
+            android:id="@+id/TweetPostButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/White"
+            android:background="@color/material_grey_850"/>
 
 </RelativeLayout>
