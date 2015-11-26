@@ -30,3 +30,4 @@ Glide
 ## Ver3.2.0との変更点（メモしないと忘れそう） ##
 * SDK更新によって消えたクラスの影響でMaterialDesignLibraryが使用不能に
 * MaterialLoadingProgressBar使用にあたりAPI12以下のサポートを切ることに
+* TL初回読み込み時に一番上になるように
