@@ -264,25 +264,32 @@ public class TweetActivity extends ActionBarActivity {
             sendTweet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    boolean imageFound = false;
-                    //画像が添付されているか
-                    for(int i = 0;i<4;i++) {
-                        if (path[i] != null) {
-                            imageFound = true;
-                        }
-                    }
-
-                    if(txtLength > 0 || imageFound) {
-                        SpannableStringBuilder sb = (SpannableStringBuilder) mInputText.getText();
-                        mtAction.sendTweet(sb.toString(), path);
-                        finish();
-                    }else{
-                        CoreActivity.showToast("テキスト又は画像を入力してください");
-                    }
+					postTweet();
                 }
             });
         }
 		return true;
+	}
+
+	/**
+	 * ツイート送信
+	 */
+	private void postTweet(){
+		boolean imageFound = false;
+		//画像が添付されているか
+		for(int i = 0;i<4;i++) {
+			if (path[i] != null) {
+				imageFound = true;
+			}
+		}
+
+		if(txtLength > 0 || imageFound) {
+			SpannableStringBuilder sb = (SpannableStringBuilder) mInputText.getText();
+			mtAction.sendTweet(sb.toString(), path);
+			finish();
+		}else{
+			CoreActivity.showToast("テキスト又は画像を入力してください");
+		}
 	}
 
 	//メニューのアイテムを押したときの判別
@@ -290,22 +297,7 @@ public class TweetActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.tweetButton:        //ツイート
-
-                boolean imageFound = false;
-				//画像が添付されているか
-				for(int i = 0;i<4;i++) {
-					if (path[i] != null) {
-                        imageFound = true;
-					}
-				}
-
-                if(txtLength > 0 || imageFound) {
-                    SpannableStringBuilder sb = (SpannableStringBuilder) mInputText.getText();
-                    mtAction.sendTweet(sb.toString(), path);
-                    finish();
-                }else{
-                    CoreActivity.showToast("テキスト又は画像を入力してください");
-                }
+				postTweet();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);

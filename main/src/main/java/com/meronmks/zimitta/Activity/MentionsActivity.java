@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import android.widget.*;
 import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 import com.meronmks.zimitta.core.TwitterUtils;
 import twitter4j.Twitter;
@@ -43,7 +45,7 @@ public class MentionsActivity extends ActionBarActivity {
     private String[] path;
     private Uri[] uri;
     private TextView textCount;
-    private SharedPreferences accountIDCount,sp;
+    private SharedPreferences accountIDCount,sp,appSharedPreferences;
     private ImageButton button1;
     private ImageButton button2;
     private ImageButton button3;
@@ -51,6 +53,7 @@ public class MentionsActivity extends ActionBarActivity {
     private TwitterActionClass mtAction;
     private long mentionID;
     private String StatusID;
+    private int txtLength;
 
     @SuppressLint("NewApi")
     @Override
@@ -67,6 +70,7 @@ public class MentionsActivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         accountIDCount = getSharedPreferences("accountidcount", 0);
+        appSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mTwitter = TwitterUtils.getTwitterInstance(this, accountIDCount.getLong("ID_Num_Now", 0));
 
         Intent intent = getIntent();
@@ -97,7 +101,7 @@ public class MentionsActivity extends ActionBarActivity {
                 int textColor = Color.GRAY;
 
                 // 入力文字数の表示
-                int txtLength = 140 - s.length();
+                txtLength = 140 - s.length();
                 textCount.setText(Integer.toString(txtLength) + "");
 
                 // 指定文字数オーバーで文字色を赤くする
@@ -294,8 +298,20 @@ public class MentionsActivity extends ActionBarActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tweet_button, menu);
+        Button sendTweet = (Button)findViewById(R.id.TweetPostButton);
+        if(appSharedPreferences.getBoolean("PostTweetTweetPosition",true)){
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.tweet_button, menu);
+            sendTweet.setVisibility(View.GONE);
+        }else{
+            sendTweet.setVisibility(View.VISIBLE);
+            sendTweet.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    postMention();
+                }
+            });
+        }
         return true;
     }
 
@@ -304,23 +320,28 @@ public class MentionsActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.tweetButton:        //ツイート
-                showProgressDialog();
-                SpannableStringBuilder sb = (SpannableStringBuilder)mInputText.getText();
-                mtAction.sendMention(sb.toString(), path, mentionID);
-                finish();
+                postMention();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //通信中とかのダイアログをだす
-    private void showProgressDialog() {
-        progressDialog = new ProgressDialog(MentionsActivity.this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(true);
-        progressDialog.setMessage("送信中・・・");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+    private void postMention(){
+        boolean imageFound = false;
+        //画像が添付されているか
+        for(int i = 0;i<4;i++) {
+            if (path[i] != null) {
+                imageFound = true;
+            }
+        }
+
+        if(txtLength > 0 || imageFound) {
+            SpannableStringBuilder sb = (SpannableStringBuilder) mInputText.getText();
+            mtAction.sendMention(sb.toString(), path, mentionID);
+            finish();
+        }else{
+            CoreActivity.showToast("テキスト又は画像を入力してください");
+        }
     }
 
     private void showToast(String text) {
