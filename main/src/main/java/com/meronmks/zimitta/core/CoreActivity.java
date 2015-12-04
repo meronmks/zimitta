@@ -36,7 +36,7 @@ public class CoreActivity extends ActionBarActivity {
     //共有変数定義
     private static Context MainContext;
     //デバックモードフラグ
-    public static Boolean DebugMode;
+    public static Boolean isDebugMode;
 
 
     /**
@@ -55,7 +55,7 @@ public class CoreActivity extends ActionBarActivity {
 
         //初期化
         CoreVariable.initializationVariable(MainContext);
-        DebugMode = BuildConfig.DebugFlag;
+        isDebugMode = BuildConfig.DebugFlag;
 
         //アカウント情報を読み込む
         accountIDCount = getSharedPreferences("accountidcount", 0);
@@ -99,7 +99,7 @@ public class CoreActivity extends ActionBarActivity {
                 public void onClick(View v) {
                     // クリックの処理を実行する
                     List_Menu list = new List_Menu();
-                    list.Main_menu(CoreActivity.this, CoreActivity.this, DebugMode, CoreVariable.userID);
+                    list.Main_menu(CoreActivity.this, CoreActivity.this, isDebugMode, CoreVariable.userID);
                 }
 
             });
@@ -166,6 +166,7 @@ public class CoreActivity extends ActionBarActivity {
      * トースト表示処理
      */
     public static void showToast(String text){
+        if(MainContext == null || text == null || text.length() == 0) return;
         Toast.makeText(MainContext, text, Toast.LENGTH_SHORT).show();
     }
 

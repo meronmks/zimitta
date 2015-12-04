@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.loopj.android.http.*;
 import com.meronmks.zimitta.Adapter.AppListAdapter;
 import com.meronmks.zimitta.R;
+import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.menu.List_Menu;
 import cz.msebera.android.httpclient.Header;
 import org.json.JSONObject;
@@ -41,6 +43,7 @@ public class ApplicationsCooperationActivity extends ActionBarActivity {
 	private String mail,pass;
 	private List_Menu list = new List_Menu();	//メニュー表示処理を書いてるクラス読み込み
 	private ProgressDialog progressDialog;
+    private RequestParams params;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +94,7 @@ public class ApplicationsCooperationActivity extends ActionBarActivity {
 
       			}
       		});
-        final RequestParams params = new RequestParams();
+        params = new RequestParams();
         //Web版ログイン処理
         params.put("session[username_or_email]", mail);	//post or get時に付与する情報の設定
         params.put("session[password]", pass);
@@ -127,38 +130,57 @@ public class ApplicationsCooperationActivity extends ActionBarActivity {
 				authenticity_token = string;
 				params.put("authenticity_token", response);
 				params.put("remember_me", "0");
-		        client.post("https://twitter.com/sessions",params, new AsyncHttpResponseHandler(){ // client.get を client.post にすれば、POST通信もできます
-					@Override
-					public void onStart(){
-						// 通信開始時の処理
-					}
+		        client.get("https://twitter.com/sessions", params, new AsyncHttpResponseHandler() { // client.get を client.post にすれば、POST通信もできます
+                    @Override
+                    public void onStart() {
+                        // 通信開始時の処理
+                    }
 
-					@Override
-					public void onFinish(){
-						// 通信終了時の処理
-					}
+                    @Override
+                    public void onFinish() {
+                        // 通信終了時の処理
+                    }
 
-					@Override
-					public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes) {
-						progressDialog.dismiss();
-						// プログレスダイアログのメッセージを設定します
-						progressDialog.setMessage("読み込み中");
-						// プログレスダイアログの確定（false）／不確定（true）を設定します
-						progressDialog.setIndeterminate(false);
-						//プログレスダイアログのスタイルを円スタイルに設定します
-						progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-						// プログレスダイアログのキャンセルが可能かどうかを設定します
-						progressDialog.setCancelable(false);
-						// プログレスダイアログを表示します
-						progressDialog.show();
-						getapplications();
-					}
+                    @Override
+                    public void onSuccess(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes) {
+                        progressDialog.dismiss();
+                        // プログレスダイアログのメッセージを設定します
+                        progressDialog.setMessage("読み込み中");
+                        // プログレスダイアログの確定（false）／不確定（true）を設定します
+                        progressDialog.setIndeterminate(false);
+                        //プログレスダイアログのスタイルを円スタイルに設定します
+                        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        // プログレスダイアログのキャンセルが可能かどうかを設定します
+                        progressDialog.setCancelable(false);
+                        // プログレスダイアログを表示します
+                        progressDialog.show();
+                        String string = null;
+                        try {
+                            string = new String(bytes, "UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        string = string;
+                        getapplications();
+                    }
 
-					@Override
-					public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
-						showToast("ログインエラー");
-					}
-				});
+                    @Override
+                    public void onFailure(int i, cz.msebera.android.httpclient.Header[] headers, byte[] bytes, Throwable throwable) {
+                        CoreActivity.showToast("ログインエラー");
+                        if (CoreActivity.isDebugMode) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ApplicationsCooperationActivity.this);
+                            builder.setTitle("ERROR!");
+                            try {
+                                builder.setMessage(new String(bytes, "UTF-8"));
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                        progressDialog.dismiss();
+                    }
+                });
 			}
 
 			@Override
@@ -201,10 +223,5 @@ public class ApplicationsCooperationActivity extends ActionBarActivity {
 			}
 
 		});
-	}
-
-	//トースト表示
-	private void showToast(String text) {
-	    Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
 	}
 }

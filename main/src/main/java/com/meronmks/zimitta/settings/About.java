@@ -68,8 +68,8 @@ public class About extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Debug_Menu:        //アカウント追加画面へ
-                CoreActivity.DebugMode = !CoreActivity.DebugMode;
-                if(CoreActivity.DebugMode){
+                CoreActivity.isDebugMode = !CoreActivity.isDebugMode;
+                if(CoreActivity.isDebugMode){
                     CoreActivity.showToast("デバックモードに入ります");
                 }else{
                     CoreActivity.showToast("デバックモードを終了します");

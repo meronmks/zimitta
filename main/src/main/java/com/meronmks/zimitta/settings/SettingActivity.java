@@ -43,7 +43,7 @@ public class SettingActivity extends AppCompatPreferenceActivity implements OnSh
         @SuppressWarnings("deprecation")
         ListPreference list_preference = (ListPreference)getPreferenceScreen().findPreference("Load_Tweet");
         list_preference.setSummary(list_preference.getValue() + "件");
-        //CheckBoxChange();
+        CheckBoxChange();
     }
 
     //チェックボックスの使用状態変更

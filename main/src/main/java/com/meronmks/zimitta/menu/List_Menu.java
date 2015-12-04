@@ -17,9 +17,7 @@ import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 import com.meronmks.zimitta.settings.SettingActivity;
 import com.meronmks.zimitta.user.Prof_Activity;
-import org.json.*;
 import twitter4j.*;
-import twitter4j.JSONObject;
 
 public class List_Menu {
 
@@ -112,7 +110,7 @@ public class List_Menu {
 	public void Tweet_Menu(final Context context, final Status Tweet)
 	{
 		String[] dialogItem;
-		if(CoreActivity.DebugMode){
+		if(CoreActivity.isDebugMode){
 			dialogItem = new String[]{"詳細","返信", "リツイート", "ふぁぼ","ユーザー詳細","リンク先処理","DM送信","共有","ShowData"};	//メニューの項目作り
 		}else {
 			dialogItem = new String[]{"詳細", "返信", "リツイート", "ふぁぼ", "ユーザー詳細", "リンク先処理", "DM送信", "共有"};    //メニューの項目作り
@@ -311,12 +309,12 @@ public class List_Menu {
 	/**
 	 * メインメニュー
 	 */
-	public void Main_menu(final Activity activity, final Context context,boolean DebugMode, final long Userid) {
+	public void Main_menu(final Activity activity, final Context context,boolean isDebugMode, final long Userid) {
 		String[] dialogItem;
-		if(DebugMode) {
-			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "連携アプリ", "設定","ShowLimit"};    //メニューの項目作り
+		if(isDebugMode) {
+			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "設定","ShowLimit"};    //メニューの項目作り
 		}else{
-			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "連携アプリ", "設定"};    //メニューの項目作り
+			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "設定"};    //メニューの項目作り
 		}
 		AlertDialog.Builder dialogMenu = new AlertDialog.Builder(context);
 		dialogMenu.setItems(dialogItem, new DialogInterface.OnClickListener() {
@@ -333,15 +331,15 @@ public class List_Menu {
 						context.startActivity(Account);
 						activity.finish();
 						break;
+//					case 2:
+//						Intent SettingsApplications = new Intent(context, WebTwitterLoginActivity.class);
+//						context.startActivity(SettingsApplications);
+//						break;
 					case 2:
-						Intent SettingsApplications = new Intent(context, WebTwitterLoginActivity.class);
-						context.startActivity(SettingsApplications);
-						break;
-					case 3:
 						Intent setting = new Intent(context, SettingActivity.class);
 						context.startActivity(setting);
 						break;
-					case 4:
+					case 3:
 						TwitterActionClass mtAction;
 						mtAction = new TwitterActionClass(context);
 						mtAction.debugMode();
