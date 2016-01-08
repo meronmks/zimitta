@@ -107,7 +107,9 @@ public class CoreActivity extends ActionBarActivity {
             //レシーバー呼び出し
             IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
             NetworkInfoReceiver receiver = new NetworkInfoReceiver();
-            registerReceiver(receiver, filter);
+            if(filter != null && receiver != null) {
+                registerReceiver(receiver, filter);
+            }
 
             //Fragment準備
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
