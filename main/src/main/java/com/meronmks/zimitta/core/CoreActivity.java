@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import com.jakewharton.rxbinding.view.RxView;
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.meronmks.zimitta.Activity.TweetActivity;
 import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
@@ -22,6 +23,10 @@ import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Receiver.NetworkInfoReceiver;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.menu.List_Menu;
+import rx.Observable;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class CoreActivity extends ActionBarActivity {
 
@@ -77,32 +82,21 @@ public class CoreActivity extends ActionBarActivity {
             }
             progres = (CircleProgressBar) findViewById(R.id.progressBar);
             progres.setShowArrow(true);
-            //ボタン準備
-            ImageButton tweet = (ImageButton) findViewById(R.id.tweet);
-            ImageButton menu = (ImageButton) findViewById(R.id.Menu_button);
 
             //ボタンクリック時の動作設定
-            tweet.setOnClickListener(new View.OnClickListener() {
+            RxView
+                    .clicks((ImageButton)findViewById(R.id.tweet))
+                    .subscribe(x -> {
+                        Intent intent = new Intent(CoreActivity.this, TweetActivity.class);
+                        startActivity(intent);
+                    });
 
-                @Override
-                public void onClick(View v) {
-                    // クリックの処理を実行する
-                    Intent intent = new Intent(CoreActivity.this, TweetActivity.class);
-                    startActivity(intent);
-                }
-
-            });
-
-            menu.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    // クリックの処理を実行する
-                    List_Menu list = new List_Menu();
-                    list.Main_menu(CoreActivity.this, CoreActivity.this, isDebugMode, CoreVariable.userID);
-                }
-
-            });
+            RxView
+                    .clicks((ImageButton)findViewById(R.id.Menu_button))
+                    .subscribe(x -> {
+                        List_Menu list = new List_Menu();
+                        list.Main_menu(CoreActivity.this, CoreActivity.this, isDebugMode, CoreVariable.userID);
+                    });
 
             //レシーバー呼び出し
             IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
