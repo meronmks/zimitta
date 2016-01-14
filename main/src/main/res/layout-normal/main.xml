@@ -1,59 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:exported="false"
-        android:background="@color/Back">
-    <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-        <android.support.v4.view.PagerTitleStrip
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:exported="false"
+            android:background="@color/Back">
+        <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top" />
-    </android.support.v4.view.ViewPager>
+                android:layout_weight="1" >
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <android.support.v4.view.PagerTitleStrip
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top" />
 
-        <ImageView
-                android:layout_width="25sp"
-                android:layout_height="25sp"
-                android:scaleType="fitXY"
-                android:background="@drawable/twitter_logo_blue"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="8dp"/>
 
-        <ImageButton
-                android:id="@+id/tweet"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/draw_pencil"
-                android:background="@color/Back"/>
+        </android.support.v4.view.ViewPager>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:indeterminate="true"
-                android:layout_weight="1"
-                android:id="@+id/progressBar"
-                app:mlpb_progress_stoke_width="3dp"
-                app:mlpb_progress_color="#566da9"
-                />
+            <ImageView
+                    android:layout_width="25sp"
+                    android:layout_height="25sp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/twitter_logo_blue"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="8dp"/>
 
-        <ImageButton
-                android:id="@+id/Menu_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/config"
-                android:background="@color/Back"/>
+            <ImageButton
+                    android:id="@+id/tweet"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/draw_pencil"
+                    android:background="@color/Back"/>
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+            <ImageButton
+                    android:id="@+id/Menu_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/config"
+                    android:background="@color/Back"/>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:id="@+id/progressBar"
+            app:mlpb_progress_stoke_width="3dp"
+            app:mlpb_progress_color="#566da9"
+            android:layout_gravity="center_horizontal|bottom"/>
+</FrameLayout>
 
