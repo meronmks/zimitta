@@ -31,14 +31,14 @@
             android:layout_above="@+id/actionStartOauth"
             android:layout_alignParentLeft="true"
             android:text="@string/FIRST_Action_Button_Text" android:textColor="@color/White"/>
-    <TextView
+    TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/APP_renkei_kaizyo_Text"
             android:id="@+id/oauthTextView3"
             android:layout_below="@+id/actionStartOauth"
             android:layout_alignParentLeft="true" android:textColor="@color/White"/>
-    <Button
+    Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/apprenkei_Text"

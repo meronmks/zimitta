@@ -52,14 +52,6 @@ public class TwitterOAuthActivity extends ActionBarActivity {
                 startAuthorize();
             }
         });
-
-        findViewById(R.id.AppRenkeiButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent SettingsApplications = new Intent(TwitterOAuthActivity.this, WebTwitterLoginActivity.class);
-                startActivity(SettingsApplications);
-            }
-        });
     }
 
     @Override
