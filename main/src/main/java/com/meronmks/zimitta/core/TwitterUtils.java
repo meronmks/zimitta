@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import com.meronmks.zimitta.R;
-import com.meronmks.zimitta.core.StaticClassVariable;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
@@ -21,7 +21,7 @@ public class TwitterUtils {
 
         TwitterFactory factory = new TwitterFactory();
         Twitter twitter = factory.getInstance();
-        twitter.setOAuthConsumer(StaticClassVariable.twitterConsumerKey, StaticClassVariable.twitterConsumerSecret);
+        twitter.setOAuthConsumer(OAuthVariable.twitterConsumerKey, OAuthVariable.twitterConsumerSecret);
 
         if (hasAccessToken(context,ID)) {
             twitter.setOAuthAccessToken(loadAccessToken(context,ID));
@@ -33,7 +33,7 @@ public class TwitterUtils {
 
         TwitterFactory factory = new TwitterFactory();
         Twitter twitter = factory.getInstance();
-        twitter.setOAuthConsumer(StaticClassVariable.twitterConsumerKey, StaticClassVariable.twitterConsumerSecret);
+        twitter.setOAuthConsumer(OAuthVariable.twitterConsumerKey, OAuthVariable.twitterConsumerSecret);
 
         return twitter;
     }

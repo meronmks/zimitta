@@ -68,8 +68,8 @@ public class TwitterActionClass {
         {
             // Twitter4Jに対してOAuth情報を設定
             // アプリ固有の情報
-            builder.setOAuthConsumerKey(StaticClassVariable.twitterConsumerKey);
-            builder.setOAuthConsumerSecret(StaticClassVariable.twitterConsumerSecret);
+            builder.setOAuthConsumerKey(OAuthVariable.twitterConsumerKey);
+            builder.setOAuthConsumerSecret(OAuthVariable.twitterConsumerSecret);
             // アプリ＋ユーザー固有の情報
             builder.setOAuthAccessToken(spOauth.getString(activity.getString(R.string.TOKEN), null));
             builder.setOAuthAccessTokenSecret(spOauth.getString(activity.getString(R.string.TOKEN_SECRET), null));
@@ -133,8 +133,8 @@ public class TwitterActionClass {
         {
             // Twitter4Jに対してOAuth情報を設定
             // アプリ固有の情報
-            builder.setOAuthConsumerKey(StaticClassVariable.twitterConsumerKey);
-            builder.setOAuthConsumerSecret(StaticClassVariable.twitterConsumerSecret);
+            builder.setOAuthConsumerKey(OAuthVariable.twitterConsumerKey);
+            builder.setOAuthConsumerSecret(OAuthVariable.twitterConsumerSecret);
             // アプリ＋ユーザー固有の情報
             builder.setOAuthAccessToken(spOauth.getString(activity.getString(R.string.TOKEN), null));
             builder.setOAuthAccessTokenSecret(spOauth.getString(activity.getString(R.string.TOKEN_SECRET), null));
@@ -177,8 +177,8 @@ public class TwitterActionClass {
         {
             // Twitter4Jに対してOAuth情報を設定
             // アプリ固有の情報
-            builder.setOAuthConsumerKey(StaticClassVariable.twitterConsumerKey);
-            builder.setOAuthConsumerSecret(StaticClassVariable.twitterConsumerSecret);
+            builder.setOAuthConsumerKey(OAuthVariable.twitterConsumerKey);
+            builder.setOAuthConsumerSecret(OAuthVariable.twitterConsumerSecret);
             // アプリ＋ユーザー固有の情報
             builder.setOAuthAccessToken(spOauth.getString(activity.getString(R.string.TOKEN), null));
             builder.setOAuthAccessTokenSecret(spOauth.getString(activity.getString(R.string.TOKEN_SECRET), null));

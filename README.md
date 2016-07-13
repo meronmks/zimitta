@@ -1,21 +1,22 @@
-## れどみと言うよりただのメモ ##
+## じみったー(仮)の説明書っぽくもない何か ##
 
-### 2016年1月19日更新 ###
+### 2016年7月13日更新 ###
 このソースは現在GooglePlayで公開中のtwitterクライアントのソースになります。
 
 ## 使用ライブラリ ##
-android-support-v4  
-android-support-v7-appcompat  
-[Android Smart Image View](http://loopj.com/android-smart-image-view/)  
-[jsoup](http://jsoup.org/)  
-[twitter4j](http://twitter4j.org/ja/)  
-Glide  
-[AsyncHttpClient](http://loopj.com/android-async-http/)  
-[MaterialLoadingProgressBar](https://github.com/lsjwzh/MaterialLoadingProgressBar)  
-[ZoomImageView](http://sukohi.blogspot.jp/2013/11/imageview.html)  
-[RxAndroid](https://github.com/ReactiveX/RxAndroid)  
-[RxJava](https://github.com/ReactiveX/RxJava)  
-[RxBinding](https://github.com/JakeWharton/RxBinding)  
+* android-support-v4  
+* android-support-v7-appcompat  
+* [Android Smart Image View](http://loopj.com/android-smart-image-view/)  
+* [ jsoup](http://jsoup.org/)  
+* [twitter4j](http://twitter4j.org/ja/)  
+* Glide2.5  
+* [AsyncHttpClient](http://loopj.com/android-async-http/)  
+* [MaterialLoadingProgressBar](https://github.com/lsjwzh/MaterialLoadingProgressBar)  
+* [ZoomImageView](http://sukohi.blogspot.jp/2013/11/imageview.html)  
+* [RxAndroid](https://github.com/ReactiveX/RxAndroid)  
+* [RxJava](https://github.com/ReactiveX/RxJava)  
+* [RxBinding](https://github.com/JakeWharton/RxBinding)  
+
 ## 直さないといけないバグ ##
 * 実機でもOutOfMemoryで落ちることがある
 * レシーバー結果が何度も繰り返される（吸収すればいいか？）
