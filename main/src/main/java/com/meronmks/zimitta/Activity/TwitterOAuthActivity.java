@@ -54,13 +54,6 @@ public class TwitterOAuthActivity extends ActionBarActivity {
         });
     }
 
-    @Override
-	protected void onResume() {
-		super.onResume();
-		PaintDrawable paintDrawable = new PaintDrawable(Color.argb(255, 0, 0, 0));
-        getWindow().setBackgroundDrawable(paintDrawable);
-	}
-
     /**
      * OAuth認証（厳密には認可）を開始します。
      *
