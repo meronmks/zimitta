@@ -299,6 +299,7 @@ public class TweetAdapter extends StatusCoreAdapter<Status> {
                 })
                 .placeholder(R.drawable.ic_action_refresh)
                 .error(R.drawable.x_c)
+                .dontAnimate()
                 .into(previewImageView);
 
         previewImageView.setOnClickListener(new View.OnClickListener() {

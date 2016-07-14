@@ -7,14 +7,19 @@
 * android-support-v4  
 * android-support-v7-appcompat  
 * [Android Smart Image View](http://loopj.com/android-smart-image-view/)  
-* [ jsoup](http://jsoup.org/)  
+* [jsoup](http://jsoup.org/)
 * [twitter4j](http://twitter4j.org/ja/)  
-* Glide2.5  
+* Glide
 * [AsyncHttpClient](http://loopj.com/android-async-http/)  
 * [MaterialLoadingProgressBar](https://github.com/lsjwzh/MaterialLoadingProgressBar)  
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid)  
 * [RxJava](https://github.com/ReactiveX/RxJava)  
-* [RxBinding](https://github.com/JakeWharton/RxBinding)  
+* [RxBinding](https://github.com/JakeWharton/RxBinding)
+* gradle 2.5
+
+## 参考にしたサイト等 ##
+* [[Android] 様々なジェスチャーを処理する(1) 拡大縮小](http://chicketen.blog.jp/archives/1579621.html)
+* [[Android] 様々なジェスチャーを処理する(2) 移動](http://chicketen.blog.jp/archives/1622120.html)
 
 ## 直さないといけないバグ ##
 * 実機でもOutOfMemoryで落ちることがある
@@ -31,6 +36,7 @@
 ## Ver3.4.1との変更点（メモしないと忘れそう） ##
 * 通知機能の完全復活
 * Rxの導入
-* 一部レイアウト修正
+* レイアウト修正
 * 認証画面が真っ黒になる問題の修正
-* [ZoomImageView](http://sukohi.blogspot.jp/2013/11/imageview.html) の削除
+* [ZoomImageView](http://sukohi.blogspot.jp/2013/11/imageview.html)からSurfaceViewへ画像表示を変更
+* 画像のプレビュー時に変なところで切れてしまう現象の修正
