@@ -4,10 +4,11 @@
     android:layout_height="match_parent" >
 
         <com.meronmks.zimitta.core.CustomImageView
-        android:id="@+id/T_Image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@android:drawable/ic_menu_gallery"
-        android:layout_centerInParent="true"/>
+            android:id="@+id/T_Image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

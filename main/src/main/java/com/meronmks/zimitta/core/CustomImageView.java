@@ -123,9 +123,9 @@ public class CustomImageView extends ImageView {
             float topY = getMatrixValue(Matrix.MTRANS_Y);
             float bottomY = topY + imageHeight;
 
-            if(imageViewWidth >= imageWidth && imageViewHeight >= imageHeight){
-                return false;
-            }
+//            if(imageViewWidth >= imageWidth && imageViewHeight >= imageHeight){
+//                return false;
+//            }
             //指の動きに追随してほしいため符号を反転
             float x = -distanceX;
             float y = -distanceY;

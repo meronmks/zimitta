@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
+import android.widget.ImageView;
+
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.CustomImageView;
 
@@ -65,7 +67,6 @@ public class ImageActivity extends Activity {
 	        	if(result != null)
 	        	{
 	        		imageView.setImageBitmap(result);
-	        		imageView.invalidate();
 	        	}else
 	        	{
 	        		showDialog("画像取得エラー");
