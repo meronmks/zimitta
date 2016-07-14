@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
@@ -38,7 +39,7 @@ import java.io.InputStream;
 /**
  * Created by meronmks on 2015/04/07.
  */
-public class MentionsActivity extends ActionBarActivity {
+public class MentionsActivity extends AppCompatActivity {
     private EditText mInputText;
     private Twitter mTwitter;
     private ProgressDialog progressDialog;

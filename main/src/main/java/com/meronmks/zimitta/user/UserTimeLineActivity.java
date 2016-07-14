@@ -2,6 +2,7 @@ package com.meronmks.zimitta.user;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.content.Intent;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
@@ -11,7 +12,7 @@ import com.meronmks.zimitta.core.TwitterActionClass;
 /**
  * Created by meronmks on 2015/04/20.
  */
-public class UserTimeLineActivity extends ActionBarActivity {
+public class UserTimeLineActivity extends AppCompatActivity {
 
     private long UserID;
     private String ScreenName;

@@ -27,7 +27,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class TweetAdapter extends ArrayAdapter<Status> {
+public class TweetAdapter extends StatusCoreAdapter<Status> {
 	private LayoutInflater mInflater;
 	private String TweetText;
     private ViewHolder holder;
@@ -69,12 +69,9 @@ public class TweetAdapter extends ArrayAdapter<Status> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         final Status item = getItem(position);
         if(item != null) {
-            Date TimeStatusNow = null;
             Long My_ID = CoreVariable.userID;	//共有変数の呼び出し
-            TimeStatusNow = new Date();
             if(convertView == null) {
                 convertView = iniHolder();
                 convertView.setTag(holder);
@@ -148,11 +145,11 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                 replaceMediaURL(item.getExtendedMediaEntities());
                 replaceURLEntities(item.getURLEntities());
 
-                replaceLoopText();
+                TweetText = replaceLoopText(TweetText);
                 //テキストを反映
                 holder.text.setText(TweetText);
 
-                replacrTimeAt(TimeStatusNow, item.getCreatedAt());
+                replacrTimeAt(new Date(), item.getCreatedAt(), holder.time);
 
                 holder.rt_To.setVisibility(View.GONE);    //RTした人の名前を非表示
                 holder.rticon.setVisibility(View.GONE);
@@ -181,11 +178,11 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                 replaceMediaURL(item.getRetweetedStatus().getExtendedMediaEntities());
                 replaceURLEntities(item.getRetweetedStatus().getURLEntities());
 
-                replaceLoopText();
+                TweetText = replaceLoopText(TweetText);
                 //テキストを反映
                 holder.text.setText(TweetText);
 
-                replacrTimeAt(TimeStatusNow, item.getRetweetedStatus().getCreatedAt());
+                replacrTimeAt(new Date(), item.getRetweetedStatus().getCreatedAt(), holder.time);
 
                 holder.rt_To.setVisibility(View.VISIBLE);
                 holder.rt_To.setText(item.getUser().getName() + " さんがリツイート");
@@ -219,42 +216,11 @@ public class TweetAdapter extends ArrayAdapter<Status> {
             convertView = mInflater.inflate(R.layout.list_item_null, null);
         }
 
+        super.getView(position, convertView, parent);
         return convertView;
     }
 
-    /**
-     * ループテキストの排除メソッド
-     */
-    protected void replaceLoopText(){
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if(sp.getBoolean("zipTweet", false)) {
-            //ループテキストを圧縮準備
-            boolean loopTextFound = false;
-            TweetText = TweetText.replaceAll("\r\n", "\n");
-            //一行ずつ取り出し
-            String[] loopStrings = TweetText.split("\n");
-            //ループしてるか判定し、していたら文字を消す
-            //ただし最初に一致しているのを発見した場合「Following text looped」に置き換える
-            for (int i = 1; i < loopStrings.length; i++) {
-                if (loopStrings[0].equals(loopStrings[i]) && !loopTextFound) {
-                    loopStrings[i] = "Following text looped";
-                    loopTextFound = true;
-                } else {
-                    loopStrings[i] = loopStrings[i].replace(loopStrings[0], "");
-                }
-            }
-            //処理が終わったテキストを合成
-            StringBuffer buf = new StringBuffer();
-            for (int i = 0; i < loopStrings.length; i++) {
-                if (i + 1 != loopStrings.length && !loopStrings[i].equals("")) {
-                    buf.append(loopStrings[i] + "\n");
-                } else {
-                    buf.append(loopStrings[i]);
-                }
-            }
-            TweetText = buf.toString();
-        }
-    }
+
 
     /**
      * 画像URLの置換
@@ -408,36 +374,6 @@ public class TweetAdapter extends ArrayAdapter<Status> {
                 }
                 count++;
             }
-        }
-    }
-
-    /**
-     * 時間を変換するやつ
-     * @param TimeStatusNow
-     * @param CreatedAt
-     */
-    protected void replacrTimeAt(Date TimeStatusNow, Date CreatedAt){
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal1.setTime(CreatedAt);
-        cal2.setTime(TimeStatusNow);
-        long date1 = cal1.getTimeInMillis();
-        long date2 = cal2.getTimeInMillis();
-        long time = (date2 - date1) / 1000;
-        if (time <= 59) {
-            holder.time.setText(time + "s前");
-        }
-        time = time / 60;
-        if ((time <= 59) && (time >= 1)) {
-            holder.time.setText(time + "m前");
-        }
-        time = time / 60;
-        if ((time <= 23) && (time >= 1)) {
-            holder.time.setText(time + "h前");
-        }
-        time = time / 24;
-        if (time != 0) {
-            holder.time.setText(DateFormat.getDateTimeInstance().format(CreatedAt));
         }
     }
 

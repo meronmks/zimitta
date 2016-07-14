@@ -19,7 +19,7 @@ import java.util.Date;
 /**
  * Created by p-user on 2015/01/20.
  */
-public class DMAdapter extends ArrayAdapter<DirectMessage> {
+public class DMAdapter extends StatusCoreAdapter<DirectMessage> {
     private LayoutInflater mInflater;
     private String TweetText;
     private ViewHolder holder;
@@ -116,37 +116,14 @@ public class DMAdapter extends ArrayAdapter<DirectMessage> {
 
             //テキスト反映
             holder.text.setText(TweetText);
-            TimeStatusTweet = item.getCreatedAt();
-            cal1.setTime(TimeStatusTweet);
-            cal2.setTime(TimeStatusNow);
-            long date1 = cal1.getTimeInMillis();
-            long date2 = cal2.getTimeInMillis();
-            long time = (date2 - date1) / 1000;
-            if (time <= 59) {
-                if(9 < time) {
-                    holder.time.setText(time + "s前");
-                }else{
-                    holder.time.setText("now");
-                }
-            }
-            time = time / 60;
-            if ((time <= 59) && (time >= 1)) {
-                holder.time.setText(time + "m前");
-            }
-            time = time / 60;
-            if ((time <= 23) && (time >= 1)) {
-                holder.time.setText(time + "h前");
-            }
-            time = time / 24;
-            if (time != 0) {
-                holder.time.setText(item.getCreatedAt().toString());
-            }
+            replacrTimeAt(new Date(), item.getCreatedAt(), holder.time);
             holder.rt_To.setVisibility(View.GONE);
             holder.rticon.setVisibility(View.GONE);
             holder.relativeLayout.setBackgroundResource(R.drawable.listitem_color);
         }else{
             convertView = mInflater.inflate(R.layout.list_item_null, null);
         }
+        super.getView(position, convertView, parent);
         return convertView;
     }
 

@@ -11,7 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 import com.meronmks.zimitta.R;
-import sukohi.ZoomImageView;
+import com.meronmks.zimitta.core.CustomImageView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ import java.net.URL;
 
 public class ImageActivity extends Activity {
 
-	public static ZoomImageView imageView;
+	public static CustomImageView imageView;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class ImageActivity extends Activity {
         setContentView(R.layout.activity_image);
         Intent intent = getIntent();
         String Image = intent.getStringExtra("Imeges");
-        imageView = (ZoomImageView) this.findViewById(R.id.T_Image);
+        imageView = (CustomImageView) this.findViewById(R.id.T_Image);
         getBitmapFromURL(Image);
     }
 
@@ -64,13 +64,7 @@ public class ImageActivity extends Activity {
 	        protected void onPostExecute(Bitmap result) {
 	        	if(result != null)
 	        	{
-	        		imageView.setMaxScale(5F);
-	        		imageView.setMinScale(0.3F);
 	        		imageView.setImageBitmap(result);
-					if(Build.VERSION.SDK_INT >= 11) {
-						imageView.setScaleY(result.getHeight() / 600.0f);
-						imageView.setScaleX(result.getWidth() / 600.0f);
-					}
 	        		imageView.invalidate();
 	        	}else
 	        	{

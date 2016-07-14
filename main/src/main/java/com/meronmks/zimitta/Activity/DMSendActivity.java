@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
@@ -22,7 +23,7 @@ import twitter4j.Twitter;
 /**
  * Created by meronmks on 2015/04/19.
  */
-public class DMSendActivity extends ActionBarActivity {
+public class DMSendActivity extends AppCompatActivity {
 
     private EditText mInputText;
     private Twitter mTwitter;

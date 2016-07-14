@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import com.meronmks.zimitta.AppCooperation.WebTwitterLoginActivity;
 import com.meronmks.zimitta.R;
@@ -20,7 +21,7 @@ import twitter4j.User;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 
-public class TwitterOAuthActivity extends ActionBarActivity {
+public class TwitterOAuthActivity extends AppCompatActivity {
 
     private String mCallbackURL;
     private Twitter mTwitter;

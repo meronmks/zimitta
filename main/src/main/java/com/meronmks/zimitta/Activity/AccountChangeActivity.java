@@ -5,6 +5,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -20,7 +21,7 @@ import android.content.Intent;
 /**
  * Created by meronmks on 2015/03/25.
  */
-public class AccountChangeActivity extends ActionBarActivity {
+public class AccountChangeActivity extends AppCompatActivity {
     private SharedPreferences accountIDCount;
     private AccountListAdapter adapter;
     private Twitter mTwitter;

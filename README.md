@@ -12,7 +12,6 @@
 * Glide2.5  
 * [AsyncHttpClient](http://loopj.com/android-async-http/)  
 * [MaterialLoadingProgressBar](https://github.com/lsjwzh/MaterialLoadingProgressBar)  
-* [ZoomImageView](http://sukohi.blogspot.jp/2013/11/imageview.html)  
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid)  
 * [RxJava](https://github.com/ReactiveX/RxJava)  
 * [RxBinding](https://github.com/JakeWharton/RxBinding)  
@@ -34,3 +33,4 @@
 * Rxの導入
 * 一部レイアウト修正
 * 認証画面が真っ黒になる問題の修正
+* [ZoomImageView](http://sukohi.blogspot.jp/2013/11/imageview.html) の削除

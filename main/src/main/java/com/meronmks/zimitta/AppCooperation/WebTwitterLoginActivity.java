@@ -3,6 +3,7 @@ package com.meronmks.zimitta.AppCooperation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -10,7 +11,7 @@ import android.widget.EditText;
 import com.meronmks.zimitta.R;
 
 
-public class WebTwitterLoginActivity extends ActionBarActivity implements OnClickListener {
+public class WebTwitterLoginActivity extends AppCompatActivity implements OnClickListener {
 
 	private EditText mailText;
 	private EditText passText;

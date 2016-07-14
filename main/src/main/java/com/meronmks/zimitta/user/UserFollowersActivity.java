@@ -21,11 +21,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class UserFollowersActivity extends ActionBarActivity {
+public class UserFollowersActivity extends AppCompatActivity {
 
     private FollowAdapter mAdapter;
     private Twitter mTwitter;

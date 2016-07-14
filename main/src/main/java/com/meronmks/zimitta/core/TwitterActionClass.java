@@ -22,6 +22,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by meronmks on 2015/02/08.
@@ -744,72 +745,73 @@ public class TwitterActionClass {
         /**
          * 通常押し
          */
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                boolean LongTap = sp.getBoolean("Tap_Setting", true);
-                if(!invoker.equals("DM")) {
-                    if (position != 0 && mAdapter.getItem(position) == null) {
-                        //フッターがクリックされた
-                        CoreActivity.progresRun();
-                        if (invoker.equals("TL")) {
-                            getTimeLine(mAdapter.getItem(position - 1).getId());
-                        } else if (invoker.equals("Mention")) {
-                            getMention(mAdapter.getItem(position - 1).getId());
-                        } else if (invoker.equals("UserTimeLineList")) {
-                            getListTimeLine(mAdapter.getItem(position - 1).getId(), spinner.getSelectedItemPosition());
-                        }
-                    } else if (position == 0 && mAdapter.getItem(position) == null) {
-                        //ヘッダーがクリックされた
-                        if (invoker.equals("TL")) {
-                            if(sp.getBoolean("Streeming_stok", false) == false) {
-                                CoreActivity.progresRun();
-                                getTimeLine(null);
-                            }else{
-                                for(Status tweet : CoreVariable.stockTweet){
-                                    mAdapter.insert(tweet,1);
-                                }
+        if(!invoker.equals("DM")) {
+            mAdapter.clickObservable
+                    .subscribe(position -> {
+                        if (position != 0 && mAdapter.getItem(position) == null) {
+                            //フッターがクリックされた
+                            CoreActivity.progresRun();
+                            if (invoker.equals("TL")) {
+                                getTimeLine(mAdapter.getItem(position - 1).getId());
+                            } else if (invoker.equals("Mention")) {
+                                getMention(mAdapter.getItem(position - 1).getId());
+                            } else if (invoker.equals("UserTimeLineList")) {
+                                getListTimeLine(mAdapter.getItem(position - 1).getId(), spinner.getSelectedItemPosition());
                             }
-                        } else if (invoker.equals("Mention")) {
-                            getMention(null);
-                        } else if (invoker.equals("UserTimeLineList")) {
-                            getListTimeLine(null, spinner.getSelectedItemPosition());
+                        } else if (position == 0 && mAdapter.getItem(position) == null) {
+                            //ヘッダーがクリックされた
+                            if (invoker.equals("TL")) {
+                                if(sp.getBoolean("Streeming_stok", false) == false) {
+                                    CoreActivity.progresRun();
+                                    getTimeLine(null);
+                                }else{
+                                    for(Status tweet : CoreVariable.stockTweet){
+                                        mAdapter.insert(tweet,1);
+                                    }
+                                }
+                            } else if (invoker.equals("Mention")) {
+                                getMention(null);
+                            } else if (invoker.equals("UserTimeLineList")) {
+                                getListTimeLine(null, spinner.getSelectedItemPosition());
+                            }
                         }
-                    } else if (!LongTap) {
+                        if(sp.getBoolean("Tap_Setting", true)) return;
                         menu.Tweet_Menu(activity, mAdapter.getItem(position));
-                    }
-                }else{
-                    //DM専用処理
-                    if (position != 0 && mDMAdapter.getItem(position) == null) {
-                        //フッターがクリックされた
-                        CoreActivity.progresRun();
-                        getDirectMessage(mDMAdapter.getItem(position - 1).getId());
-                    } else if (position == 0 && mDMAdapter.getItem(position) == null) {
-                        //ヘッダーがクリックされた
-                        CoreActivity.progresRun();
-                        getDirectMessage(null);
-                    } else if (!LongTap) {
+
+                    });
+        }else{
+            mDMAdapter.clickObservable
+                    .subscribe(position -> {
+                        if (position != 0 && mDMAdapter.getItem(position) == null) {
+                            //フッターがクリックされた
+                            CoreActivity.progresRun();
+                            getDirectMessage(mDMAdapter.getItem(position - 1).getId());
+                        } else if (position == 0 && mDMAdapter.getItem(position) == null) {
+                            //ヘッダーがクリックされた
+                            CoreActivity.progresRun();
+                            getDirectMessage(null);
+                        }
+                        if(sp.getBoolean("Tap_Setting", true)) return;
                         menu.DM_Menu(activity, mDMAdapter.getItem(position));
-                    }
-                }
-            }
-        });
+                    });
+        }
 
         /**
          * 長押し
          */
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                boolean LongTap = sp.getBoolean("Tap_Setting", true);
-                if (!invoker.equals("DM") && mAdapter.getItem(position) != null && LongTap) {
-                    menu.Tweet_Menu(activity, mAdapter.getItem(position));
-                }else if(invoker.equals("DM") && mDMAdapter.getItem(position) != null && LongTap){
-                    menu.DM_Menu(activity, mDMAdapter.getItem(position));
-                }
-                return true;
-            }
-        });
+        if(!invoker.equals("DM")) {
+            mAdapter.longClickObservable
+                    .filter(position -> (mAdapter.getItem(position) != null && sp.getBoolean("Tap_Setting", true)))
+                    .subscribe(position -> {
+                        menu.Tweet_Menu(activity, mAdapter.getItem(position));
+                    });
+        }else{
+            mDMAdapter.longClickObservable
+                    .filter(position -> (mDMAdapter.getItem(position) != null && sp.getBoolean("Tap_Setting", true)))
+                    .subscribe(position -> {
+                        menu.DM_Menu(activity, mDMAdapter.getItem(position));
+                    });
+        }
     }
 
     /**

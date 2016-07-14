@@ -24,11 +24,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-public class UserFavActivity extends ActionBarActivity {
+public class UserFavActivity extends AppCompatActivity {
 
     private TweetAdapter mAdapter;
     private Twitter mTwitter;
@@ -79,8 +80,6 @@ public class UserFavActivity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        PaintDrawable paintDrawable = new PaintDrawable(Color.argb(255,0,0,0));
-        getWindow().setBackgroundDrawable(paintDrawable);
         mAdapter.notifyDataSetChanged();
 
         final boolean LongTap = sp.getBoolean("Tap_Setting", true);

@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -32,7 +33,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ApplicationsCooperationActivity extends ActionBarActivity {
+public class ApplicationsCooperationActivity extends AppCompatActivity {
 
 	private AsyncHttpClient client;
 	private PersistentCookieStore myCookieStore;

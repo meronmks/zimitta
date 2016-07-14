@@ -16,7 +16,7 @@ import twitter4j.User;
 /**
  * Created by p-user on 2015/05/25.
  */
-public class FollowAdapter extends ArrayAdapter<User> {
+public class FollowAdapter extends StatusCoreAdapter<User> {
     private LayoutInflater mInflater;
 
     public FollowAdapter(Context context) {
@@ -76,6 +76,7 @@ public class FollowAdapter extends ArrayAdapter<User> {
         holder.text.setText(sb.toString());
 
         holder.relativeLayout.setBackgroundResource(R.drawable.listitem_color);
+        super.getView(position, convertView, parent);
         return convertView;
     }
 }

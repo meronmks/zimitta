@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-        <sukohi.ZoomImageView
+        <com.meronmks.zimitta.core.CustomImageView
         android:id="@+id/T_Image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

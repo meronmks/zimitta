@@ -13,13 +13,18 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Activity.TwitterOAuthActivity;
 import com.meronmks.zimitta.Adapter.FollowAdapter;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.TwitterUtils;
+
+import rx.Subscription;
 import twitter4j.PagableResponseList;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -31,7 +36,7 @@ import java.util.List;
 /**
  * Created by p-user on 2015/05/25.
  */
-public class UserFollowActivity extends ActionBarActivity {
+public class UserFollowActivity extends AppCompatActivity {
 
     private FollowAdapter mAdapter;
     private Twitter mTwitter;
@@ -104,13 +109,6 @@ public class UserFollowActivity extends ActionBarActivity {
                 getFriendsList();
             }
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        PaintDrawable paintDrawable = new PaintDrawable(Color.argb(255, 0, 0, 0));
-        getWindow().setBackgroundDrawable(paintDrawable);
     }
 
     //フォロー一覧取得

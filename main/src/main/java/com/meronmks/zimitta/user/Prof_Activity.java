@@ -7,6 +7,7 @@ import android.graphics.drawable.PaintDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,7 +25,7 @@ import twitter4j.User;
 /**
  * Created by meronmks on 2015/03/25.
  */
-public class Prof_Activity extends ActionBarActivity implements View.OnClickListener {
+public class Prof_Activity extends AppCompatActivity implements View.OnClickListener {
     private TextView ScreenName;
     private TextView UserName;
     private TextView ProfText;
@@ -51,8 +52,6 @@ public class Prof_Activity extends ActionBarActivity implements View.OnClickList
 
         //ActionBarからアイコンを消す
         getSupportActionBar().setDisplayShowHomeEnabled(false);
-        PaintDrawable paintDrawable = new PaintDrawable(Color.argb(255, 0, 0, 0));
-        getWindow().setBackgroundDrawable(paintDrawable);
         ScreenName = (TextView)this.findViewById(R.id.NameView);
         UserName = (TextView)this.findViewById(R.id.ScreenNameView);
         ProfText = (TextView)this.findViewById(R.id.ProfTextView);

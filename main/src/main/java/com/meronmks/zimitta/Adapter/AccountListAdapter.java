@@ -16,7 +16,7 @@ import twitter4j.User;
 /**
  * Created by meronmks on 2015/03/25.
  */
-public class AccountListAdapter extends ArrayAdapter<User> {
+public class AccountListAdapter extends StatusCoreAdapter<User> {
     private LayoutInflater mInflater;
 
     public AccountListAdapter(Context context) {
@@ -43,6 +43,7 @@ public class AccountListAdapter extends ArrayAdapter<User> {
             Icon.setImageResource(R.drawable.clear);
             Log.e("GlideException", e.getMessage());
         }
+        super.getView(position, convertView, parent);
         return convertView;
     }
 }
