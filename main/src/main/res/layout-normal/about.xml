@@ -29,7 +29,7 @@
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Copyright(C)2014 meronmks All Rights Reserved\nこのアプリの開発者\nmeronmks　@meronmks"
+                    android:text="Copyright(C)2014-2016 meronmks All Rights Reserved\nこのアプリの開発者\nmeronmks　@meronmks"
                     android:layout_below="@+id/verTextView" android:layout_alignLeft="@+id/verTextView"
                     android:layout_alignStart="@+id/verTextView" android:layout_marginTop="17dp"/>
 
@@ -58,7 +58,7 @@
                     android:layout_below="@+id/textView3"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="17dp"
-                    android:text="このアプリは以下のライブラリ等を使用して作られています。\nTwitter4j\nGlide\nZoomImageView\njsoup\nAsyncHttpClient\nAndroid Device Compatibility Package\nMaterialLoadingProgressBar\nまたこのアプリは Apache License, Version 2.0 のライセンスで配布されている成果物を含んでいます。" />
+                    android:text="このアプリは以下のライブラリ等を使用して作られています。\nTwitter4j\nGlide\njsoup\nAsyncHttpClient\nAndroid Device Compatibility Package\nMaterialLoadingProgressBar\nまたこのアプリは Apache License, Version 2.0 のライセンスで配布されている成果物を含んでいます。" />
 
             <TextView
                     android:id="@+id/textView6"

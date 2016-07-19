@@ -31,6 +31,28 @@ public class CoreVariable {
     public static final int REQUEST_PICK_CONTENT = 0;
     public static final int REQUEST_KITKAT_PICK_CONTENT = 1;
     public static int nowNetworkStatus;
+    public static RateLimitVariable HomeTimeline = new RateLimitVariable();
+    public static RateLimitVariable MentionsTimeline = new RateLimitVariable();
+    public static RateLimitVariable UserListStatuses = new RateLimitVariable();
+    public static int ActiveFragmentView;
+
+    public enum ActiveFragmentViewEnum {
+        Home(0),
+        Mention(1),
+        UserList(2),
+        DirectMessage(3),
+        Search(4);
+
+        private final int id;
+
+        private ActiveFragmentViewEnum(final int id) {
+            this.id = id;
+        }
+
+        public int getId() {
+            return id;
+        }
+    }
 
     public static void initializationVariable(Context context){
         Destroy();
@@ -41,6 +63,7 @@ public class CoreVariable {
         DMAdapter = new DMAdapter(context);
         deleteTweet = new ArrayList<Long>();
         stockTweet = new ArrayList<Status>();
+        ActiveFragmentView = ActiveFragmentViewEnum.Home.getId();
     }
 
     public static void Destroy(){

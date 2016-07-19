@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -24,10 +23,6 @@ import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Receiver.NetworkInfoReceiver;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.menu.List_Menu;
-import rx.Observable;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class CoreActivity extends AppCompatActivity {
 
@@ -95,6 +90,7 @@ public class CoreActivity extends AppCompatActivity {
             RxView
                     .clicks((ImageButton)findViewById(R.id.Menu_button))
                     .subscribe(x -> {
+                        CoreVariable.ActiveFragmentView = viewPager.getCurrentItem();
                         List_Menu list = new List_Menu();
                         list.Main_menu(CoreActivity.this, CoreActivity.this, isDebugMode, CoreVariable.userID);
                     });

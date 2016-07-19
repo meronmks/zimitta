@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.*;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -12,7 +13,7 @@ import com.meronmks.zimitta.BuildConfig;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.CoreActivity;
 
-public class About extends ActionBarActivity {
+public class About extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
