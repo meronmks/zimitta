@@ -31,6 +31,9 @@ public class CoreVariable {
     public static final int REQUEST_PICK_CONTENT = 0;
     public static final int REQUEST_KITKAT_PICK_CONTENT = 1;
     public static int nowNetworkStatus;
+    public static RateLimitVariable HomeTimeline = new RateLimitVariable();
+    public static RateLimitVariable MentionsTimeline = new RateLimitVariable();
+    public static RateLimitVariable UserListStatuses = new RateLimitVariable();
 
     public static void initializationVariable(Context context){
         Destroy();

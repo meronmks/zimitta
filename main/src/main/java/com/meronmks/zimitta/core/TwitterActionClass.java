@@ -14,6 +14,7 @@ import com.meronmks.zimitta.Adapter.DMAdapter;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
+import com.meronmks.zimitta.Variable.RateLimitVariable;
 import com.meronmks.zimitta.menu.List_Menu;
 import twitter4j.*;
 import twitter4j.conf.Configuration;
@@ -303,9 +304,9 @@ public class TwitterActionClass {
      * タイムライン非同期処理
      */
     public void getTimeLine(final Long ID) {
-        AsyncTask<Void, Void, List<twitter4j.Status>> task = new AsyncTask<Void, Void, List<twitter4j.Status>>() {
+        AsyncTask<Void, Void, ResponseList<twitter4j.Status>> task = new AsyncTask<Void, Void, ResponseList<twitter4j.Status>>() {
             @Override
-            protected List<twitter4j.Status> doInBackground(Void... params) {
+            protected ResponseList<twitter4j.Status> doInBackground(Void... params) {
                 try {
                     getListViewPosition();
                     Paging paging = new Paging();
@@ -321,10 +322,11 @@ public class TwitterActionClass {
             }
 
             @Override
-            protected void onPostExecute(List<twitter4j.Status> result) {
+            protected void onPostExecute(ResponseList<twitter4j.Status> result) {
                 CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result,ID);
+                    setRateLimitStaatus(CoreVariable.HomeTimeline, result.getRateLimitStatus());
                 }
             }
         };
@@ -335,9 +337,9 @@ public class TwitterActionClass {
      * Mention取得メソッド
      */
     public void getMention(final Long ID) {
-        AsyncTask<Void, Void, List<twitter4j.Status>> task = new AsyncTask<Void, Void, List<twitter4j.Status>>() {
+        AsyncTask<Void, Void, ResponseList<twitter4j.Status>> task = new AsyncTask<Void, Void, ResponseList<Status>>() {
             @Override
-            protected List<twitter4j.Status> doInBackground(Void... params) {
+            protected ResponseList<twitter4j.Status> doInBackground(Void... params) {
                 try {
                     getListViewPosition();
                     Paging paging = new Paging();
@@ -353,10 +355,11 @@ public class TwitterActionClass {
             }
 
             @Override
-            protected void onPostExecute(List<twitter4j.Status> result) {
+            protected void onPostExecute(ResponseList<twitter4j.Status> result) {
                 CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result,ID);
+                    setRateLimitStaatus(CoreVariable.MentionsTimeline, result.getRateLimitStatus());
                 }
             }
         };
@@ -369,10 +372,10 @@ public class TwitterActionClass {
      */
     public void getListTimeLine(final Long ID, final int ListID) {
 
-        AsyncTask<Void, Void, List<twitter4j.Status>> task = new AsyncTask<Void, Void, List<twitter4j.Status>>() {
+        AsyncTask<Void, Void, ResponseList<twitter4j.Status>> task = new AsyncTask<Void, Void, ResponseList<twitter4j.Status>>() {
             long timeLineID = ListIDs[ListID];
             @Override
-            protected List<twitter4j.Status> doInBackground(Void... params) {
+            protected ResponseList<twitter4j.Status> doInBackground(Void... params) {
                 try {
                     getListViewPosition();
                     Paging paging = new Paging();
@@ -388,10 +391,11 @@ public class TwitterActionClass {
             }
 
             @Override
-            protected void onPostExecute(List<twitter4j.Status> result) {
+            protected void onPostExecute(ResponseList<twitter4j.Status> result) {
                 CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result,ID);
+                    setRateLimitStaatus(CoreVariable.UserListStatuses, result.getRateLimitStatus());
                 }
             }
         };
@@ -1284,8 +1288,7 @@ public class TwitterActionClass {
     /**
      * Streaming開始
      */
-    public void startStreaming()
-    {
+    public void startStreaming() {
         //CoreActivity.twitterStreamがnull（未定義）でなくMainActivity.runStreamがfalseなら
         if(CoreVariable.twitterStream != null && CoreVariable.runStream == false) {
             //TwitterStream#user() を呼び出し、ユーザーストリームを開始する
@@ -1304,6 +1307,65 @@ public class TwitterActionClass {
             CoreVariable.runStream = false;
             Log.d("StreamingStatus", "ShutdownStreaming");
         }
+    }
+
+    public void getRateLimitStatus(){
+        final Twitter mTwitter;
+        SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
+        mTwitter = TwitterUtils.getTwitterInstance(activity, accountIDCount.getLong("ID_Num_Now", 0));
+        //非同期
+        AsyncTask<Void, Void, Map<String, RateLimitStatus>> task = new AsyncTask<Void, Void, Map<String, RateLimitStatus>>() {
+
+            @Override
+            protected Map<String, RateLimitStatus> doInBackground(Void... params) {
+                try {
+                    return mTwitter.getRateLimitStatus();
+                } catch (TwitterException e) {
+                    // TODO 自動生成された catch ブロック
+                    e.printStackTrace();
+                };
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Map<String, RateLimitStatus> result) {
+                if(result == null) return;
+                for (String endpoint : result.keySet()) {
+                    RateLimitStatus rateStatus = result.get(endpoint);
+                    switch (endpoint){
+                        case "/statuses/home_timeline":
+                            setRateLimitStaatus(CoreVariable.HomeTimeline, rateStatus);
+                            break;
+                        case "/statuses/mentions_timeline":
+                            setRateLimitStaatus(CoreVariable.MentionsTimeline, rateStatus);
+                            break;
+                        case "/lists/statuses":
+                            setRateLimitStaatus(CoreVariable.UserListStatuses, rateStatus);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+        };
+        task.execute();
+    }
+
+    /**
+     * Limit情報を代入する奴
+     * @param rateLimitVariable
+     * @param rateLimitStatus
+     */
+    protected void setRateLimitStaatus(RateLimitVariable rateLimitVariable, RateLimitStatus rateLimitStatus){
+        //現在の最大回数
+        rateLimitVariable.HourlyLimit = rateLimitStatus.getLimit();
+        //残りアクセス可能回数
+        rateLimitVariable.RemainingHits = rateLimitStatus.getRemaining();
+        //リセットされる時間
+        rateLimitVariable.ResetTimeInSeconds = rateLimitStatus.getResetTimeInSeconds();
+        //リセットされる"までの"秒数
+        rateLimitVariable.SecondsUntilReset = rateLimitStatus.getSecondsUntilReset();
     }
 
     /**
