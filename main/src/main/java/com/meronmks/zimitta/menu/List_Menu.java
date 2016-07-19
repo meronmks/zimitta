@@ -13,6 +13,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.meronmks.zimitta.Activity.*;
 import com.meronmks.zimitta.AppCooperation.WebTwitterLoginActivity;
+import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
 import com.meronmks.zimitta.settings.SettingActivity;
@@ -302,10 +303,28 @@ public class List_Menu {
 	 */
 	public void Main_menu(final Activity activity, final Context context,boolean isDebugMode, final long Userid) {
 		String[] dialogItem;
+        String apiLimit = "";
+        switch (CoreVariable.ActiveFragmentView){
+            case 0:
+                apiLimit = new String("API:" + CoreVariable.HomeTimeline.RemainingHits + "/" + CoreVariable.HomeTimeline.HourlyLimit);
+                break;
+            case 1:
+                apiLimit = new String("API:" + CoreVariable.MentionsTimeline.RemainingHits + "/" + CoreVariable.MentionsTimeline.HourlyLimit);
+                break;
+            case 2:
+                apiLimit = new String("API:" + CoreVariable.UserListStatuses.RemainingHits + "/" + CoreVariable.UserListStatuses.HourlyLimit);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
 		if(isDebugMode) {
-			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "設定","ShowLimit"};    //メニューの項目作り
+			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "設定","ShowLimit", apiLimit};    //メニューの項目作り
 		}else{
-			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "設定"};    //メニューの項目作り
+			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "設定", apiLimit};    //メニューの項目作り
 		}
 		AlertDialog.Builder dialogMenu = new AlertDialog.Builder(context);
 		dialogMenu.setItems(dialogItem, (dialog, which) -> {

@@ -112,8 +112,8 @@
     <orderEntry type="library" exported="" name="twitter4j-media-support-4.0.4" level="project" />
     <orderEntry type="library" exported="" name="rxbinding-0.3.0" level="project" />
     <orderEntry type="library" exported="" name="httpclient-4.3.6" level="project" />
-    <orderEntry type="library" exported="" name="twitter4j-core-4.0.4" level="project" />
     <orderEntry type="library" exported="" name="glide-3.6.1" level="project" />
+    <orderEntry type="library" exported="" name="twitter4j-core-4.0.4" level="project" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.9" level="project" />
     <orderEntry type="library" exported="" name="android-android-24" level="project" />
   </component>

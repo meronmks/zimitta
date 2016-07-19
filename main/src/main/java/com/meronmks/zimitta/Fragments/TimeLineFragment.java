@@ -35,6 +35,7 @@ public class TimeLineFragment extends Fragment {
         mtAction = new TwitterActionClass(Activity, CoreVariable.TLmAdapter,lv,"TL",null);
 
         if(CoreVariable.TLmAdapter.getCount() == 0){
+            mtAction.getRateLimitStatus();
             CoreActivity.progresRun();
             mtAction.getTimeLine(null);
         }

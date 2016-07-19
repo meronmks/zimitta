@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import com.meronmks.zimitta.Fragments.*;
 import com.meronmks.zimitta.R;
@@ -87,11 +88,11 @@ public class MainTabFragmentPagerAdapter extends FragmentStatePagerAdapter {
         } else {
             switch (position) {
                 case 0:
-                    return "Home API:" + CoreVariable.HomeTimeline.RemainingHits + "/" + CoreVariable.HomeTimeline.HourlyLimit;
+                    return "Home";
                 case 1:
-                    return "Mention API:" + CoreVariable.MentionsTimeline.RemainingHits + "/" + CoreVariable.MentionsTimeline.HourlyLimit;
+                    return "Mention" ;
                 case 2:
-                    return "List API:" + CoreVariable.UserListStatuses.RemainingHits + "/" + CoreVariable.UserListStatuses.HourlyLimit;
+                    return "List";
                 case 3:
                     return "DM";
                 default:
