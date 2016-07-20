@@ -322,7 +322,7 @@ public class List_Menu {
                 break;
         }
 		if(isDebugMode) {
-			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "設定","ShowLimit", apiLimit};    //メニューの項目作り
+			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "設定", apiLimit, "ShowLimit"};    //メニューの項目作り
 		}else{
 			dialogItem = new String[]{"プロフィール表示", "アカウント切替と追加", "設定", apiLimit};    //メニューの項目作り
 		}
@@ -347,13 +347,12 @@ public class List_Menu {
                     Intent setting = new Intent(context, SettingActivity.class);
                     context.startActivity(setting);
                     break;
-                case 3:
+                case 4:
                     TwitterActionClass mtAction;
                     mtAction = new TwitterActionClass(context);
                     mtAction.debugMode();
                     break;
                 default:
-                    CoreActivity.showToast("Menuで例外発生");
                     break;
             }
         }).create().show();
