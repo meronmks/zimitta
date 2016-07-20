@@ -33,6 +33,7 @@ public class CoreActivity extends AppCompatActivity {
     private TwitterActionClass mtAction;
     private ViewPager viewPager;
     private  MainTabFragmentPagerAdapter pagerAdapter;
+    private NetworkInfoReceiver receiver;
 
     //共有変数定義
     private static Context MainContext;
@@ -97,7 +98,7 @@ public class CoreActivity extends AppCompatActivity {
 
             //レシーバー呼び出し
             IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
-            NetworkInfoReceiver receiver = new NetworkInfoReceiver();
+            receiver = new NetworkInfoReceiver();
             if(filter != null && receiver != null) {
                 registerReceiver(receiver, filter);
             }
@@ -198,5 +199,6 @@ public class CoreActivity extends AppCompatActivity {
         super.onDestroy();
         TimeLineFragment.StreamingStop();
         CoreVariable.Destroy();
+        unregisterReceiver(receiver);
     }
 }
