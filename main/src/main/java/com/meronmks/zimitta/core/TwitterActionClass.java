@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.widget.*;
 import com.meronmks.zimitta.Adapter.DMAdapter;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
@@ -23,7 +22,6 @@ import twitter4j.conf.ConfigurationBuilder;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * Created by meronmks on 2015/02/08.
@@ -359,7 +357,7 @@ public class TwitterActionClass {
                 CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result,ID);
-                    setRateLimitStaatus(CoreVariable.MentionsTimeline, result.getRateLimitStatus());
+                    setRateLimitStaatus(CoreVariable.MentionsTimelineLimit, result.getRateLimitStatus());
                 }
             }
         };
@@ -395,7 +393,7 @@ public class TwitterActionClass {
                 CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result,ID);
-                    setRateLimitStaatus(CoreVariable.UserListStatuses, result.getRateLimitStatus());
+                    setRateLimitStaatus(CoreVariable.UserListStatusesLimit, result.getRateLimitStatus());
                 }
             }
         };
@@ -438,9 +436,9 @@ public class TwitterActionClass {
      * DirectMessageの取得メソッド
      * */
     public void getDirectMessage(final Long ID){
-        AsyncTask<Void, Void, List<DirectMessage>> task = new AsyncTask<Void, Void, List<twitter4j.DirectMessage>>() {
+        AsyncTask<Void, Void, ResponseList<DirectMessage>> task = new AsyncTask<Void, Void, ResponseList<twitter4j.DirectMessage>>() {
             @Override
-            protected List<DirectMessage> doInBackground(Void... params) {
+            protected ResponseList<DirectMessage> doInBackground(Void... params) {
                 try {
                     getListViewPosition();
                     Paging p = new Paging();
@@ -455,10 +453,11 @@ public class TwitterActionClass {
                 }
             }
             @Override
-            protected void onPostExecute(List<twitter4j.DirectMessage> result) {
+            protected void onPostExecute(ResponseList<twitter4j.DirectMessage> result) {
                 CoreActivity.progresStop();
                 if(result != null){
                     setMessegetoAdapter(result, ID);
+                    setRateLimitStaatus(CoreVariable.DirectMessageLimit, result.getRateLimitStatus());
                 }
             }
         };
@@ -493,6 +492,7 @@ public class TwitterActionClass {
                 CoreActivity.progresStop();
                 if(result != null){
                     setItemtoAdapter(result.getTweets(),ID);
+                    setRateLimitStaatus(CoreVariable.SearchLimit, result.getRateLimitStatus());
                 }
             }
         };
@@ -1337,10 +1337,16 @@ public class TwitterActionClass {
                             setRateLimitStaatus(CoreVariable.HomeTimeline, rateStatus);
                             break;
                         case "/statuses/mentions_timeline":
-                            setRateLimitStaatus(CoreVariable.MentionsTimeline, rateStatus);
+                            setRateLimitStaatus(CoreVariable.MentionsTimelineLimit, rateStatus);
                             break;
                         case "/lists/statuses":
-                            setRateLimitStaatus(CoreVariable.UserListStatuses, rateStatus);
+                            setRateLimitStaatus(CoreVariable.UserListStatusesLimit, rateStatus);
+                            break;
+                        case "/direct_messages":
+                            setRateLimitStaatus(CoreVariable.DirectMessageLimit, rateStatus);
+                            break;
+                        case "/search/tweets":
+                            setRateLimitStaatus(CoreVariable.SearchLimit, rateStatus);
                             break;
                         default:
                             break;

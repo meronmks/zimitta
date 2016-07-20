@@ -2,7 +2,6 @@ package com.meronmks.zimitta.menu;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.app.ShareCompat;
@@ -12,7 +11,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.meronmks.zimitta.Activity.*;
-import com.meronmks.zimitta.AppCooperation.WebTwitterLoginActivity;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterActionClass;
@@ -309,14 +307,16 @@ public class List_Menu {
                 apiLimit = new String("API:" + CoreVariable.HomeTimeline.RemainingHits + "/" + CoreVariable.HomeTimeline.HourlyLimit);
                 break;
             case 1:
-                apiLimit = new String("API:" + CoreVariable.MentionsTimeline.RemainingHits + "/" + CoreVariable.MentionsTimeline.HourlyLimit);
+                apiLimit = new String("API:" + CoreVariable.MentionsTimelineLimit.RemainingHits + "/" + CoreVariable.MentionsTimelineLimit.HourlyLimit);
                 break;
             case 2:
-                apiLimit = new String("API:" + CoreVariable.UserListStatuses.RemainingHits + "/" + CoreVariable.UserListStatuses.HourlyLimit);
+                apiLimit = new String("API:" + CoreVariable.UserListStatusesLimit.RemainingHits + "/" + CoreVariable.UserListStatusesLimit.HourlyLimit);
                 break;
             case 3:
+                apiLimit = new String("API:" + CoreVariable.DirectMessageLimit.RemainingHits + "/" + CoreVariable.DirectMessageLimit.HourlyLimit);
                 break;
             case 4:
+                apiLimit = new String("API:" + CoreVariable.SearchLimit.RemainingHits + "/" + CoreVariable.SearchLimit.HourlyLimit);
                 break;
             default:
                 break;
