@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
+import com.meronmks.zimitta.Listener.MonitorInputStream;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.CustomSurfaceView;
 
@@ -53,7 +54,14 @@ public class ImageActivity extends Activity {
 					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 					connection.setDoInput(true);
 					connection.connect();
+					final long contentSize = connection.getContentLength();
 					InputStream input = connection.getInputStream();
+					input = new MonitorInputStream(input) {
+						@Override
+						public void onStreamRead(long totalReadSize, int size) {
+							//listener.onLoadingProgressUpdated(totalReadSize, contentSize);
+						}
+					};
 					Bitmap myBitmap = BitmapFactory.decodeStream(input);
 					return myBitmap;
 				} catch (IOException e) {
