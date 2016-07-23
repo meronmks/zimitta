@@ -52,8 +52,7 @@
                   android:label="@string/web_login_text"/>
         <activity android:name=".AppCooperation.ApplicationsCooperationActivity"
                   android:label="@string/app_cooperation_text"/>
-        <activity android:name=".Activity.ImageActivity"
-                  android:theme="@android:style/Theme.Translucent"/>
+        <activity android:name=".Activity.ImageActivity" />
         <activity android:name=".Activity.TweetDetail"
                 android:label="@string/tweet_detail_label_text"/>
         <activity android:name=".settings.SettingActivity"
