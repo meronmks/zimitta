@@ -20,6 +20,7 @@
 ## 参考にしたサイト等 ##
 * [[Android] 様々なジェスチャーを処理する(1) 拡大縮小](http://chicketen.blog.jp/archives/1579621.html)
 * [[Android] 様々なジェスチャーを処理する(2) 移動](http://chicketen.blog.jp/archives/1622120.html)
+* [Android (Java) で InputStream / OutputStream の進捗状況の取得・表示](http://foreignkey.toyao.net/archives/1386)
 
 ## 直さないといけないバグ ##
 * 実機でもOutOfMemoryで落ちることがある
@@ -43,3 +44,4 @@
 * ふぁぼ+RTを同時にする機能の追加
 * メニュー部分にリミット情報の表示始めました
 * レシーバーがエラー吐いてるのをどうにかした
+* 画像の読み込み時に進捗を表示するようにした

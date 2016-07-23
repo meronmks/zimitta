@@ -2,14 +2,19 @@ package com.meronmks.zimitta.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
+import com.meronmks.zimitta.Listener.MonitorInputStream;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.CustomSurfaceView;
 
@@ -23,17 +28,24 @@ public class ImageActivity extends Activity {
 
 	private static CustomSurfaceView surfaceView;
 	private RelativeLayout rootLayout;
+	private ProgressBar progressBar;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		// UncaughtExceptionHandlerを実装したクラスをセットする。
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Intent intent = getIntent();
 		String Image = intent.getStringExtra("Imeges");
+
+		rootLayout = new RelativeLayout(this);
 		surfaceView = new CustomSurfaceView(getApplicationContext());
-		surfaceView.setImageResourceId(R.drawable.ic_action_refresh);
-		setContentView(surfaceView);
+		surfaceView.setImageResourceId(R.drawable.clear);
+
+		progressBar = new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
+		setContentView(rootLayout);
+		rootLayout.addView(surfaceView);
+		rootLayout.addView(progressBar, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
 		getBitmapFromURL(Image);
     }
 
@@ -53,7 +65,15 @@ public class ImageActivity extends Activity {
 					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 					connection.setDoInput(true);
 					connection.connect();
+					long contentSize = connection.getContentLength();
+					progressBar.setMax((int)contentSize);
 					InputStream input = connection.getInputStream();
+					input = new MonitorInputStream(input) {
+						@Override
+						public void onStreamRead(long totalReadSize, int size) {
+							progressBar.setProgress((int)totalReadSize);
+						}
+					};
 					Bitmap myBitmap = BitmapFactory.decodeStream(input);
 					return myBitmap;
 				} catch (IOException e) {
@@ -67,6 +87,7 @@ public class ImageActivity extends Activity {
 				if(result != null)
 				{
 					surfaceView.setImageBitmap(result);
+					progressBar.setVisibility(View.INVISIBLE);
 				}else
 				{
 					showDialog("画像取得に失敗しました。");
@@ -74,13 +95,6 @@ public class ImageActivity extends Activity {
 			}
 		};
 		task.execute();
-	}
-
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) {
-		super.onWindowFocusChanged(hasFocus);
-		// Viewサイズを取得する
-		rootLayout = (RelativeLayout) findViewById(R.id.relativeLayout1);
 	}
 
 	/**
@@ -113,4 +127,6 @@ public class ImageActivity extends Activity {
         });
         alertDialog.show();
 	}
+
+
 }
