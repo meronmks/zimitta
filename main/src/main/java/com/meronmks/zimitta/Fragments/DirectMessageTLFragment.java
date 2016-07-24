@@ -29,11 +29,11 @@ public class DirectMessageTLFragment extends Fragment {
 
         Activity = getActivity();
 
-        lv.setAdapter(CoreVariable.DMAdapter);
+        lv.setAdapter(CoreVariable.DirectMessageAdapter);
 
-        mtAction = new TwitterActionClass(Activity, CoreVariable.DMAdapter,lv,"DM",null);
+        mtAction = new TwitterActionClass(Activity, CoreVariable.DirectMessageAdapter,lv,"DM",null);
 
-        if(CoreVariable.DMAdapter.getCount() == 0){
+        if(CoreVariable.DirectMessageAdapter.getCount() == 0){
             CoreActivity.progresRun();
             mtAction.getDirectMessage(null);
         }
@@ -45,7 +45,7 @@ public class DirectMessageTLFragment extends Fragment {
         //表示の定期更新
         timer = new Timer();
         InvalidateFragmentClass invalidat = new InvalidateFragmentClass();
-        invalidat.invalidate(timer, CoreVariable.DMAdapter);
+        invalidat.invalidate(timer, CoreVariable.DirectMessageAdapter);
 
     }
 

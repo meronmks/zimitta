@@ -24,7 +24,7 @@ public class CoreVariable {
     public static TweetAdapter TLmAdapter;
     public static TweetAdapter mentionTLmAdapter;
     public static TweetAdapter listTLmAdapter;
-    public static DMAdapter DMAdapter;
+    public static DMAdapter DirectMessageAdapter;
     public static ArrayList<Long> deleteTweet;
     public static ArrayList<Status> stockTweet;
     public static TweetAdapter searchTweet;
@@ -43,7 +43,7 @@ public class CoreVariable {
         listTLmAdapter = new TweetAdapter(context);
         mentionTLmAdapter = new TweetAdapter(context);
         searchTweet = new TweetAdapter(context);
-        DMAdapter = new DMAdapter(context);
+        DirectMessageAdapter = new DMAdapter(context);
         deleteTweet = new ArrayList<Long>();
         stockTweet = new ArrayList<Status>();
         ActiveFragmentView = 0;
