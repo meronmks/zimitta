@@ -1,11 +1,13 @@
 package com.meronmks.zimitta.Activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +16,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -106,9 +111,13 @@ public class TweetActivity extends AppCompatActivity {
         findViewById(R.id.Image_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_PICK);
-				intent.setType("image/*");
-				startActivityForResult(intent, 1);
+				if(ContextCompat.checkSelfPermission(TweetActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+					Intent intent = new Intent(Intent.ACTION_PICK);
+					intent.setType("image/*");
+					startActivityForResult(intent, 1);
+				}else{
+					ActivityCompat.requestPermissions(TweetActivity.this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+				}
             }
         });
 
