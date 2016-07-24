@@ -199,6 +199,7 @@ public class CoreActivity extends AppCompatActivity {
         super.onDestroy();
         TimeLineFragment.StreamingStop();
         CoreVariable.Destroy();
+        if(receiver == null)return;
         unregisterReceiver(receiver);
     }
 }
