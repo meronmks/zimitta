@@ -2,6 +2,7 @@ package com.meronmks.zimitta.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,6 +121,7 @@ public class DMAdapter extends StatusCoreAdapter<DirectMessage> {
             holder.rt_To.setVisibility(View.GONE);
             holder.rticon.setVisibility(View.GONE);
             holder.relativeLayout.setBackgroundResource(R.drawable.listitem_color);
+            Linkify.addLinks(holder.text, Linkify.WEB_URLS);
         }else{
             convertView = mInflater.inflate(R.layout.list_item_null, null);
         }
