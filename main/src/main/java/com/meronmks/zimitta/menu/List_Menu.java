@@ -20,6 +20,12 @@ import twitter4j.*;
 
 public class List_Menu {
 
+    /**
+     * ユーザに対するメニュー
+     * @param context
+     * @param mTwitter
+     * @param user
+     */
 	public void Prof_Menu(final Context context, final Twitter mTwitter, final User user){
 		String[] dialogItem;
 		dialogItem = new String[]{"ブロック","ミュート"};	//メニューの項目作り
@@ -61,6 +67,13 @@ public class List_Menu {
         }).create().show();
 	}
 
+    /**
+     * 連携アプリに対するメニュー（現在封印中）
+     * @param context
+     * @param authenticity_token
+     * @param app_oauth
+     * @param client
+     */
 	public void App_Menu(Context context, final String authenticity_token,final String app_oauth,final AsyncHttpClient client){
 		String[] dialogItem;
 		dialogItem = new String[]{"連携解除"};	//メニューの項目作り
@@ -99,14 +112,18 @@ public class List_Menu {
             }
         }).create().show();
 	}
-	
-	public void Tweet_Menu(final Context context, final Status Tweet)
-	{
+
+    /**
+     * ツイートに対するメニュー
+     * @param context
+     * @param Tweet
+     */
+	public void Tweet_Menu(final Context context, final Status Tweet) {
 		String[] dialogItem;
 		if(CoreActivity.isDebugMode){
-			dialogItem = new String[]{"詳細","返信", "リツイート", "ふぁぼ", "ふぁぼ+RT","ユーザー詳細","リンク先処理","DM送信","共有","ShowData"};	//メニューの項目作り
+			dialogItem = new String[]{"詳細","返信", "リツイート", "ふぁぼ", "ふぁぼ+RT","ユーザー詳細","DM送信","共有","ShowData"};	//メニューの項目作り
 		}else {
-			dialogItem = new String[]{"詳細", "返信", "リツイート", "ふぁぼ", "ふぁぼ+RT", "ユーザー詳細", "リンク先処理", "DM送信", "共有"};    //メニューの項目作り
+			dialogItem = new String[]{"詳細", "返信", "リツイート", "ふぁぼ", "ふぁぼ+RT", "ユーザー詳細", "DM送信", "共有"};    //メニューの項目作り
 		}
 		AlertDialog.Builder dialogMenu = new AlertDialog.Builder(context);
         dialogMenu.setItems(dialogItem, (dialog, which) -> {
@@ -208,23 +225,19 @@ public class List_Menu {
                         }).create().show();
                     }
                     break;
-                case 6:	//URLを開く
-                    ListMenuAdon list = new ListMenuAdon(context);
-                    list.URLList(Tweet);
-                    break;
-                case 7: //DM
+                case 6: //DM
                     Intent DMintent = new Intent(context, DMSendActivity.class);
                     DMintent.putExtra("mentionID", Tweet.getUser().getId());
                     context.startActivity(DMintent);
                     break;
-                case 8:	//共有
+                case 7:	//共有
                     ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from((Activity) context);
                     builder.setText(Tweet.getText());
                     builder.setType("text/plain");
                     // Intent を起動する
                     builder.startChooser();
                     break;
-                case 9://デバック用
+                case 8://デバック用
                     ShowDebugStatusAll(context,Tweet);
                     break;
                 default:
@@ -234,6 +247,11 @@ public class List_Menu {
         }).create().show();
 	}
 
+    /**
+     * DMでのメニュー
+     * @param context
+     * @param Tweet
+     */
 	public void DM_Menu(final Context context, final twitter4j.DirectMessage Tweet){
 		String[] dialogItem;
 		dialogItem = new String[]{"返信","ユーザー詳細"};	//メニューの項目作り
@@ -258,8 +276,12 @@ public class List_Menu {
         }).create().show();
 	}
 
-	public void Detail_Menu(final Context context, final Status Tweet)
-	{
+    /**
+     * ツイート詳細画面でのメニュー
+     * @param context
+     * @param Tweet
+     */
+	public void Detail_Menu(final Context context, final Status Tweet) {
 		String[] dialogItem;
 		dialogItem = new String[]{"ツイートをコピー","ユーザー詳細","ツイートのリンクをコピー"};	//メニューの項目作り
 		AlertDialog.Builder dialogMenu = new AlertDialog.Builder(context);

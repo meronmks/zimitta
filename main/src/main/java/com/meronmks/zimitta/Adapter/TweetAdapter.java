@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -209,8 +210,8 @@ public class TweetAdapter extends StatusCoreAdapter<Status> {
                     break;
                 }
             }
-
             holder.relativeLayout.setBackgroundResource(R.drawable.listitem_color);
+            Linkify.addLinks(holder.text, Linkify.WEB_URLS);
         }else{
             //ツイート以外を入れる用
             convertView = mInflater.inflate(R.layout.list_item_null, null);

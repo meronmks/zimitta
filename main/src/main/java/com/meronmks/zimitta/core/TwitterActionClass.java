@@ -764,6 +764,7 @@ public class TwitterActionClass {
                             }
                         } else if (position == 0 && mAdapter.getItem(position) == null) {
                             //ヘッダーがクリックされた
+                            CoreActivity.progresRun();
                             if (invoker.equals("TL")) {
                                 if(sp.getBoolean("Streeming_stok", false) == false) {
                                     CoreActivity.progresRun();
