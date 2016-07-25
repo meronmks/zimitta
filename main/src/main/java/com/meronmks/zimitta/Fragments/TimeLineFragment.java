@@ -32,7 +32,9 @@ public class TimeLineFragment extends Fragment {
 
         lv.setAdapter(CoreVariable.TLmAdapter);
 
-        mtAction = new TwitterActionClass(Activity, CoreVariable.TLmAdapter,lv,"TL",null);
+        if(mtAction == null) {
+            mtAction = new TwitterActionClass(Activity, CoreVariable.TLmAdapter, lv, "TL", null);
+        }
 
         if(CoreVariable.TLmAdapter.getCount() == 0){
             mtAction.getRateLimitStatus();
@@ -70,6 +72,7 @@ public class TimeLineFragment extends Fragment {
     public void onPause() {
         super.onPause();
         timer.cancel();
+
     }
 
     public static void StreamingStart(){

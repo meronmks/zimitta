@@ -143,7 +143,7 @@ public class CoreActivity extends AppCompatActivity {
         PendingIntent pi = PendingIntent.getActivity(MainContext, 0, i, 0);
 
         n = new Notification.Builder(MainContext)
-                .setContentIntent(pi).setSmallIcon(R.drawable.app_icon)
+                .setContentIntent(pi).setSmallIcon(R.drawable.ic_launcher)
                 .setTicker(text).setContentTitle(text)
                 .setContentText("").setWhen(System.currentTimeMillis());
         // 通知時の音・バイブ・ライト

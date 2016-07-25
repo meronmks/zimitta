@@ -36,7 +36,9 @@ public class SearchTweetFramgent extends Fragment {
 
         lv.setAdapter(CoreVariable.searchTweet);
 
-        mtAction = new TwitterActionClass(Activity, CoreVariable.searchTweet,lv,"searchTab",null);
+        if(mtAction == null) {
+            mtAction = new TwitterActionClass(Activity, CoreVariable.searchTweet, lv, "searchTab", null);
+        }
     }
 
     @Override

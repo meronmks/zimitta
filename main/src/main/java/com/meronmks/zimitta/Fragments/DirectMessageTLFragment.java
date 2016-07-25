@@ -31,7 +31,9 @@ public class DirectMessageTLFragment extends Fragment {
 
         lv.setAdapter(CoreVariable.DirectMessageAdapter);
 
-        mtAction = new TwitterActionClass(Activity, CoreVariable.DirectMessageAdapter,lv,"DM",null);
+        if(mtAction == null) {
+            mtAction = new TwitterActionClass(Activity, CoreVariable.DirectMessageAdapter, lv, "DM", null);
+        }
 
         if(CoreVariable.DirectMessageAdapter.getCount() == 0){
             CoreActivity.progresRun();
