@@ -2,6 +2,7 @@ package com.meronmks.zimitta.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Spannable;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import com.meronmks.zimitta.Variable.CoreVariable;
 import twitter4j.DirectMessage;
 import twitter4j.MediaEntity;
 import com.bumptech.glide.Glide;
+import com.meronmks.zimitta.core.MutableLinkMovementMethod;
+
 import twitter4j.URLEntity;
 
 import java.util.Calendar;
@@ -121,6 +124,21 @@ public class DMAdapter extends StatusCoreAdapter<DirectMessage> {
             holder.rt_To.setVisibility(View.GONE);
             holder.rticon.setVisibility(View.GONE);
             holder.relativeLayout.setBackgroundResource(R.drawable.listitem_color);
+            holder.text.setOnTouchListener((view, event) -> {
+                TextView textView = (TextView) view;
+                //LinkMovementMethodを継承したもの 下記参照
+                MutableLinkMovementMethod m = new MutableLinkMovementMethod();
+                //MovementMethod m=LinkMovementMethod.getInstance();
+                //リンクのチェックを行うため一時的にsetする
+                textView.setMovementMethod(m);
+                boolean mt = m.onTouchEvent(textView, (Spannable) textView.getText(), event);
+                //チェックが終わったので解除する しないと親view(listview)に行けない
+                textView.setMovementMethod(null);
+                //setMovementMethodを呼ぶとフォーカスがtrueになるのでfalseにする
+                textView.setFocusable(false);
+                //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
+                return mt;
+            });
             Linkify.addLinks(holder.text, Linkify.WEB_URLS);
         }else{
             convertView = mInflater.inflate(R.layout.list_item_null, null);
