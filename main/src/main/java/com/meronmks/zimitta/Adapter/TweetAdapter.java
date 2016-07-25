@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -22,6 +24,8 @@ import com.meronmks.zimitta.Activity.ImageActivity;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.core.CoreActivity;
+import com.meronmks.zimitta.core.MutableLinkMovementMethod;
+
 import twitter4j.*;
 
 import java.text.DateFormat;
@@ -211,6 +215,21 @@ public class TweetAdapter extends StatusCoreAdapter<Status> {
                 }
             }
             holder.relativeLayout.setBackgroundResource(R.drawable.listitem_color);
+            holder.text.setOnTouchListener((view, event) -> {
+                TextView textView = (TextView) view;
+                //LinkMovementMethodを継承したもの 下記参照
+                MutableLinkMovementMethod m = new MutableLinkMovementMethod();
+                //MovementMethod m=LinkMovementMethod.getInstance();
+                //リンクのチェックを行うため一時的にsetする
+                textView.setMovementMethod(m);
+                boolean mt = m.onTouchEvent(textView, (Spannable) textView.getText(), event);
+                //チェックが終わったので解除する しないと親view(listview)に行けない
+                textView.setMovementMethod(null);
+                //setMovementMethodを呼ぶとフォーカスがtrueになるのでfalseにする
+                textView.setFocusable(false);
+                //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
+                return mt;
+            });
             Linkify.addLinks(holder.text, Linkify.WEB_URLS);
         }else{
             //ツイート以外を入れる用
