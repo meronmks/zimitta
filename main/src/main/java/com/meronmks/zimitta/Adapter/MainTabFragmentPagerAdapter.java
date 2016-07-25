@@ -4,14 +4,11 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.view.ViewGroup;
 
 import com.meronmks.zimitta.Fragments.*;
 import com.meronmks.zimitta.R;
-import com.meronmks.zimitta.Variable.CoreVariable;
 
-public class MainTabFragmentPagerAdapter extends FragmentStatePagerAdapter {
+public class MainTabFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private Context context;
 

@@ -30,7 +30,9 @@ public class MentionFragment extends Fragment {
 
         lv.setAdapter(CoreVariable.mentionTLmAdapter);
 
-        mtAction = new TwitterActionClass(Activity, CoreVariable.mentionTLmAdapter,lv,"Mention",null);
+		if(mtAction == null) {
+			mtAction = new TwitterActionClass(Activity, CoreVariable.mentionTLmAdapter, lv, "Mention", null);
+		}
 
 		if(CoreVariable.mentionTLmAdapter.getCount() == 0){
 			mtAction.getMention(null);

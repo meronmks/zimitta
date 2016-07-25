@@ -38,7 +38,9 @@ public class UserListTimeLineFragment extends Fragment {
 
         lv.setAdapter(CoreVariable.listTLmAdapter);
 
-        mtAction = new TwitterActionClass(Activity, CoreVariable.listTLmAdapter,lv,"UserTimeLineList",spinner);
+        if(mtAction == null) {
+            mtAction = new TwitterActionClass(Activity, CoreVariable.listTLmAdapter, lv, "UserTimeLineList", spinner);
+        }
 
         mtAction.getUserList(adapter);
 	}
