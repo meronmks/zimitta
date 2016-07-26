@@ -1,11 +1,6 @@
 package com.meronmks.zimitta.Fragments;
 
-import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
-import com.meronmks.zimitta.Adapter.DMAdapter;
+import com.meronmks.zimitta.Adapter.DirectMessageAdapterClass;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.core.UiHandler;
@@ -84,7 +79,7 @@ public class InvalidateFragmentClass {
      * @param timer
      * @param mAdapter
      */
-    public void invalidate(Timer timer, final DMAdapter mAdapter){
+    public void invalidate(Timer timer, final DirectMessageAdapterClass mAdapter){
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {

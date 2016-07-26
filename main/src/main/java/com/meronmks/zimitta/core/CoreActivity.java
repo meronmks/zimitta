@@ -1,7 +1,10 @@
 package com.meronmks.zimitta.core;
 
 import android.annotation.SuppressLint;
-import android.app.*;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
 import com.jakewharton.rxbinding.view.RxView;
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.meronmks.zimitta.Activity.TweetActivity;
@@ -32,7 +36,7 @@ public class CoreActivity extends AppCompatActivity {
     private static CircleProgressBar progres;
     private TwitterActionClass mtAction;
     private ViewPager viewPager;
-    private  MainTabFragmentPagerAdapter pagerAdapter;
+    private MainTabFragmentPagerAdapter pagerAdapter;
     private NetworkInfoReceiver receiver;
 
     //共有変数定義

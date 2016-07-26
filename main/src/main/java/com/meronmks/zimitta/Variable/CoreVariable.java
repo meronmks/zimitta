@@ -1,7 +1,7 @@
 package com.meronmks.zimitta.Variable;
 
 import android.content.Context;
-import com.meronmks.zimitta.Adapter.DMAdapter;
+import com.meronmks.zimitta.Adapter.DirectMessageAdapterClass;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -24,7 +24,7 @@ public class CoreVariable {
     public static TweetAdapter TLmAdapter;
     public static TweetAdapter mentionTLmAdapter;
     public static TweetAdapter listTLmAdapter;
-    public static DMAdapter DirectMessageAdapter;
+    public static DirectMessageAdapterClass DirectMessageAdapter;
     public static ArrayList<Long> deleteTweet;
     public static ArrayList<Status> stockTweet;
     public static TweetAdapter searchTweet;
@@ -43,7 +43,7 @@ public class CoreVariable {
         listTLmAdapter = new TweetAdapter(context);
         mentionTLmAdapter = new TweetAdapter(context);
         searchTweet = new TweetAdapter(context);
-        DirectMessageAdapter = new DMAdapter(context);
+        DirectMessageAdapter = new DirectMessageAdapterClass(context);
         deleteTweet = new ArrayList<Long>();
         stockTweet = new ArrayList<Status>();
         ActiveFragmentView = 0;

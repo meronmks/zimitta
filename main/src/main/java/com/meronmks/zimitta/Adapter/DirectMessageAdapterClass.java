@@ -23,12 +23,12 @@ import java.util.Date;
 /**
  * Created by p-user on 2015/01/20.
  */
-public class DMAdapter extends StatusCoreAdapter<DirectMessage> {
+public class DirectMessageAdapterClass extends StatusCoreAdapter<DirectMessage> {
     private LayoutInflater mInflater;
     private String TweetText;
     private ViewHolder holder;
 
-    public DMAdapter(Context context) {
+    public DirectMessageAdapterClass(Context context) {
         super(context, android.R.layout.simple_list_item_1);
         mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
     }

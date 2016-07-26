@@ -9,7 +9,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.*;
-import com.meronmks.zimitta.Adapter.DMAdapter;
+import com.meronmks.zimitta.Adapter.DirectMessageAdapterClass;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
@@ -31,7 +31,7 @@ public class TwitterActionClass {
     protected Context activity;
     protected Twitter mTwitter;
     protected TweetAdapter mAdapter;
-    protected DMAdapter mDMAdapter;
+    protected DirectMessageAdapterClass mDirectMessageAdapterClass;
     protected ListView listView;
     protected List_Menu menu;
     protected long[] ListIDs;
@@ -115,10 +115,10 @@ public class TwitterActionClass {
      * @param invokerName
      * @param spinnerArgument
      */
-    public TwitterActionClass(Context context, DMAdapter madapter, ListView lv , String invokerName, Spinner spinnerArgument){
+    public TwitterActionClass(Context context, DirectMessageAdapterClass madapter, ListView lv , String invokerName, Spinner spinnerArgument){
         //初期化
         activity = context;
-        mDMAdapter = madapter;
+        mDirectMessageAdapterClass = madapter;
         listView = lv;
         menu = new List_Menu();
         spinner = spinnerArgument;
@@ -566,20 +566,20 @@ public class TwitterActionClass {
      */
     protected void setMessegetoAdapter(final List<twitter4j.DirectMessage> messages, final Long MaxId){
                 int count;
-                if(mDMAdapter.getCount() == 0){
+                if(mDirectMessageAdapterClass.getCount() == 0){
                     count = 0;
                 }else if(MaxId != null){
-                    count = mDMAdapter.getCount() - 1;
+                    count = mDirectMessageAdapterClass.getCount() - 1;
                 }else{
                     count = 1;
                 }
                 for (final twitter4j.DirectMessage message : messages) {
-                    if(mDMAdapter.getCount() != 0 && mDMAdapter.getPosition(message) > 0 ) continue;
+                    if(mDirectMessageAdapterClass.getCount() != 0 && mDirectMessageAdapterClass.getPosition(message) > 0 ) continue;
                     final int finalCount = count;
                     new UiHandler() {
                         public void run() {
-                            mDMAdapter.insert(message, finalCount);
-                            mDMAdapter.notifyDataSetChanged();
+                            mDirectMessageAdapterClass.insert(message, finalCount);
+                            mDirectMessageAdapterClass.notifyDataSetChanged();
                         }
                     }.post();
                     count++;
@@ -750,6 +750,7 @@ public class TwitterActionClass {
          * 通常押し
          */
         if(!invoker.equals("DM")) {
+            if(mAdapter == null)return;
             mAdapter.clickObservable
                     .subscribe(position -> {
                         if (position != 0 && mAdapter.getItem(position) == null) {
@@ -785,19 +786,20 @@ public class TwitterActionClass {
 
                     });
         }else{
-            mDMAdapter.clickObservable
+            if(mDirectMessageAdapterClass == null)return;
+            mDirectMessageAdapterClass.clickObservable
                     .subscribe(position -> {
-                        if (position != 0 && mDMAdapter.getItem(position) == null) {
+                        if (position != 0 && mDirectMessageAdapterClass.getItem(position) == null) {
                             //フッターがクリックされた
                             CoreActivity.progresRun();
-                            getDirectMessage(mDMAdapter.getItem(position - 1).getId());
-                        } else if (position == 0 && mDMAdapter.getItem(position) == null) {
+                            getDirectMessage(mDirectMessageAdapterClass.getItem(position - 1).getId());
+                        } else if (position == 0 && mDirectMessageAdapterClass.getItem(position) == null) {
                             //ヘッダーがクリックされた
                             CoreActivity.progresRun();
                             getDirectMessage(null);
                         }
                         if(sp.getBoolean("Tap_Setting", true)) return;
-                        menu.DM_Menu(activity, mDMAdapter.getItem(position));
+                        menu.DM_Menu(activity, mDirectMessageAdapterClass.getItem(position));
                     });
         }
 
@@ -805,16 +807,18 @@ public class TwitterActionClass {
          * 長押し
          */
         if(!invoker.equals("DM")) {
+            if(mAdapter == null)return;
             mAdapter.longClickObservable
                     .filter(position -> (mAdapter.getItem(position) != null && sp.getBoolean("Tap_Setting", true)))
                     .subscribe(position -> {
                         menu.Tweet_Menu(activity, mAdapter.getItem(position));
                     });
         }else{
-            mDMAdapter.longClickObservable
-                    .filter(position -> (mDMAdapter.getItem(position) != null && sp.getBoolean("Tap_Setting", true)))
+            if(mDirectMessageAdapterClass == null)return;
+            mDirectMessageAdapterClass.longClickObservable
+                    .filter(position -> (mDirectMessageAdapterClass.getItem(position) != null && sp.getBoolean("Tap_Setting", true)))
                     .subscribe(position -> {
-                        menu.DM_Menu(activity, mDMAdapter.getItem(position));
+                        menu.DM_Menu(activity, mDirectMessageAdapterClass.getItem(position));
                     });
         }
     }
