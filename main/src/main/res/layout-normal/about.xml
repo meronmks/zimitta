@@ -69,15 +69,25 @@
                     android:layout_marginTop="16dp"
                     android:text="使用アイコン等\nmonochromat\n作者様に多大な感謝をいたします。" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="オープンソースライブラリ"
-                    android:id="@+id/aboutLicenseButton"
-                    android:layout_below="@+id/textView6"
-                    android:layout_centerHorizontal="true"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="オープンソースライブラリ"
+                android:id="@+id/aboutLicenseButton"
+                android:layout_below="@+id/textView6"
+                android:layout_centerHorizontal="true"/>
 
         </RelativeLayout>
     </ScrollView>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:adUnitId="ca-app-pub-7702909260317154/6069816626"
+        ads:adSize="BANNER"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -71,5 +71,11 @@
         <activity android:name=".user.UserFollowActivity"/>
         <activity android:name=".user.UserFollowersActivity"/>
         <activity android:name=".user.UserFavActivity"/>
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
     </application>
 </manifest>

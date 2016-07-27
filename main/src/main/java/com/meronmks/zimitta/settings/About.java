@@ -9,11 +9,16 @@ import android.view.*;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.meronmks.zimitta.BuildConfig;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.CoreActivity;
 
 public class About extends AppCompatActivity {
+
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,13 @@ public class About extends AppCompatActivity {
             }
 
         });
+
+        adView = (AdView)findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("6589876C65F878753519D46A23B269B6")
+                .build();
+        adView.loadAd(adRequest);
     }
 
     @Override
@@ -80,4 +92,21 @@ public class About extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        adView.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adView.resume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adView.destroy();
+    }
 }
