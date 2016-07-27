@@ -15,7 +15,7 @@ repositories {
     mavenCentral()
 }
 
-def VERSION_NAME = "4.0.0"
+def VERSION_NAME = "4.1.0"
 
 android {
     compileSdkVersion 24
@@ -25,7 +25,7 @@ android {
         applicationId "com.meronmks.zimitta"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 39
+        versionCode 40
         versionName VERSION_NAME
     }
 
