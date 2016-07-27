@@ -37,6 +37,7 @@ public class MentionFragment extends Fragment {
 		if(CoreVariable.mentionTLmAdapter.getCount() == 0){
 			mtAction.getMention(null);
 		}
+		CoreVariable.isMentionMenu = true;
 	}
 
  	@Override

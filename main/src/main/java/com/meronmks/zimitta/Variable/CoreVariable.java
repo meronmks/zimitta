@@ -37,6 +37,12 @@ public class CoreVariable {
     public static RateLimitVariable DirectMessageLimit = new RateLimitVariable();
     public static RateLimitVariable SearchLimit = new RateLimitVariable();
     public static int ActiveFragmentView;
+    public static boolean isTLMenu;
+    public static boolean isMentionMenu;
+    public static boolean isListMenu;
+    public static boolean isDmMenu;
+    public static boolean isSerchMenu;
+
     public static void initializationVariable(Context context){
         Destroy();
         TLmAdapter = new TweetAdapter(context);
@@ -47,6 +53,11 @@ public class CoreVariable {
         deleteTweet = new ArrayList<Long>();
         stockTweet = new ArrayList<Status>();
         ActiveFragmentView = 0;
+        isTLMenu = false;
+        isMentionMenu = false;
+        isListMenu = false;
+        isDmMenu = false;
+        isSerchMenu = false;
     }
 
     public static void Destroy(){

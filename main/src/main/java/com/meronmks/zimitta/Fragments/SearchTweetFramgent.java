@@ -39,6 +39,8 @@ public class SearchTweetFramgent extends Fragment {
         if(mtAction == null) {
             mtAction = new TwitterActionClass(Activity, CoreVariable.searchTweet, lv, "searchTab", null);
         }
+
+        CoreVariable.isSerchMenu = true;
     }
 
     @Override

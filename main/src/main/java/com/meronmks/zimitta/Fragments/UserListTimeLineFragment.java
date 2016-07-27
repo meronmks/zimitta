@@ -37,12 +37,10 @@ public class UserListTimeLineFragment extends Fragment {
         adapter = new ArrayAdapter(Activity, android.R.layout.simple_spinner_item);
 
         lv.setAdapter(CoreVariable.listTLmAdapter);
-
-        if(mtAction == null) {
-            mtAction = new TwitterActionClass(Activity, CoreVariable.listTLmAdapter, lv, "UserTimeLineList", spinner);
-        }
+        mtAction = new TwitterActionClass(Activity, CoreVariable.listTLmAdapter, lv, "UserTimeLineList", spinner);
 
         mtAction.getUserList(adapter);
+        CoreVariable.isListMenu = true;
 	}
 
     @Override

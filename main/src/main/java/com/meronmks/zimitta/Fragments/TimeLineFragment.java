@@ -31,16 +31,15 @@ public class TimeLineFragment extends Fragment {
         Activity = getActivity();
 
         lv.setAdapter(CoreVariable.TLmAdapter);
-
-        if(mtAction == null) {
-            mtAction = new TwitterActionClass(Activity, CoreVariable.TLmAdapter, lv, "TL", null);
-        }
+        mtAction = new TwitterActionClass(Activity, CoreVariable.TLmAdapter, lv, "TL", null);
 
         if(CoreVariable.TLmAdapter.getCount() == 0){
             mtAction.getRateLimitStatus();
             CoreActivity.progresRun();
             mtAction.getTimeLine(null);
         }
+
+        CoreVariable.isTLMenu = true;
 	}
 
     @Override

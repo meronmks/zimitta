@@ -39,6 +39,8 @@ public class DirectMessageTLFragment extends Fragment {
             CoreActivity.progresRun();
             mtAction.getDirectMessage(null);
         }
+
+        CoreVariable.isDmMenu = true;
     }
 
     @Override

@@ -751,6 +751,10 @@ public class TwitterActionClass {
          */
         if(!invoker.equals("DM")) {
             if(mAdapter == null)return;
+            if (invoker.equals("TL") && CoreVariable.isTLMenu)return;
+            if (invoker.equals("Mention") && CoreVariable.isMentionMenu)return;
+            if (invoker.equals("UserTimeLineList") && CoreVariable.isListMenu)return;
+            if (invoker.equals("searchTab") && CoreVariable.isSerchMenu)return;
             mAdapter.clickObservable
                     .subscribe(position -> {
                         if (position != 0 && mAdapter.getItem(position) == null) {
@@ -787,6 +791,7 @@ public class TwitterActionClass {
                     });
         }else{
             if(mDirectMessageAdapterClass == null)return;
+            if (CoreVariable.isDmMenu)return;
             mDirectMessageAdapterClass.clickObservable
                     .subscribe(position -> {
                         if (position != 0 && mDirectMessageAdapterClass.getItem(position) == null) {
@@ -808,6 +813,10 @@ public class TwitterActionClass {
          */
         if(!invoker.equals("DM")) {
             if(mAdapter == null)return;
+            if (invoker.equals("TL") && CoreVariable.isTLMenu)return;
+            if (invoker.equals("Mention") && CoreVariable.isMentionMenu)return;
+            if (invoker.equals("UserTimeLineList") && CoreVariable.isListMenu)return;
+            if (invoker.equals("searchTab") && CoreVariable.isSerchMenu)return;
             mAdapter.longClickObservable
                     .filter(position -> (mAdapter.getItem(position) != null && sp.getBoolean("Tap_Setting", true)))
                     .subscribe(position -> {
@@ -815,6 +824,7 @@ public class TwitterActionClass {
                     });
         }else{
             if(mDirectMessageAdapterClass == null)return;
+            if (CoreVariable.isDmMenu)return;
             mDirectMessageAdapterClass.longClickObservable
                     .filter(position -> (mDirectMessageAdapterClass.getItem(position) != null && sp.getBoolean("Tap_Setting", true)))
                     .subscribe(position -> {
