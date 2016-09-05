@@ -56,54 +56,48 @@ public class UserFollowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-        accountIDCount = getSharedPreferences("accountidcount", 0);
-        if (!TwitterUtils.hasAccessToken(this, accountIDCount.getLong("ID_Num_Now", 0))) {
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
+        if (!TwitterUtils.hasAccessToken(this, accountIDCount.getLong(getString(R.string.SelectAccountNum), 0))) {
             Intent intent = new Intent(this, TwitterOAuthActivity.class);
             startActivity(intent);
             finish();
         }else {
             mAdapter = new FollowAdapter(this);
             setContentView(R.layout.listview_base);
-            ListView listView = (ListView)findViewById(R.id.listView_base);
+            ListView listView = (ListView)findViewById(R.id.listViewBase);
             listView.setAdapter(mAdapter);
             final boolean LongTap = sp.getBoolean("Tap_Setting", true);
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            mAdapter.clickObservable
+                    .subscribe(position -> {
+                        if (LongTap == false) {
+                            List_Menu(position);
+                        }
 
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (LongTap == false) {
-                        List_Menu(position);
-                    }
+                        //フッターがクリックされた
+                        if (position != 0 && mAdapter.getItem(position) == null) {
+                            NewReloadFulg = false;
+                            StatusIDs.remove(position);
+                            getFriendsList();
+                        }
+                        //ヘッダーがクリックされた
+                        if (position == 0 && mAdapter.getItem(position) == null) {
+                            NewReloadFulg = true;
+                            StatusIDs.remove(0);
+                            getFriendsList();
+                        }
+                    });
 
-                    //フッターがクリックされた
-                    if (position != 0 && mAdapter.getItem(position) == null) {
-                        NewReloadFulg = false;
-                        StatusIDs.remove(position);
-                        getFriendsList();
-                    }
-                    //ヘッダーがクリックされた
-                    if (position == 0 && mAdapter.getItem(position) == null) {
-                        NewReloadFulg = true;
-                        StatusIDs.remove(0);
-                        getFriendsList();
-                    }
-                }
-            });
-
-            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
-                    if(LongTap == true){
-                        List_Menu(position);
-                    }
-                    return true;
-                }
-            });
-            mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong("ID_Num_Now", 0));
+            mAdapter.longClickObservable
+                    .subscribe(position -> {
+                        if(LongTap == true){
+                            List_Menu(position);
+                        }
+                    });
+            mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong(getString(R.string.SelectAccountNum), 0));
             Intent Intent = getIntent();
             UserID = Intent.getLongExtra("UserID_TL", BIND_ABOVE_CLIENT);
-            ScreenName = Intent.getStringExtra("ScreenName");
+            ScreenName = Intent.getStringExtra(getString(R.string.ScreanNames));
             if(UserID != 0){
                 setTitle(ScreenName + "フォロー一覧");
                 getFriendsList();

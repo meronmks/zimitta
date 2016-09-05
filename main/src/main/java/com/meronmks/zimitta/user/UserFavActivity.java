@@ -57,20 +57,20 @@ public class UserFavActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-        accountIDCount = getSharedPreferences("accountidcount", 0);
-        if (!TwitterUtils.hasAccessToken(this, accountIDCount.getLong("ID_Num_Now", 0))) {
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
+        if (!TwitterUtils.hasAccessToken(this, accountIDCount.getLong(getString(R.string.SelectAccountNum), 0))) {
             Intent intent = new Intent(this, TwitterOAuthActivity.class);
             startActivity(intent);
             finish();
         }else {
             mAdapter = new TweetAdapter(this);
             setContentView(R.layout.listview_base);
-            listView = (ListView)findViewById(R.id.listView_base);
+            listView = (ListView)findViewById(R.id.listViewBase);
             listView.setAdapter(mAdapter);
-            mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong("ID_Num_Now", 0));
+            mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong(getString(R.string.SelectAccountNum), 0));
             Intent Intent = getIntent();
             UserID_Fav = Intent.getLongExtra("UserID_Fav", BIND_ABOVE_CLIENT);
-            ScreenName = Intent.getStringExtra("ScreenName");
+            ScreenName = Intent.getStringExtra(getString(R.string.ScreanNames));
             setTitle(ScreenName + " Fav");
             reloadUserFavTimeLine();
         }
@@ -85,53 +85,45 @@ public class UserFavActivity extends AppCompatActivity {
         final boolean LongTap = sp.getBoolean("Tap_Setting", true);
 
         //ListViewのクリックリスナー登録
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            //通常押し
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (LongTap == false) {
-                    try {
-                        Tweet = mAdapter.getItem(position);
-                        List_Menu list = new List_Menu();
-                        list.Tweet_Menu(UserFavActivity.this, Tweet);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        mAdapter.clickObservable
+                .subscribe(position -> {
+                    if (LongTap == false) {
+                        try {
+                            Tweet = mAdapter.getItem(position);
+                            List_Menu list = new List_Menu();
+                            list.Tweet_Menu(UserFavActivity.this, Tweet);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
 
-                }
-
-                //フッターがクリックされた
-                if (position != 0 && mAdapter.getItem(position) == null) {
-                    NewReloadFulg = false;
-                    StatusIDs.remove(position);
-                    reloadUserFavTimeLine();
-                }
-                //ヘッダーがクリックされた
-                if (position == 0 && mAdapter.getItem(position) == null) {
-                    NewReloadFulg = true;
-                    StatusIDs.remove(0);
-                    reloadUserFavTimeLine();
-                }
-            }
-
-        });
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            //長押し
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (LongTap == true) {
-                    try {
-                        Tweet = mAdapter.getItem(position);
-                        List_Menu list = new List_Menu();
-                        list.Tweet_Menu(UserFavActivity.this, Tweet);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    //フッターがクリックされた
+                    if (position != 0 && mAdapter.getItem(position) == null) {
+                        NewReloadFulg = false;
+                        StatusIDs.remove(position);
+                        reloadUserFavTimeLine();
                     }
-                }
-                return true;
-            }
-        });
+                    //ヘッダーがクリックされた
+                    if (position == 0 && mAdapter.getItem(position) == null) {
+                        NewReloadFulg = true;
+                        StatusIDs.remove(0);
+                        reloadUserFavTimeLine();
+                    }
+                });
+
+        mAdapter.longClickObservable
+                .subscribe(position -> {
+                    if (LongTap == true) {
+                        try {
+                            Tweet = mAdapter.getItem(position);
+                            List_Menu list = new List_Menu();
+                            list.Tweet_Menu(UserFavActivity.this, Tweet);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     //タイムラインの非同期取得

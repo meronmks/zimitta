@@ -68,7 +68,7 @@ public class ApplicationsCooperationActivity extends AppCompatActivity {
 		progressDialog.show();
 
         //ListView関連
-    	lv =  (ListView)findViewById(R.id.listView_base);
+    	lv =  (ListView)findViewById(R.id.listViewBase);
         mAdapter = new AppListAdapter(this);
         lv.setAdapter(mAdapter);
 

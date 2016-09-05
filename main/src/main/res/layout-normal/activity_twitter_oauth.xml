@@ -6,16 +6,6 @@
     android:layout_marginLeft="10sp"
     android:layout_marginRight="10sp">
 
-    <Button
-        android:id="@+id/actionStartOauth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/twitter_oauth"
-        android:textColor="@color/White"
-        />
-
     <TextView
         android:id="@+id/oauthTextView1"
         android:layout_width="wrap_content"
@@ -26,13 +16,12 @@
         android:layout_marginRight="07dp"
         android:text="@string/FIRST_Attention_Text"
         android:textColor="@color/White"/>
-    <TextView
-        android:id="@+id/oauthTextView2"
+
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/actionStartOauth"
-        android:layout_alignParentLeft="true"
-        android:text="@string/FIRST_Action_Button_Text"
-        android:textColor="@color/White"/>
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

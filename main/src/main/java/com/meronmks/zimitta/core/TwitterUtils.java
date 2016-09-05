@@ -2,22 +2,25 @@ package com.meronmks.zimitta.core;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+
 import com.meronmks.zimitta.R;
+import com.twitter.sdk.android.core.TwitterSession;
 
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
+/**
+ * Created by meron on 2016/08/28.
+ */
 public class TwitterUtils {
-
     /**
      * Twitterインスタンスを取得します。アクセストークンが保存されていれば自動的にセットします。
      *
      * @param context
      * @return
      */
-    public static Twitter getTwitterInstance(Context context,long ID) {
+    public static Twitter getTwitterInstance(Context context, long ID) {
 
         TwitterFactory factory = new TwitterFactory();
         Twitter twitter = factory.getInstance();
@@ -42,13 +45,13 @@ public class TwitterUtils {
      * アクセストークンをプリファレンスに保存します。
      *
      * @param context
-     * @param accessToken
+     * @param twitterSession
      */
-    public static void storeAccessToken(Context context, AccessToken accessToken,long ID) {
+    public static void storeAccessToken(Context context, TwitterSession twitterSession, long ID) {
         SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.PREF_NAME) + ID, Context.MODE_PRIVATE);
-        Editor editor = preferences.edit();
-        editor.putString(context.getString(R.string.TOKEN), accessToken.getToken());
-        editor.putString(context.getString(R.string.TOKEN_SECRET), accessToken.getTokenSecret());
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(context.getString(R.string.TOKEN), twitterSession.getAuthToken().token);
+        editor.putString(context.getString(R.string.TOKEN_SECRET), twitterSession.getAuthToken().secret);
         editor.commit();
     }
 

@@ -11,10 +11,11 @@
 
     <!-- アプリの定義等 -->
     <application
-            android:label="@string/app_name"
-            android:icon="@drawable/ic_launcher"
-            android:theme="@style/Theme.AppCompat"
-            tools:replace="android:icon">
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher"
+        android:theme="@style/Theme.AppCompat"
+        tools:replace="android:icon">
 
         <!-- レシーバー定義 -->
         <receiver android:name=".Receiver.NetworkInfoReceiver" >
@@ -23,27 +24,18 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".core.CoreActivity"
-                  android:label="@string/app_name"
-                  android:configChanges="orientation|screenSize"
-                  android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity
+            android:name=".core.CoreActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".Activity.TwitterOAuthActivity"
-                android:launchMode="singleTask"
-                android:label="@string/twitter_oauth">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                        android:host="twitter"
-                        android:scheme="meron" />
-            </intent-filter>
+        <activity android:name=".Activity.TwitterOAuthActivity"
+            android:label="@string/startOauth">
         </activity>
         <activity android:name=".Activity.TweetActivity"
                   android:label="@string/new_tweet_activity_label"
@@ -72,10 +64,15 @@
         <activity android:name=".user.UserFollowersActivity"/>
         <activity android:name=".user.UserFavActivity"/>
 
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
 
-        <activity android:name="com.google.android.gms.ads.AdActivity"
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d38b73f997b80b75ecb5016e01dfb9f8256ef33c" />
     </application>
 </manifest>

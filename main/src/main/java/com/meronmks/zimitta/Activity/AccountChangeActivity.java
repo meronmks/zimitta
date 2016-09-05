@@ -35,30 +35,26 @@ public class AccountChangeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(false);
 
         adapter = new AccountListAdapter(this);
-        accountIDCount = getSharedPreferences("accountidcount", 0);
-        long ID = accountIDCount.getLong("ID_Num", 0);
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
+        long ID = accountIDCount.getLong(getString(R.string.AccountNum), 0);
 
         for (long i = 0; i < ID; i++) {
             getUserItem(i);
         }
 
-        ListView listView = (ListView)findViewById(R.id.listView_base);
+        ListView listView = (ListView)findViewById(R.id.listViewBase);
         listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Editor e = accountIDCount.edit();
-                e.putLong("ID_Num_Now", position);
-                e.commit();
-                CoreVariable.TLmAdapter = null;
-                Intent intent = new Intent(AccountChangeActivity.this, CoreActivity.class);
-                startActivity(intent);
-                finish();
-            }
-
-        });
+        adapter.clickObservable
+                .subscribe(position -> {
+                    Editor e = accountIDCount.edit();
+                    e.putLong(getString(R.string.SelectAccountNum), position);
+                    e.commit();
+                    CoreVariable.TLmAdapter = null;
+                    Intent intent = new Intent(AccountChangeActivity.this, CoreActivity.class);
+                    startActivity(intent);
+                    finish();
+                });
     }
 
     @Override
@@ -85,7 +81,6 @@ public class AccountChangeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.acount_Menu:
                 Intent intent = new Intent(this, TwitterOAuthActivity.class);
-                intent.putExtra("Flag", true);
                 startActivity(intent);
                 finish();
                 return true;

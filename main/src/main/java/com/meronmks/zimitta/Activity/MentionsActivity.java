@@ -70,9 +70,9 @@ public class MentionsActivity extends AppCompatActivity {
         mtAction = new TwitterActionClass(this);
 
         getSupportActionBar().setDisplayShowHomeEnabled(false);
-        accountIDCount = getSharedPreferences("accountidcount", 0);
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
         appSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mTwitter = TwitterUtils.getTwitterInstance(this, accountIDCount.getLong("ID_Num_Now", 0));
+        mTwitter = TwitterUtils.getTwitterInstance(this, accountIDCount.getLong(getString(R.string.SelectAccountNum), 0));
 
         Intent intent = getIntent();
         mentionID = intent.getLongExtra("mentionID", BIND_ABOVE_CLIENT);
@@ -82,13 +82,13 @@ public class MentionsActivity extends AppCompatActivity {
         String Image = intent.getStringExtra("Image");
         String MentionEntity[] = intent.getStringArrayExtra("UserMentionEntities");
 
-        accountIDCount = getSharedPreferences("accountidcount", 0);
-        mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong("ID_Num_Now", 0));
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
+        mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong(getString(R.string.SelectAccountNum), 0));
 
         TextView ScreenName = (TextView)this.findViewById(R.id.m_screen_name);	//IDの受け取り
         ScreenName.setText("@" + StatusID);										//表示
         TextView Name = (TextView)this.findViewById(R.id.m_name);				//表示名の受け取り
-        sp = getSharedPreferences("accountidcount", 0);
+        sp = getSharedPreferences(getString(R.string.SelectAccount), 0);
         Name.setText(name);
 
         mInputText = (EditText) findViewById(R.id.input_text);

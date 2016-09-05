@@ -60,8 +60,8 @@ public class TwitterActionClass {
         listPosition = new ListPositionVariable();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         //アカウント情報を読み込む
-        SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
-        SharedPreferences spOauth = activity.getSharedPreferences(activity.getString(R.string.PREF_NAME) + accountIDCount.getLong("ID_Num_Now", 0), Context.MODE_PRIVATE);
+        SharedPreferences accountIDCount = activity.getSharedPreferences(activity.getString(R.string.SelectAccount), 0);
+        SharedPreferences spOauth = activity.getSharedPreferences(activity.getString(R.string.PREF_NAME) + accountIDCount.getLong(activity.getString(R.string.SelectAccountNum), 0), Context.MODE_PRIVATE);
 
         //一般設定
         ConfigurationBuilder builder = new ConfigurationBuilder();
@@ -125,8 +125,8 @@ public class TwitterActionClass {
         listPosition = new ListPositionVariable();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         //アカウント情報を読み込む
-        SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
-        SharedPreferences spOauth = activity.getSharedPreferences(activity.getString(R.string.PREF_NAME) + accountIDCount.getLong("ID_Num_Now", 0), Context.MODE_PRIVATE);
+        SharedPreferences accountIDCount = activity.getSharedPreferences(activity.getString(R.string.SelectAccount), 0);
+        SharedPreferences spOauth = activity.getSharedPreferences(activity.getString(R.string.PREF_NAME) + accountIDCount.getLong(activity.getString(R.string.SelectAccountNum), 0), Context.MODE_PRIVATE);
 
         //一般設定
         ConfigurationBuilder builder = new ConfigurationBuilder();
@@ -169,8 +169,8 @@ public class TwitterActionClass {
         listPosition = new ListPositionVariable();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         //アカウント情報を読み込む
-        SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
-        SharedPreferences spOauth = activity.getSharedPreferences(activity.getString(R.string.PREF_NAME) + accountIDCount.getLong("ID_Num_Now", 0), Context.MODE_PRIVATE);
+        SharedPreferences accountIDCount = activity.getSharedPreferences(activity.getString(R.string.SelectAccount), 0);
+        SharedPreferences spOauth = activity.getSharedPreferences(activity.getString(R.string.PREF_NAME) + accountIDCount.getLong(activity.getString(R.string.SelectAccountNum), 0), Context.MODE_PRIVATE);
 
         //一般設定
         ConfigurationBuilder builder = new ConfigurationBuilder();
@@ -969,8 +969,8 @@ public class TwitterActionClass {
                 try {
                     if(CoreVariable.userLists == null) {
                         SharedPreferences ScreanNames = activity.getSharedPreferences("ScreanNames", 0);
-                        SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
-                        long id = accountIDCount.getLong("ID_Num_Now", 0);
+                        SharedPreferences accountIDCount = activity.getSharedPreferences(activity.getString(R.string.SelectAccount), 0);
+                        long id = accountIDCount.getLong(activity.getString(R.string.SelectAccountNum), 0);
                         StringBuilder sb = new StringBuilder();
                         sb.append("ScreanName");
                         sb.append(id);
@@ -1011,8 +1011,8 @@ public class TwitterActionClass {
     public void debugMode(){
 
         final Twitter mTwitter;
-        SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
-        mTwitter = TwitterUtils.getTwitterInstance(activity, accountIDCount.getLong("ID_Num_Now", 0));
+        SharedPreferences accountIDCount = activity.getSharedPreferences(activity.getString(R.string.SelectAccount), 0);
+        mTwitter = TwitterUtils.getTwitterInstance(activity, accountIDCount.getLong(activity.getString(R.string.SelectAccountNum), 0));
         //非同期
         AsyncTask<Void, Void, Map<String, RateLimitStatus>> task = new AsyncTask<Void, Void, Map<String, RateLimitStatus>>() {
 
@@ -1326,8 +1326,8 @@ public class TwitterActionClass {
 
     public void getRateLimitStatus(){
         final Twitter mTwitter;
-        SharedPreferences accountIDCount = activity.getSharedPreferences("accountidcount", 0);
-        mTwitter = TwitterUtils.getTwitterInstance(activity, accountIDCount.getLong("ID_Num_Now", 0));
+        SharedPreferences accountIDCount = activity.getSharedPreferences(activity.getString(R.string.SelectAccount), 0);
+        mTwitter = TwitterUtils.getTwitterInstance(activity, accountIDCount.getLong(activity.getString(R.string.SelectAccountNum), 0));
         //非同期
         AsyncTask<Void, Void, Map<String, RateLimitStatus>> task = new AsyncTask<Void, Void, Map<String, RateLimitStatus>>() {
 

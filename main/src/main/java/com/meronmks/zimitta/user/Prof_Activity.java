@@ -73,8 +73,8 @@ public class Prof_Activity extends AppCompatActivity implements View.OnClickList
         Follow.setOnClickListener(this);
         Menu.setOnClickListener(this);
 
-        accountIDCount = getSharedPreferences("accountidcount", 0);
-        if (!TwitterUtils.hasAccessToken(this, accountIDCount.getLong("ID_Num_Now", 0))) {
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
+        if (!TwitterUtils.hasAccessToken(this, accountIDCount.getLong(getString(R.string.SelectAccountNum), 0))) {
             Intent intent = new Intent(this, TwitterOAuthActivity.class);
             startActivity(intent);
             finish();
@@ -96,25 +96,25 @@ public class Prof_Activity extends AppCompatActivity implements View.OnClickList
             case R.id.TweetCountView:
                 Intent TweetCountView = new Intent(Prof_Activity.this, UserTimeLineActivity.class);
                 TweetCountView.putExtra("UserID_TL", Userid);
-                TweetCountView.putExtra("ScreenName", ScreenName.getText());
+                TweetCountView.putExtra(getString(R.string.ScreanNames), ScreenName.getText());
                 startActivity(TweetCountView);
                 break;
             case R.id.FavCountView:
                 Intent FavCountView = new Intent(Prof_Activity.this, UserFavActivity.class);
                 FavCountView.putExtra("UserID_Fav", Userid);
-                FavCountView.putExtra("ScreenName", ScreenName.getText());
+                FavCountView.putExtra(getString(R.string.ScreanNames), ScreenName.getText());
                 startActivity(FavCountView);
                 break;
             case R.id.FollowingCountView:
                 Intent FollowingCountView = new Intent(Prof_Activity.this, UserFollowActivity.class);
                 FollowingCountView.putExtra("UserID_TL", Userid);
-                FollowingCountView.putExtra("ScreenName", ScreenName.getText());
+                FollowingCountView.putExtra(getString(R.string.ScreanNames), ScreenName.getText());
                 startActivity(FollowingCountView);
                 break;
             case R.id.FollwersCountView:
                 Intent FollwersCountView = new Intent(Prof_Activity.this, UserFollowersActivity.class);
                 FollwersCountView.putExtra("UserID_TL", Userid);
-                FollwersCountView.putExtra("ScreenName", ScreenName.getText());
+                FollwersCountView.putExtra(getString(R.string.ScreanNames), ScreenName.getText());
                 startActivity(FollwersCountView);
                 break;
             case R.id.followButton:

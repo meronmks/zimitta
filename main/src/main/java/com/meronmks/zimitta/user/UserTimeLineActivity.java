@@ -24,11 +24,11 @@ public class UserTimeLineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent Intent = getIntent();
         UserID = Intent.getLongExtra("UserID_TL", BIND_ABOVE_CLIENT);
-        ScreenName = Intent.getStringExtra("ScreenName");
+        ScreenName = Intent.getStringExtra(getString(R.string.ScreanNames));
         setTitle(ScreenName + " TL");
         setContentView(R.layout.listview_base);
         mAdapter = new TweetAdapter(this);
-        ListView listView = (ListView)findViewById(R.id.listView_base);
+        ListView listView = (ListView)findViewById(R.id.listViewBase);
         listView.setAdapter(mAdapter);
         mtAction = new TwitterActionClass(this,mAdapter,listView,"UserTL",null);
         mtAction.getUserTimeLine(UserID, null);

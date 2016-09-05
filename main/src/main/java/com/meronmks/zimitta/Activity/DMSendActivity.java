@@ -46,8 +46,8 @@ public class DMSendActivity extends AppCompatActivity {
         mtAction = new TwitterActionClass(this);
 
         getSupportActionBar().setDisplayShowHomeEnabled(false);
-        accountIDCount = getSharedPreferences("accountidcount", 0);
-        mTwitter = TwitterUtils.getTwitterInstance(this, accountIDCount.getLong("ID_Num_Now", 0));
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
+        mTwitter = TwitterUtils.getTwitterInstance(this, accountIDCount.getLong(getString(R.string.SelectAccountNum), 0));
 
         mInputText = (EditText) findViewById(R.id.input_text);
         textCount = ((TextView)findViewById(R.id.textCount));

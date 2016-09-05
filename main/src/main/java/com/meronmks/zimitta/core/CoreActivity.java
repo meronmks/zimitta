@@ -27,6 +27,10 @@ import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Receiver.NetworkInfoReceiver;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.menu.List_Menu;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+
+import io.fabric.sdk.android.Fabric;
 
 public class CoreActivity extends AppCompatActivity {
 
@@ -53,6 +57,9 @@ public class CoreActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(OAuthVariable.twitterConsumerKey, OAuthVariable.twitterConsumerSecret);
+        Fabric.with(this, new com.twitter.sdk.android.Twitter(authConfig), new Twitter(authConfig));
+
         //レイアウト設定
         setContentView(R.layout.main);
 
@@ -64,10 +71,10 @@ public class CoreActivity extends AppCompatActivity {
         isDebugMode = BuildConfig.DebugFlag;
 
         //アカウント情報を読み込む
-        accountIDCount = getSharedPreferences("accountidcount", 0);
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
 
         //アクセストークンがあるかどうか
-        if (!TwitterUtils.hasAccessToken(this, accountIDCount.getLong("ID_Num_Now", 0))) {
+        if (!TwitterUtils.hasAccessToken(this, accountIDCount.getLong(getString(R.string.SelectAccountNum), 0))) {
             Intent intent = new Intent(this, TwitterOAuthActivity.class);
             intent.putExtra("Flag", false);
             startActivity(intent);

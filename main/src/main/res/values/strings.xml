@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">じみったー（仮）</string>
-    <string name="twitter_callback_url">meron://twitter</string>
     <string name="twitter_oauth">twitter認証</string>
     <string name="FIRST_Attention_Text">このアプリはまだまだ開発中です。\nバグとかバグとか含まれている場合があるため、メインで使用する際は覚悟してください。</string>
     <string name="FIRST_Action_Button_Text">このボタンを押すとブラウザが開いてアカウントの認証が行われます</string>
     <string name="APP_renkei_kaizyo_Text">アプリ連携を確認or解除だけしたい方はこちら</string>
     <string name="apprenkei_Text">アプリ連携</string>
-    <string name="PREF_NAME">twitter_access_token</string>
-    <string name="TOKEN">token</string>
-    <string name="TOKEN_SECRET">token_secret</string>
     <string name="new_tweet_activity_label">新規ツイート</string>
     <string name="image_select">画像選択</string>
     <string name="web_login_text">Web版ログイン</string>
@@ -24,4 +20,18 @@
     <string name="accountchangeactovity_label_text">アカウント一覧</string>
     <string name="dm_edittext_hinttext">ダイレクトメッセージ</string>
     <string name="dmsendactivity_labeltext">ダイレクトメッセージ</string>
+    <!-- TwitterUtils -->
+    <string name="PREF_NAME">twitter_access_token</string>
+    <string name="TOKEN">token</string>
+    <string name="TOKEN_SECRET">token_secret</string>
+
+    <!-- -->
+    <string name="SelectAccount">SelectAccount</string>
+    <string name="SelectAccountNum">SelectAccountNum</string>
+    <string name="AccountNum">AccountNum</string>
+
+    <!-- TwitterOAuthActivity -->
+    <string name="startOauth">Twitter認証開始</string>
+    <string name="accountAddFlag">AccountAddFlag</string>
+    <string name="ScreanNames">ScreanNames</string>
 </resources>

@@ -47,37 +47,30 @@ public class UserFollowersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-        accountIDCount = getSharedPreferences("accountidcount", 0);
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
         mAdapter = new FollowAdapter(this);
         setContentView(R.layout.listview_base);
-        ListView listView = (ListView)findViewById(R.id.listView_base);
+        ListView listView = (ListView)findViewById(R.id.listViewBase);
         listView.setAdapter(mAdapter);
         final boolean LongTap = sp.getBoolean("Tap_Setting", true);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            //通常押し
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (LongTap == false) {
-                    List_Menu(position);
-                }
-            }
-        });
+        mAdapter.clickObservable
+                .subscribe(position -> {
+                    if (LongTap == false) {
+                        List_Menu(position);
+                    }
+                });
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            //長押し
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id) {
-                if(LongTap == true){
-                    List_Menu(position);
-                }
-                return true;
-            }
-        });
-        mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong("ID_Num_Now", 0));
+        mAdapter.longClickObservable
+                .subscribe(position -> {
+                    if(LongTap == true){
+                        List_Menu(position);
+                    }
+                });
+        mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong(getString(R.string.SelectAccountNum), 0));
         Intent Intent = getIntent();
         UserID = Intent.getLongExtra("UserID_TL", BIND_ABOVE_CLIENT);
-        ScreenName = Intent.getStringExtra("ScreenName");
+        ScreenName = Intent.getStringExtra(getString(R.string.ScreanNames));
         if(UserID != 0){
             setTitle(ScreenName + "のフォロワー一覧");
             reloadUserTimeLine();

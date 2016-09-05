@@ -67,9 +67,9 @@ public class TweetActivity extends AppCompatActivity {
         mtAction = new TwitterActionClass(this);
 
 		getSupportActionBar().setDisplayShowHomeEnabled(false);	//ActionBarからアイコンを消す
-        accountIDCount = getSharedPreferences("accountidcount", 0);
+        accountIDCount = getSharedPreferences(getString(R.string.SelectAccount), 0);
         appSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mTwitter = TwitterUtils.getTwitterInstance(this, accountIDCount.getLong("ID_Num_Now", 0));
+        mTwitter = TwitterUtils.getTwitterInstance(this, accountIDCount.getLong(getString(R.string.SelectAccountNum), 0));
 
         mInputText = (EditText) findViewById(R.id.input_text);
         textCount = ((TextView)findViewById(R.id.textCount));

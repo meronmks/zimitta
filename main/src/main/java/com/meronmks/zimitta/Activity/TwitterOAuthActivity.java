@@ -15,6 +15,11 @@ import com.meronmks.zimitta.AppCooperation.WebTwitterLoginActivity;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.TwitterUtils;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.User;
@@ -23,157 +28,55 @@ import twitter4j.auth.RequestToken;
 
 public class TwitterOAuthActivity extends AppCompatActivity {
 
-    private String mCallbackURL;
-    private Twitter mTwitter;
-    private RequestToken mRequestToken;
-    private SharedPreferences accountIDCount,ScreanNames;
+    private TwitterLoginButton twitterLoginButton;
 
-	@Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_twitter_oauth);
 
-        mCallbackURL = getString(R.string.twitter_callback_url);
-
-        Intent intent = getIntent();
-        Boolean Flag = intent.getBooleanExtra("Flag",true);
-
-        if(Flag)
-        {
-            mTwitter = TwitterUtils.addTwitterInstance(this);
-        }
-        else{
-            accountIDCount = getSharedPreferences("accountidcount", 0);
-            mTwitter = TwitterUtils.getTwitterInstance(this,accountIDCount.getLong("ID_Num_Now", 0));
-        }
-
-        findViewById(R.id.actionStartOauth).setOnClickListener(new View.OnClickListener() {
+        twitterLoginButton = (TwitterLoginButton)findViewById(R.id.login_button);
+        twitterLoginButton.setCallback(new Callback<TwitterSession>() {
             @Override
-            public void onClick(View v) {
-                startAuthorize();
+            public void success(Result<TwitterSession> result) {
+                CoreActivity.showToast("認証成功！");
+                setOauthResult(result.data);
+            }
+
+            @Override
+            public void failure(com.twitter.sdk.android.core.TwitterException exception) {
+                CoreActivity.showToast("認証失敗・・");
             }
         });
     }
 
-    /**
-     * OAuth認証（厳密には認可）を開始します。
-     *
-     */
-    private void startAuthorize() {
-        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                try {
-                    mRequestToken = mTwitter.getOAuthRequestToken(mCallbackURL);
-                    return mRequestToken.getAuthorizationURL();
-                } catch (TwitterException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
+    private void setOauthResult(TwitterSession twitterSession){
+        SharedPreferences selectAccount = getSharedPreferences(getString(R.string.SelectAccount), 0);
+        long accountNum = selectAccount.getLong(getString(R.string.AccountNum), 0);
+        TwitterUtils.storeAccessToken(this, twitterSession, accountNum);
 
-            @Override
-            protected void onPostExecute(String url) {
-                if (url != null) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(intent);
-                } else {
-                    // 失敗。。。
-                }
-            }
-        };
-        task.execute();
+        SharedPreferences.Editor e = selectAccount.edit();
+        e.putLong(getString(R.string.AccountNum), accountNum + 1);	//追加
+        e.putLong(getString(R.string.SelectAccountNum), accountNum);
+        e.commit();
+        SharedPreferences screanNames = getSharedPreferences(getString(R.string.ScreanNames), 0);
+        SharedPreferences.Editor e1 = screanNames.edit();
+        StringBuilder sb = new StringBuilder();
+        sb.append(getString(R.string.ScreanNames));
+        sb.append(accountNum);
+        String str = new String(sb);
+        e1.putString(str, twitterSession.getUserName());
+        e1.commit();
+        Intent intent = new Intent(TwitterOAuthActivity.this, CoreActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
-    public void onNewIntent(Intent intent) {
-        if (intent == null
-                || intent.getData() == null
-                || !intent.getData().toString().startsWith(mCallbackURL)) {
-            return;
-        }
-        String verifier = intent.getData().getQueryParameter("oauth_verifier");
-
-        AsyncTask<String, Void, AccessToken> task = new AsyncTask<String, Void, AccessToken>() {
-            @Override
-            protected AccessToken doInBackground(String... params) {
-                try {
-                    return mTwitter.getOAuthAccessToken(mRequestToken, params[0]);
-                } catch (TwitterException e) {
-                    e.printStackTrace();
-                }catch (Exception e) {
-					e.printStackTrace();
-				}
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(AccessToken accessToken) {
-                if (accessToken != null) {
-                    // 認証成功！
-                    CoreActivity.showToast("認証成功！");
-                    successOAuth(accessToken);
-                } else {
-                    // 認証失敗。。。
-                    CoreActivity.showToast("認証失敗。。。");
-                }
-            }
-        };
-        task.execute(verifier);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        twitterLoginButton.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void successOAuth(AccessToken accessToken) {
-    	accountIDCount = getSharedPreferences("accountidcount", 0);
-    	long ID = accountIDCount.getLong("ID_Num", 0);
-    	getScreanname(accessToken,ID);
-    }
-
-    private void getScreanname(final AccessToken accessToken,final long ID)
-    {
-    	AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-
-			@Override
-			protected String doInBackground(Void... params) {
-				try
-				{
-					TwitterUtils.storeAccessToken(TwitterOAuthActivity.this, accessToken, ID);
-					User user = mTwitter.verifyCredentials();//Userオブジェクトを作成
-					return user.getScreenName();
-				 } catch (TwitterException e) {
-	                    e.printStackTrace();
-	                }catch (Exception e) {
-						e.printStackTrace();
-					}
-				return null;
-			}
-
-			@Override
-            protected void onPostExecute(String user) {
-                if (user != null) {
-                    // 取得成功！
-                	Editor e = accountIDCount.edit();
-                    e.putLong("ID_Num", ID + 1);	//追加
-                    e.putLong("ID_Num_Now", ID);
-                    e.commit();
-                    ScreanNames = getSharedPreferences("ScreanNames", 0);
-                    Editor e1 = ScreanNames.edit();
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("ScreanName");
-                    sb.append(ID);
-                    String str = new String(sb);
-                    e1.putString(str, user);
-                    e1.commit();
-                    Intent intent = new Intent(TwitterOAuthActivity.this, CoreActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    // 取得失敗。。。
-                	Intent intent = new Intent(TwitterOAuthActivity.this, CoreActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-    	};
-        task.execute();
-    }
 }
