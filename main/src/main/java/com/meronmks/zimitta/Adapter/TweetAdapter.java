@@ -25,6 +25,7 @@ import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Variable.CoreVariable;
 import com.meronmks.zimitta.core.CoreActivity;
 import com.meronmks.zimitta.core.MutableLinkMovementMethod;
+import com.meronmks.zimitta.user.Prof_Activity;
 
 import twitter4j.*;
 
@@ -231,6 +232,12 @@ public class TweetAdapter extends StatusCoreAdapter<Status> {
                 return mt;
             });
             Linkify.addLinks(holder.text, Linkify.WEB_URLS);
+
+            holder.icon.setOnClickListener(view -> {
+                Intent My_Prof_Intent = new Intent(mContext, Prof_Activity.class);
+                My_Prof_Intent.putExtra("UserID", item.getUser().getId());
+                mContext.startActivity(My_Prof_Intent);
+            });
         }else{
             //ツイート以外を入れる用
             convertView = mInflater.inflate(R.layout.list_item_null, null);
