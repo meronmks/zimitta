@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">zimitta</string>
+    <!-- TwitterUtils -->
+    <string name="PREF_NAME">twitter_access_token</string>
+    <string name="TOKEN">token</string>
+    <string name="TOKEN_SECRET">token_secret</string>
+    <string name="Account">Account</string>
+    <string name="ActiveAccount">ActiveAccount</string>
 </resources>
