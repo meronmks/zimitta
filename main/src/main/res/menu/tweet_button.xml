@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:zimitta="http://schemas.android.com/apk/res/com.meronmks.zimitta">
-    <item
-            android:id="@+id/tweetButton"
-            android:orderInCategory="100"
-            zimitta:showAsAction="ifRoom"
-            android:title="ツイート"/>
-</menu>
