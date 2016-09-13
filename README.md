@@ -20,6 +20,7 @@
 * [[Android] 様々なジェスチャーを処理する(2) 移動](http://chicketen.blog.jp/archives/1622120.html)
 * [Android (Java) で InputStream / OutputStream の進捗状況の取得・表示](http://foreignkey.toyao.net/archives/1386)
 * [TextViewのリンク以外をクリックした時はListViewのクリックに行く方法](http://oigami.hatenablog.com/entry/2014/11/08/082615)
+* [[Android Tips] SwipeRefreshLayout で Pull to Refresh を実装する](http://dev.classmethod.jp/smartphone/swiperefreshlayout/)
 
 ## 直さないといけないバグ ##
 * 実機でもOutOfMemoryで落ちることがある
@@ -32,8 +33,5 @@
 * アカウント情報のバックアップ書き出し機能を付けてみる？
 * API残量表示をタップしたら何か一覧等を出すようにする
 
-## Ver4.1.0との変更点（メモしないと忘れそう） ##
-* 認証方式を変更し、より簡単にアカウントを追加できるように
-* アカウント変更画面でアカウント一覧をタップしても変更できないバグを修正
-* その他一部一覧表示の画面でタップしても何もおきない放置されたバグをやっと修正
-* タイムラインでアカウントのサムネイルタップでユーザ詳細を見れるように
+## Ver4.2.0との変更点（メモしないと忘れそう） ##
+*
