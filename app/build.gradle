@@ -60,9 +60,9 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
-    compile 'com.android.support:support-v4:24.2.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
+    compile 'com.android.support:support-v4:24.2.1'
     compile 'com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'io.reactivex:rxandroid:1.1.0'
@@ -70,8 +70,9 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
     compile 'com.google.android.gms:play-services-ads:9.4.0'
-    compile 'org.twitter4j:twitter4j-core:4.0.4'
-    compile 'org.twitter4j:twitter4j-stream:4.0.4'
+    compile 'org.twitter4j:twitter4j-core:4.0.5'
+    compile 'org.twitter4j:twitter4j-stream:4.0.5'
+    compile 'org.twitter4j:twitter4j-async:4.0.5'
     compile('com.twitter.sdk.android:twitter:2.0.0@aar') {
         transitive = true;
     }

@@ -1,9 +1,8 @@
-package com.meronmks.zimitta.Core;
+package com.meronmks.zimitta.OAuth;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.meronmks.zimitta.Datas.OAuthVariable;
 import com.meronmks.zimitta.R;
 import com.twitter.sdk.android.core.TwitterSession;
 
