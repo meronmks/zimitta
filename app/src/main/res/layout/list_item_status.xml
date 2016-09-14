@@ -30,6 +30,8 @@
         android:layout_height="wrap_content"
         android:text="Name"
         android:id="@+id/Name"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:layout_alignTop="@+id/UserIcon"
         android:layout_toRightOf="@+id/UserIcon"
         android:layout_toEndOf="@+id/UserIcon"
@@ -37,13 +39,15 @@
         android:textStyle="bold" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="\@ScreenName"
         android:id="@+id/ScreenName"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:layout_alignBottom="@+id/Name"
+        android:layout_toLeftOf="@+id/TweetDeletedStatus"
         android:layout_toRightOf="@+id/Name"
-        android:layout_toEndOf="@+id/Name"
         android:layout_marginLeft="8sp" />
 
     <ImageView
@@ -102,26 +106,43 @@
         android:layout_height="wrap_content"
         android:text="RT : 0"
         android:id="@+id/RTCount"
-        android:layout_below="@+id/Time"
+        android:layout_below="@+id/Via"
         android:layout_alignLeft="@+id/TweetText"
         android:layout_alignStart="@+id/Time"
-        android:layout_marginRight="4sp" />
+        android:layout_marginRight="8sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Fav : 0"
         android:id="@+id/FavCount"
-        android:layout_below="@+id/Time"
-        android:layout_toRightOf="@+id/RTCount" />
+        android:layout_toRightOf="@+id/RTCount"
+        android:layout_toEndOf="@+id/RTCount"
+        android:layout_below="@+id/Via" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="RTUserName"
         android:id="@+id/RTUserName"
+        android:ellipsize="end"
+        android:singleLine="true"
         android:layout_below="@+id/RTCount"
         android:layout_alignLeft="@+id/TweetText"
         android:layout_alignStart="@+id/RTCount" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Via"
+        android:id="@+id/Via"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:layout_below="@+id/Time"
+        android:layout_alignLeft="@+id/TweetText"
+        android:layout_alignStart="@+id/Time"
+        android:layout_toLeftOf="@+id/TweetStatus"
+        android:layout_toStartOf="@+id/TweetStatus"
+        android:layout_marginRight="4sp" />
 
 </RelativeLayout>
