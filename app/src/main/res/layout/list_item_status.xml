@@ -1,6 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="2sp"
+    android:paddingBottom="2sp">
+
+    <ImageView
+        android:layout_width="48sp"
+        android:layout_height="48sp"
+        android:id="@+id/UserIcon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="@mipmap/ic_sync_white_48dp"
+        android:layout_marginLeft="4sp" />
+
+    <ImageView
+        android:layout_width="24sp"
+        android:layout_height="24sp"
+        android:id="@+id/RTUserIcon"
+        android:src="@mipmap/ic_sync_white_24dp"
+        android:layout_below="@+id/UserIcon"
+        android:layout_alignRight="@+id/UserIcon"
+        android:layout_alignEnd="@+id/UserIcon"
+        android:layout_marginTop="4sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/Name"
+        android:layout_alignTop="@+id/UserIcon"
+        android:layout_toRightOf="@+id/UserIcon"
+        android:layout_toEndOf="@+id/UserIcon"
+        android:layout_marginLeft="4sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="\@ScreenName"
+        android:id="@+id/ScreenName"
+        android:layout_alignBottom="@+id/Name"
+        android:layout_toRightOf="@+id/Name"
+        android:layout_toEndOf="@+id/Name"
+        android:layout_marginLeft="8sp" />
+
+    <ImageView
+        android:layout_width="12sp"
+        android:layout_height="12sp"
+        android:id="@+id/LockedStatus"
+        android:src="@mipmap/ic_lock_white_12dp"
+        android:layout_alignTop="@+id/Name"
+        android:layout_toLeftOf="@+id/TweetStatus"
+        android:layout_toStartOf="@+id/TweetStatus" />
+
+    <View
+        android:id="@+id/TweetStatus"
+        android:layout_width="4sp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_alignTop="@+id/Name"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="4sp"
+        android:layout_alignBottom="@+id/RTUserName" />
+
+    <ImageView
+        android:layout_width="12sp"
+        android:layout_height="12sp"
+        android:id="@+id/TweetDeletedStatus"
+        android:layout_alignTop="@+id/Name"
+        android:layout_toLeftOf="@+id/LockedStatus"
+        android:layout_toStartOf="@+id/LockedStatus"
+        android:src="@mipmap/ic_delete_white_18dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TweetText"
+        android:id="@+id/TweetText"
+        android:layout_below="@+id/Name"
+        android:layout_alignLeft="@+id/Name"
+        android:layout_alignStart="@+id/Name"
+        android:layout_marginTop="4sp"
+        android:layout_toLeftOf="@+id/TweetStatus"
+        android:layout_toStartOf="@+id/TweetStatus"
+        android:layout_marginRight="4sp"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="atTime"
+        android:id="@+id/Time"
+        android:layout_below="@+id/TweetText"
+        android:layout_alignLeft="@+id/TweetText"
+        android:layout_alignStart="@+id/TweetText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RT : 0"
+        android:id="@+id/RTCount"
+        android:layout_below="@+id/Time"
+        android:layout_alignLeft="@+id/TweetText"
+        android:layout_alignStart="@+id/Time"
+        android:layout_marginRight="4sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fav : 0"
+        android:id="@+id/FavCount"
+        android:layout_below="@+id/Time"
+        android:layout_toRightOf="@+id/RTCount" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RTUserName"
+        android:id="@+id/RTUserName"
+        android:layout_below="@+id/RTCount"
+        android:layout_alignLeft="@+id/TweetText"
+        android:layout_alignStart="@+id/RTCount" />
 
 </RelativeLayout>
