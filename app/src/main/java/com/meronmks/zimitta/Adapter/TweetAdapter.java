@@ -14,9 +14,15 @@ import twitter4j.Status;
 /**
  * Created by meron on 2016/09/14.
  */
-public class TweetAdapter extends ArrayAdapter<Status> {
+public class TweetAdapter extends BaseAdapter<Status> {
     private LayoutInflater mInflater;
     private Context mContext;
+
+    static class ViewHolder {
+        TextView Name;
+        TextView ScreenName;
+        TextView TweetText;
+    }
 
     public TweetAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_1);
@@ -27,11 +33,34 @@ public class TweetAdapter extends ArrayAdapter<Status> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        convertView = mInflater.inflate(R.layout.list_item_status, null);
+        ViewHolder viewHolder = null;
+        if(convertView == null) {
+            convertView = mInflater.inflate(R.layout.list_item_status, null);
+            viewHolder = iniViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
         Status item = getItem(position);
-        TextView tweetText = (TextView) convertView.findViewById(R.id.TweetText);
-        tweetText.setText(item.getText());
-        //super.getView(position, convertView, parent);
+        viewHolder.Name.setText(item.getUser().getName());
+        viewHolder.ScreenName.setText("@" + item.getUser().getScreenName());
+        viewHolder.TweetText.setText(item.getText());
+
         return convertView;
+    }
+
+    /**
+     * Holderを初期化
+     * @param convertView
+     * @return
+     */
+    private ViewHolder iniViewHolder(View convertView){
+        ViewHolder viewHolder = new ViewHolder();
+
+        viewHolder.Name = (TextView) convertView.findViewById(R.id.Name);
+        viewHolder.ScreenName = (TextView) convertView.findViewById(R.id.ScreenName);
+        viewHolder.TweetText = (TextView) convertView.findViewById(R.id.TweetText);
+        return viewHolder;
     }
 }
