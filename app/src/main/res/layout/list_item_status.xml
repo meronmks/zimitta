@@ -47,10 +47,10 @@
         android:layout_marginLeft="8sp" />
 
     <ImageView
-        android:layout_width="12sp"
-        android:layout_height="12sp"
+        android:layout_width="24sp"
+        android:layout_height="24sp"
         android:id="@+id/LockedStatus"
-        android:src="@mipmap/ic_lock_white_12dp"
+        android:src="@mipmap/ic_lock_white_24dp"
         android:layout_alignTop="@+id/Name"
         android:layout_toLeftOf="@+id/TweetStatus"
         android:layout_toStartOf="@+id/TweetStatus" />
@@ -66,13 +66,13 @@
         android:layout_alignBottom="@+id/RTUserName" />
 
     <ImageView
-        android:layout_width="12sp"
-        android:layout_height="12sp"
+        android:layout_width="24sp"
+        android:layout_height="24sp"
         android:id="@+id/TweetDeletedStatus"
         android:layout_alignTop="@+id/Name"
         android:layout_toLeftOf="@+id/LockedStatus"
         android:layout_toStartOf="@+id/LockedStatus"
-        android:src="@mipmap/ic_delete_white_18dp" />
+        android:src="@mipmap/ic_delete_white_24dp" />
 
     <TextView
         android:layout_width="wrap_content"
