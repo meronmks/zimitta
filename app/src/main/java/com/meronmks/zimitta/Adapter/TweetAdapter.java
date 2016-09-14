@@ -27,10 +27,11 @@ public class TweetAdapter extends ArrayAdapter<Status> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        convertView = mInflater.inflate(R.layout.list_item_status, null);
         Status item = getItem(position);
         TextView tweetText = (TextView) convertView.findViewById(R.id.TweetText);
         tweetText.setText(item.getText());
-        super.getView(position, convertView, parent);
+        //super.getView(position, convertView, parent);
         return convertView;
     }
 }
