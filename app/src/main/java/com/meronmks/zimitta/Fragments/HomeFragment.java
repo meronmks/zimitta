@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.meronmks.zimitta.Adapter.TweetAdapter;
@@ -46,6 +47,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mAdapter = new TweetAdapter(getContext());
         mListView.setAdapter(mAdapter);
 
+        setItemClickListener();
+        setLongItemClickListener();
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light, android.R.color.holo_blue_light, android.R.color.holo_orange_light);
@@ -62,6 +66,18 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public void onDestroyView() {
         super.onDestroyView();
         mSwipeRefreshLayout.removeAllViews();   //残像バグ対策
+    }
+
+    private void setItemClickListener(){
+        mListView.setOnItemClickListener((adapterView, view, i, l) -> {
+
+        });
+    }
+
+    private void setLongItemClickListener(){
+        mListView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            return true;
+        });
     }
 
     TwitterListener listener = new TwitterAdapter() {
