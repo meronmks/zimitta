@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">じみったー（仮）</string>
     <string name="PREF_NAME">twitter_access_token</string>
     <string name="TOKEN">token</string>
     <string name="TOKEN_SECRET">token_secret</string>

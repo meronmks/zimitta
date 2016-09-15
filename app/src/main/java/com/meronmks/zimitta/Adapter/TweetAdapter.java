@@ -29,10 +29,13 @@ public class TweetAdapter extends BaseAdapter<Status> {
     static class ViewHolder {
         TextView Name;
         ImageView UserIcon;
+        ImageView RTUserIcon;
         TextView ScreenName;
         TextView TweetText;
         TextView Time;
         TextView Via;
+        TextView RTCount;
+        TextView FavCount;
 
         TextView RTUserName;
 
@@ -50,24 +53,25 @@ public class TweetAdapter extends BaseAdapter<Status> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder viewHolder = null;
+        ViewHolder vh = null;
         if(convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_status, null);
-            viewHolder = iniViewHolder(convertView);
-            convertView.setTag(viewHolder);
+            vh = iniViewHolder(convertView);
+            convertView.setTag(vh);
         }else{
-            viewHolder = (ViewHolder) convertView.getTag();
+            vh = (ViewHolder) convertView.getTag();
         }
 
         Status item = getItem(position);
 
-        viewHolder.TweetDeletedStatus.setVisibility(View.GONE);
-        viewHolder.RTUserName.setVisibility(View.GONE);
-        viewHolder.TweetStatus.setVisibility(View.GONE);
+        vh.TweetDeletedStatus.setVisibility(View.GONE);
+        vh.RTUserIcon.setVisibility(View.GONE);
+        vh.RTUserName.setVisibility(View.GONE);
+        vh.TweetStatus.setVisibility(View.GONE);
 
-        Linkify.addLinks(viewHolder.TweetText, Linkify.WEB_URLS);
+        Linkify.addLinks(vh.TweetText, Linkify.WEB_URLS);
 
-        viewHolder.TweetText.setOnTouchListener((view, event) -> {
+        vh.TweetText.setOnTouchListener((view, event) -> {
             TextView textView = (TextView) view;
             //LinkMovementMethodを継承したもの 下記参照
             MutableLinkMovementMethod m = new MutableLinkMovementMethod();
@@ -84,49 +88,57 @@ public class TweetAdapter extends BaseAdapter<Status> {
         });
 
         if(item.getRetweetedStatus() != null){
-            viewHolder.TweetStatus.setVisibility(View.VISIBLE);
-            viewHolder.TweetStatus.setBackgroundResource(R.color.Green);
-            viewHolder.RTUserName.setVisibility(View.VISIBLE);
-            viewHolder.RTUserName.setText(item.getUser().getName() + " さんがRT");
+            vh.TweetStatus.setVisibility(View.VISIBLE);
+            vh.TweetStatus.setBackgroundResource(R.color.Green);
+            vh.RTUserName.setVisibility(View.VISIBLE);
+            vh.RTUserName.setText(item.getUser().getName() + " さんがRT");
+            vh.RTUserIcon.setVisibility(View.VISIBLE);
+            Glide.with(getContext()).load(item.getUser().getProfileImageURLHttps()).into(vh.RTUserIcon);
             item = item.getRetweetedStatus();
         }
 
-        viewHolder.Name.setText(item.getUser().getName());
-        Glide.with(getContext()).load(item.getUser().getProfileImageURLHttps()).into(viewHolder.UserIcon);
-        viewHolder.ScreenName.setText("@" + item.getUser().getScreenName());
-        viewHolder.TweetText.setText(item.getText());
-        replacrTimeAt(new Date(), item.getCreatedAt(), viewHolder.Time);
-        viewHolder.Via.setText(item.getSource().replaceAll("<.+?>", "") + " : より");
+        vh.Name.setText(item.getUser().getName());
+        Glide.with(getContext()).load(item.getUser().getProfileImageURLHttps()).into(vh.UserIcon);
+        vh.ScreenName.setText("@" + item.getUser().getScreenName());
+        vh.TweetText.setText(item.getText());
+        replacrTimeAt(new Date(), item.getCreatedAt(), vh.Time);
+        vh.Via.setText(item.getSource().replaceAll("<.+?>", "") + " : より");
+        vh.RTCount.setText("RT : " + item.getRetweetCount());
+        vh.FavCount.setText("Fav : " + item.getFavoriteCount());
 
         //鍵垢判定
         if(item.getUser().isProtected()){
-            viewHolder.LockedStatus.setVisibility(View.VISIBLE);
+            vh.LockedStatus.setVisibility(View.VISIBLE);
         }else{
-            viewHolder.LockedStatus.setVisibility(View.GONE);
+            vh.LockedStatus.setVisibility(View.GONE);
         }
         return convertView;
     }
 
     /**
      * Holderを初期化
-     * @param convertView
+     * @param cv
      * @return
      */
-    private ViewHolder iniViewHolder(View convertView){
-        ViewHolder viewHolder = new ViewHolder();
+    private ViewHolder iniViewHolder(View cv){
+        ViewHolder vh = new ViewHolder();
 
-        viewHolder.Name = (TextView) convertView.findViewById(R.id.Name);
-        viewHolder.UserIcon = (ImageView) convertView.findViewById(R.id.UserIcon);
-        viewHolder.ScreenName = (TextView) convertView.findViewById(R.id.ScreenName);
-        viewHolder.TweetText = (TextView) convertView.findViewById(R.id.TweetText);
-        viewHolder.Via = (TextView) convertView.findViewById(R.id.Via);
+        vh.Name = (TextView) cv.findViewById(R.id.Name);
+        vh.UserIcon = (ImageView) cv.findViewById(R.id.UserIcon);
+        vh.RTUserIcon = (ImageView) cv.findViewById(R.id.RTUserIcon);
+        vh.ScreenName = (TextView) cv.findViewById(R.id.ScreenName);
+        vh.TweetText = (TextView) cv.findViewById(R.id.TweetText);
+        vh.Via = (TextView) cv.findViewById(R.id.Via);
+        vh.RTCount = (TextView) cv.findViewById(R.id.RTCount);
+        vh.FavCount = (TextView) cv.findViewById(R.id.FavCount);
 
-        viewHolder.RTUserName = (TextView) convertView.findViewById(R.id.RTUserName);
+        vh.RTUserName = (TextView) cv.findViewById(R.id.RTUserName);
 
-        viewHolder.TweetDeletedStatus = (ImageView) convertView.findViewById(R.id.TweetDeletedStatus);
-        viewHolder.LockedStatus = (ImageView) convertView.findViewById(R.id.LockedStatus);
-        viewHolder.TweetStatus = convertView.findViewById(R.id.TweetStatus);
-        viewHolder.Time = (TextView) convertView.findViewById(R.id.Time);
-        return viewHolder;
+        vh.TweetDeletedStatus = (ImageView) cv.findViewById(R.id.TweetDeletedStatus);
+        vh.LockedStatus = (ImageView) cv.findViewById(R.id.LockedStatus);
+        vh.TweetStatus = cv.findViewById(R.id.TweetStatus);
+        vh.Time = (TextView) cv.findViewById(R.id.Time);
+
+        return vh;
     }
 }

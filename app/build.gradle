@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
+def VERSION_CODE = 42
 def VERSION_NAME = "5.0.0"
 
 buildscript {
@@ -22,14 +23,21 @@ repositories {
 }
 
 android {
+    signingConfigs {
+        Release {
+            keyAlias 'zimitta_key'
+            keyPassword 'ak529633'
+            storeFile file('C:\\Users\\meron\\keystore\\meronmks')
+            storePassword 'ak529633'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
-
     defaultConfig {
         applicationId "com.meronmks.zimitta"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 42
+        versionCode VERSION_CODE
         versionName VERSION_NAME
     }
     compileOptions {
@@ -40,11 +48,15 @@ android {
         debug {
             debuggable true
             buildConfigField "boolean", "DebugFlag", "true"
+            applicationIdSuffix ".debug"
+            versionNameSuffix '-dev'
         }
         release {
+            debuggable false
             minifyEnabled false
             buildConfigField "boolean", "DebugFlag", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.Release
         }
     }
     packagingOptions {
@@ -58,8 +70,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    compile('com.twitter.sdk.android:twitter:2.0.0@aar') {
+        transitive = true;
+    }
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'
@@ -74,7 +89,4 @@ dependencies {
     compile 'org.twitter4j:twitter4j-stream:4.0.5'
     compile 'org.twitter4j:twitter4j-async:4.0.5'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile('com.twitter.sdk.android:twitter:2.0.0@aar') {
-        transitive = true;
-    }
 }
