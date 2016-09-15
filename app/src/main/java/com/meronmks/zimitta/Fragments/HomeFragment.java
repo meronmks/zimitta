@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.meronmks.zimitta.Adapter.TweetAdapter;
@@ -37,6 +38,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private TwitterAction mAction;
+    private boolean isStatusAdd;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         setItemClickListener();
         setLongItemClickListener();
+        setScrollListener();
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -66,6 +69,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         super.onResume();
         if(!Variable.TLAdapter.isEmpty())return;
         mSwipeRefreshLayout.setRefreshing(true);
+        isStatusAdd = false;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         Paging p = new Paging();
         p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
@@ -75,6 +79,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onRefresh() {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+        isStatusAdd = false;
         Paging p = new Paging();
         p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
         mAction.getHomeTimeline(p);
@@ -98,11 +103,43 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         });
     }
 
+    private void setScrollListener(){
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (totalItemCount != 0 && !mSwipeRefreshLayout.isRefreshing() && totalItemCount == firstVisibleItem + visibleItemCount) {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    isStatusAdd = true;
+                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                    Paging p = new Paging();
+                    p.setMaxId(Variable.TLAdapter.getItem(Variable.TLAdapter.getCount()-1).getId());
+                    p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+                    mAction.getHomeTimeline(p);
+                }
+            }
+        });
+    }
+
     TwitterListener listener = new TwitterAdapter() {
         @Override
         public void gotHomeTimeline(ResponseList<Status> statuses) {
             getActivity().runOnUiThread(() -> {
+                int pos = 0;
+                int top = 0;
+                int tmpCount = Variable.TLAdapter.getCount();
+                if(!Variable.TLAdapter.isEmpty()) {
+                    pos = mListView.getFirstVisiblePosition();
+                    top = mListView.getChildAt(0).getTop();
+                }
                 Variable.TLAdapter.statusAddAll(Variable.TLAdapter, statuses);
+                if(tmpCount != 0 && !isStatusAdd){
+                    mListView.setSelectionFromTop(pos + (Variable.TLAdapter.getCount() - tmpCount), top);
+                }
                 mSwipeRefreshLayout.setRefreshing(false);
             });
         }
