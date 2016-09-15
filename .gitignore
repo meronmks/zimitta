@@ -7,3 +7,4 @@
 /build
 /captures
 app/src/main/java/com/meronmks/zimitta/Datas/OAuthVariable.java
+*.apk
