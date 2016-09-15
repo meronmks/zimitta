@@ -1,20 +1,26 @@
 package com.meronmks.zimitta.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.meronmks.zimitta.Adapter.TweetAdapter;
+import com.meronmks.zimitta.Core.MainActivity;
+import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
+import java.util.Comparator;
+import java.util.HashSet;
+
+import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.TwitterAdapter;
@@ -30,7 +36,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private ListView mListView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private TweetAdapter mAdapter;
     private TwitterAction mAction;
 
     @Override
@@ -44,22 +49,35 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         View v = inflater.inflate(R.layout.core_fragment, container, false);
 
         mListView = (ListView) v.findViewById(R.id.list);
-        mAdapter = new TweetAdapter(getContext());
-        mListView.setAdapter(mAdapter);
+        mListView.setAdapter(Variable.TLAdapter);
 
         setItemClickListener();
         setLongItemClickListener();
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_red_light, android.R.color.holo_green_light, android.R.color.holo_blue_light, android.R.color.holo_orange_light);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.Rad, R.color.Green, R.color.Blue, R.color.Orange);
 
         return v;
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(!Variable.TLAdapter.isEmpty())return;
+        mSwipeRefreshLayout.setRefreshing(true);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Paging p = new Paging();
+        p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+        mAction.getHomeTimeline(p);
+    }
+
+    @Override
     public void onRefresh() {
-        mAction.getHomeTimeline();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+        Paging p = new Paging();
+        p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+        mAction.getHomeTimeline(p);
     }
 
     @Override
@@ -84,14 +102,17 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         @Override
         public void gotHomeTimeline(ResponseList<Status> statuses) {
             getActivity().runOnUiThread(() -> {
-                mAdapter.addAll(statuses);
+                Variable.TLAdapter.statusAddAll(Variable.TLAdapter, statuses);
                 mSwipeRefreshLayout.setRefreshing(false);
             });
         }
 
         @Override
         public void onException(TwitterException te, TwitterMethod method) {
-            Log.e("TwitterException", te.getMessage());
+            getActivity().runOnUiThread(() -> {
+                mSwipeRefreshLayout.setRefreshing(false);
+                MainActivity.showToast(te.getMessage());
+            });
         }
     };
 }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.meronmks.zimitta.Adapter.MainPagerAdapter;
+import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.OAuth.OAuthVariable;
 import com.meronmks.zimitta.OAuth.OauthUtils;
 import com.meronmks.zimitta.OAuth.TwitterOAuthActivity;
@@ -17,18 +18,18 @@ import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
 import io.fabric.sdk.android.Fabric;
-import twitter4j.conf.ConfigurationBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
-    private static Context MainContext;
+    private static Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MainContext = this;
+        mContext = this;
+        Variable.iniVariable(mContext);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(OAuthVariable.TWITTER_KEY, OAuthVariable.TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
@@ -49,11 +50,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Variable.Destroy();
+    }
+
     /**
      * トースト表示処理
      */
     public static void showToast(String text){
-        if(MainContext == null || text == null || text.length() == 0) return;
-        Toast.makeText(MainContext, text, Toast.LENGTH_SHORT).show();
+        if(mContext == null || text == null || text.length() == 0) return;
+        Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
     }
 }
