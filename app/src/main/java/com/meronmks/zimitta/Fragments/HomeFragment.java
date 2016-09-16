@@ -95,8 +95,14 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mStreamReceiver.unregister();
+
         mSwipeRefreshLayout.removeAllViews();   //残像バグ対策
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mStreamReceiver.unregister();
     }
 
     private void setItemClickListener(){
@@ -140,15 +146,12 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mStreamReceiver = StreamReceiver.register(getContext(), status -> getActivity().runOnUiThread(() -> {
             int pos = 0;
             int top = 0;
-            int tmpCount = Variable.TLAdapter.getCount();
             if(!Variable.TLAdapter.isEmpty()) {
                 pos = mListView.getFirstVisiblePosition();
                 top = mListView.getChildAt(0).getTop();
             }
             Variable.TLAdapter.statusAdd(Variable.TLAdapter, status);
-            if(tmpCount != 0 && !isStatusAdd){
-                mListView.setSelectionFromTop(pos + (Variable.TLAdapter.getCount() - tmpCount), top);
-            }
+            mListView.setSelectionFromTop(pos + 1, top);
             if (pos == 0 && top == 0) {
                 mListView.smoothScrollToPositionFromTop(0, 0);
             }
