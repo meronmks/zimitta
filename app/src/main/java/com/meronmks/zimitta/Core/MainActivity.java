@@ -75,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Variable.twitterStream.user();
+        if(Variable.twitterStream != null) {
+            Variable.twitterStream.user();
+        }
         Variable.Destroy();
     }
 

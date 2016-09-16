@@ -73,7 +73,10 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         long date1 = cal1.getTimeInMillis();
         long date2 = cal2.getTimeInMillis();
         long time = (date2 - date1) / 1000;
-        if (time <= 59) {
+        if(time < 5){
+            timeView.setText("now");
+        }
+        if (5 <= time && time <= 59) {
             timeView.setText(time + "s前");
         }
         time = time / 60;
