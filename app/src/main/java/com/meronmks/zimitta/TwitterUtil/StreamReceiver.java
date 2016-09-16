@@ -6,61 +6,58 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import com.meronmks.zimitta.Datas.ParcelStatus;
+import com.meronmks.zimitta.Datas.Variable;
 
-import org.jetbrains.annotations.NotNull;
-import org.parceler.Parcels;
+import twitter4j.Status;
 
 /**
  * Created by meron on 2016/09/16.
  */
 public class StreamReceiver extends BroadcastReceiver {
 
-    private static final String ACTION_INVOKED = "com.meronmks.zimitta.ACTION_INVOKED";
-    private static final String BUNDLE = "BUNDLE";
-    private static final String STREAMSTATUS = "STREAMSTATUS";
-
-    public interface Callback {
-        void onEventInvoked(ParcelStatus status);
+    public interface Callback{
+        void onEventInvoked(Status status);
     }
 
     private Callback callback;
     private LocalBroadcastManager manager;
 
-    private StreamReceiver(@NotNull Context context, @NotNull Callback callback) {
+    private StreamReceiver(Context context, Callback callback) {
         super();
         this.callback = callback;
-        manager = LocalBroadcastManager.getInstance(context.getApplicationContext());
+        manager = LocalBroadcastManager.getInstance(context);
 
         IntentFilter filter = new IntentFilter();
-        filter.addAction(ACTION_INVOKED);
+        filter.addAction(Variable.ACTION_INVOKED);
 
         manager.registerReceiver(this, filter);
     }
 
-    public static StreamReceiver register(@NotNull Context context, @NotNull Callback callback) {
+    public static StreamReceiver register(Context context, Callback callback) {
         return new StreamReceiver(context, callback);
     }
 
     @Override
-    public void onReceive(@NotNull Context context, @NotNull Intent intent) {
-        String action = intent.getAction();
-
-        if (ACTION_INVOKED.equals(action)) {
-            Bundle bundle = intent.getBundleExtra(BUNDLE);
-            callback.onEventInvoked(Parcels.unwrap(bundle.getParcelable(STREAMSTATUS)));
-        }
+    public void onReceive(Context context, Intent intent) {
+        Bundle bundle = intent.getBundleExtra(Variable.STREAM_BUNDLE);
+        ParcelStatus parcelStatus = bundle.getParcelable(Variable.STREAM_PARCELABLE);
+        if(parcelStatus == null)return;
+        callback.onEventInvoked(parcelStatus.status);
     }
 
-    public static void sendBroadcast(@NotNull Context context, @NotNull ParcelStatus status) {
-        Intent intent = new Intent();
+    public static void sendLocalBroadcast(Context context, Status status){
+        ParcelStatus parcelStatus = new ParcelStatus();
+        parcelStatus.status = status;
         Bundle bundle = new Bundle();
-        bundle.putParcelable(STREAMSTATUS, Parcels.wrap(status));
-        intent.putExtra(BUNDLE, bundle);
-
-        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(context.getApplicationContext());
-        manager.sendBroadcast(intent);
+        bundle.putParcelable(Variable.STREAM_PARCELABLE, parcelStatus);
+        Intent intent = new Intent();
+        intent.setAction(Variable.ACTION_INVOKED);
+        intent.putExtra(Variable.STREAM_BUNDLE, bundle);
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager.getInstance(context);
+        localBroadcastManager.sendBroadcast(intent);
     }
 
     public void unregister() {

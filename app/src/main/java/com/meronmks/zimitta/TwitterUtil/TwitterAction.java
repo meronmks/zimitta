@@ -11,6 +11,7 @@ import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
 import twitter4j.Paging;
 import twitter4j.TwitterListener;
+import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -30,11 +31,18 @@ public class TwitterAction {
         if(Variable.conf == null){
             makeConfigurationBuilder(context);
         }
-        //TwitterFactoryをインスタンス化する
+        //AsyncTwitterFactoryをインスタンス化する
         AsyncTwitterFactory twitterFactory = new AsyncTwitterFactory(Variable.conf);
         //Twitterをインスタンス化する
         mTwitter = twitterFactory.getInstance();
         mTwitter.addListener(twitterListener);
+
+        if(Variable.twitterStream == null) {
+            TwitterStreamFactory factory = new TwitterStreamFactory(Variable.conf);
+            Variable.twitterStream = factory.getInstance();
+            StreamAdapter streamAdapter = new StreamAdapter(context);
+            Variable.twitterStream.addListener(streamAdapter);
+        }
     }
 
     /**

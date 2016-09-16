@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.meronmks.zimitta.Adapter.TweetAdapter;
 
+import twitter4j.TwitterStream;
 import twitter4j.conf.Configuration;
 
 /**
@@ -15,6 +16,11 @@ public class Variable {
     public static String userName;
     public static TweetAdapter TLAdapter;
     public static Configuration conf;
+    public static TwitterStream twitterStream;
+    public static final String ACTION_INVOKED = "com.meronmks.zimitta.ACTION_INVOKED";
+    public static final String STREAM_PARCELABLE = "STREAM_PARCELABLE";
+    public static final String STREAM_BUNDLE = "STREAM_BUNDLE";
+
 
     public static boolean iniVariable(Context context){
         Destroy();
@@ -32,5 +38,6 @@ public class Variable {
         userName = "";
         TLAdapter = null;
         conf = null;
+        twitterStream = null;
     }
 }

@@ -23,16 +23,8 @@ repositories {
 }
 
 android {
-    signingConfigs {
-        Release {
-            keyAlias 'zimitta_key'
-            keyPassword 'ak529633'
-            storeFile file('C:\\Users\\meron\\keystore\\meronmks')
-            storePassword 'ak529633'
-        }
-    }
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
     defaultConfig {
         applicationId "com.meronmks.zimitta"
         minSdkVersion 14
@@ -56,7 +48,6 @@ android {
             minifyEnabled false
             buildConfigField "boolean", "DebugFlag", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.Release
         }
     }
     packagingOptions {

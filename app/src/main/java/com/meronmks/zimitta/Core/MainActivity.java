@@ -53,8 +53,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Variable.twitterStream.user();
         Variable.Destroy();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
 
     /**
      * トースト表示処理

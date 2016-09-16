@@ -1,25 +1,29 @@
 package com.meronmks.zimitta.Fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import com.meronmks.zimitta.Adapter.TweetAdapter;
 import com.meronmks.zimitta.Core.MainActivity;
+import com.meronmks.zimitta.Datas.ParcelStatus;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
+import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
-
-import java.util.Comparator;
-import java.util.HashSet;
 
 import twitter4j.Paging;
 import twitter4j.ResponseList;
@@ -39,11 +43,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private TwitterAction mAction;
     private boolean isStatusAdd;
+    private StreamReceiver mStreamReceiver;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAction = new TwitterAction(getContext(), listener);
+        Variable.twitterStream.user();
     }
 
     @Override
@@ -56,6 +62,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         setItemClickListener();
         setLongItemClickListener();
         setScrollListener();
+        setReceiver();
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -88,6 +95,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mStreamReceiver.unregister();
         mSwipeRefreshLayout.removeAllViews();   //残像バグ対策
     }
 
@@ -125,6 +133,31 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         });
     }
 
+    /**
+     * レシーバの受け取り口作成
+     */
+    private void setReceiver(){
+        mStreamReceiver = StreamReceiver.register(getContext(), status -> getActivity().runOnUiThread(() -> {
+            int pos = 0;
+            int top = 0;
+            int tmpCount = Variable.TLAdapter.getCount();
+            if(!Variable.TLAdapter.isEmpty()) {
+                pos = mListView.getFirstVisiblePosition();
+                top = mListView.getChildAt(0).getTop();
+            }
+            Variable.TLAdapter.statusAdd(Variable.TLAdapter, status);
+            if(tmpCount != 0 && !isStatusAdd){
+                mListView.setSelectionFromTop(pos + (Variable.TLAdapter.getCount() - tmpCount), top);
+            }
+            if (pos == 0 && top == 0) {
+                mListView.smoothScrollToPositionFromTop(0, 0);
+            }
+        }));
+    }
+
+    /**
+     * Listener定義
+     */
     TwitterListener listener = new TwitterAdapter() {
         @Override
         public void gotHomeTimeline(ResponseList<Status> statuses) {
