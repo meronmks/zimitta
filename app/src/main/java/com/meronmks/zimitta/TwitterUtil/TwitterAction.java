@@ -12,21 +12,19 @@ import twitter4j.AsyncTwitterFactory;
 import twitter4j.Paging;
 import twitter4j.TwitterListener;
 import twitter4j.TwitterStreamFactory;
-import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
+ * Twitterとの通信詰め合わせ。結果はリスナー経由
  * Created by meron on 2016/09/14.
  */
 public class TwitterAction {
 
-    private TwitterListener mTwitterListener;
     private AsyncTwitter mTwitter;
     private ConfigurationBuilder builder;
 
 
     public TwitterAction(Context context, TwitterListener twitterListener){
-        mTwitterListener = twitterListener;
 
         if(Variable.conf == null){
             makeConfigurationBuilder(context);
@@ -67,7 +65,25 @@ public class TwitterAction {
         Variable.conf = builder.build();
     }
 
+    /**
+     * タイムラインの取得
+     * @param p 取得時のオプション
+     */
     public void getHomeTimeline(Paging p){
         mTwitter.getHomeTimeline(p);
+    }
+
+    /**
+     * ログインしているユーザの情報取得
+     */
+    public void getVerifyCredentials(){
+        mTwitter.verifyCredentials();
+    }
+
+    /**
+     * ミュートしているユーザのID取得
+     */
+    public void getMutesIDs(){
+        mTwitter.getMutesIDs(-1);
     }
 }
