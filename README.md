@@ -21,6 +21,7 @@
 * [Android (Java) で InputStream / OutputStream の進捗状況の取得・表示](http://foreignkey.toyao.net/archives/1386)
 * [TextViewのリンク以外をクリックした時はListViewのクリックに行く方法](http://oigami.hatenablog.com/entry/2014/11/08/082615)
 * [[Android Tips] SwipeRefreshLayout で Pull to Refresh を実装する](http://dev.classmethod.jp/smartphone/swiperefreshlayout/)
+* [イベントの通知にインテントのブロードキャストを使う話](http://qiita.com/kazhida/items/91a15a1cf8ec0c443dbb)
 
 ## 直さないといけないバグ ##
 * 実機でもOutOfMemoryで落ちることがある
