@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +28,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
     private Context mContext;
 
     static class ViewHolder {
+        RelativeLayout listItemBase;
         TextView Name;
         ImageView UserIcon;
         ImageView RTUserIcon;
@@ -112,6 +114,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
         }else{
             vh.LockedStatus.setVisibility(View.GONE);
         }
+        vh.listItemBase.setBackgroundResource(R.drawable.list_item);
         return convertView;
     }
 
@@ -123,6 +126,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
     private ViewHolder iniViewHolder(View cv){
         ViewHolder vh = new ViewHolder();
 
+        vh.listItemBase = (RelativeLayout) cv.findViewById(R.id.listItemBase);
         vh.Name = (TextView) cv.findViewById(R.id.Name);
         vh.UserIcon = (ImageView) cv.findViewById(R.id.UserIcon);
         vh.RTUserIcon = (ImageView) cv.findViewById(R.id.RTUserIcon);
