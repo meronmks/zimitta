@@ -4,7 +4,6 @@
 ## 使用ライブラリ ##
 * android-support-v4  
 * android-support-v7-appcompat  
-* [Android Smart Image View](http://loopj.com/android-smart-image-view/)  
 * [jsoup](http://jsoup.org/)
 * [twitter4j](http://twitter4j.org/ja/)  
 * Glide
