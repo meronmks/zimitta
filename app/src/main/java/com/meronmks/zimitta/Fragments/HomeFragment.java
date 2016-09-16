@@ -1,17 +1,11 @@
 package com.meronmks.zimitta.Fragments;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +13,12 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.meronmks.zimitta.Core.MainActivity;
-import com.meronmks.zimitta.Datas.ParcelStatus;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
+import twitter4j.IDs;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -161,7 +155,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     /**
      * Listener定義
      */
-    TwitterListener listener = new TwitterAdapter() {
+    private TwitterListener listener = new TwitterAdapter() {
         @Override
         public void gotHomeTimeline(ResponseList<Status> statuses) {
             getActivity().runOnUiThread(() -> {
@@ -183,8 +177,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         @Override
         public void onException(TwitterException te, TwitterMethod method) {
             getActivity().runOnUiThread(() -> {
+                switch (method){
+                    case HOME_TIMELINE:
+                        MainActivity.showToast("タイムラインの取得に失敗しました。");
+                        break;
+                }
                 mSwipeRefreshLayout.setRefreshing(false);
-                MainActivity.showToast(te.getMessage());
+
             });
         }
     };
