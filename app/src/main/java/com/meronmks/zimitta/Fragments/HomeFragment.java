@@ -18,6 +18,9 @@ import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import twitter4j.IDs;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
@@ -39,11 +42,15 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private boolean isStatusAdd;
     private StreamReceiver mStreamReceiver;
 
+    private Timer  limitTimer;
+    private boolean isLimited;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAction = new TwitterAction(getContext(), listener);
         Variable.twitterStream.user();
+        isLimited = false;
     }
 
     @Override
@@ -120,7 +127,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
             @Override
             public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (totalItemCount != 0 && !mSwipeRefreshLayout.isRefreshing() && totalItemCount == firstVisibleItem + visibleItemCount) {
+                if (totalItemCount != 0 && !mSwipeRefreshLayout.isRefreshing() && !isLimited && totalItemCount == firstVisibleItem + visibleItemCount) {
                     mSwipeRefreshLayout.setRefreshing(true);
                     isStatusAdd = true;
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -180,6 +187,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 switch (method){
                     case HOME_TIMELINE:
                         MainActivity.showToast("タイムラインの取得に失敗しました。");
+                        isLimited = true;
+                        limitTimer = new Timer();
+                        limitTimer.schedule(new LimitTimer(), te.getRateLimitStatus().getSecondsUntilReset()*1000);
                         break;
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -187,4 +197,12 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             });
         }
     };
+
+    private class LimitTimer extends TimerTask{
+        @Override
+        public void run() {
+            isLimited = false;
+            limitTimer.cancel();
+        }
+    }
 }
