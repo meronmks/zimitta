@@ -5,6 +5,7 @@ import android.content.Context;
 import android.provider.ContactsContract;
 import android.text.Spannable;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
+import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 
 import java.util.Date;
@@ -88,6 +90,12 @@ public class TweetAdapter extends BaseAdapter<Status> {
             //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
             return mt;
         });
+
+        //TODO これが動かない原因を調べる
+        if(item.getUser().getId() == Variable.userID){
+            vh.TweetStatus.setVisibility(View.VISIBLE);
+            vh.TweetStatus.setBackgroundResource(R.color.Blue);
+        }
 
         if(item.getRetweetedStatus() != null){
             vh.TweetStatus.setVisibility(View.VISIBLE);
