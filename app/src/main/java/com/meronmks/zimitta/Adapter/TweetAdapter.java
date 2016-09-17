@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,7 +28,7 @@ import twitter4j.Status;
  */
 public class TweetAdapter extends BaseAdapter<Status> {
     private LayoutInflater mInflater;
-    private Context mContext;
+    private ViewHolder vh;
 
     static class ViewHolder {
         RelativeLayout listItemBase;
@@ -51,13 +52,12 @@ public class TweetAdapter extends BaseAdapter<Status> {
     public TweetAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_1);
         mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        mContext = context;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder vh = null;
+        vh = null;
         if(convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item_status, null);
             vh = iniViewHolder(convertView);
@@ -91,7 +91,6 @@ public class TweetAdapter extends BaseAdapter<Status> {
             return mt;
         });
 
-        //TODO これが動かない原因を調べる
         if(item.getUser().getId() == Variable.userID){
             vh.TweetStatus.setVisibility(View.VISIBLE);
             vh.TweetStatus.setBackgroundResource(R.color.Blue);
@@ -123,7 +122,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
             vh.LockedStatus.setVisibility(View.GONE);
         }
         vh.listItemBase.setBackgroundResource(R.drawable.list_item);
-        return convertView;
+       return convertView;
     }
 
     /**
@@ -132,7 +131,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
      * @return
      */
     private ViewHolder iniViewHolder(View cv){
-        ViewHolder vh = new ViewHolder();
+        vh = new ViewHolder();
 
         vh.listItemBase = (RelativeLayout) cv.findViewById(R.id.listItemBase);
         vh.Name = (TextView) cv.findViewById(R.id.Name);
