@@ -28,4 +28,10 @@ public class StreamAdapter extends UserStreamAdapter {
         super.onStatus(status);
         StreamReceiver.sendLocalBroadcast(context, status);
     }
+
+    @Override
+    public void onException(Exception ex) {
+        super.onException(ex);
+        Log.e("StreamAdapter",ex.getMessage());
+    }
 }
