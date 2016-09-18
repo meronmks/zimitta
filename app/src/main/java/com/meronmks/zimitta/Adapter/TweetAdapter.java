@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -47,6 +48,16 @@ public class TweetAdapter extends BaseAdapter<Status> {
         ImageView TweetDeletedStatus;
         ImageView LockedStatus;
         View TweetStatus;
+
+        LinearLayout PreviewImage;
+
+        //引用ツイート関連
+        LinearLayout QuoteTweetView;
+        TextView QuoteName;
+        TextView QuoteScreenName;
+        TextView QuoteText;
+        TextView QuoteAtTime;
+        LinearLayout QuotePreviewImage;
     }
 
     public TweetAdapter(Context context) {
@@ -72,24 +83,9 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.RTUserIcon.setVisibility(View.GONE);
         vh.RTUserName.setVisibility(View.GONE);
         vh.TweetStatus.setVisibility(View.GONE);
-
-        Linkify.addLinks(vh.TweetText, Linkify.WEB_URLS);
-
-        vh.TweetText.setOnTouchListener((view, event) -> {
-            TextView textView = (TextView) view;
-            //LinkMovementMethodを継承したもの 下記参照
-            MutableLinkMovementMethod m = new MutableLinkMovementMethod();
-            //MovementMethod m=LinkMovementMethod.getInstance();
-            //リンクのチェックを行うため一時的にsetする
-            textView.setMovementMethod(m);
-            boolean mt = m.onTouchEvent(textView, (Spannable) textView.getText(), event);
-            //チェックが終わったので解除する しないと親view(listview)に行けない
-            textView.setMovementMethod(null);
-            //setMovementMethodを呼ぶとフォーカスがtrueになるのでfalseにする
-            textView.setFocusable(false);
-            //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
-            return mt;
-        });
+        vh.PreviewImage.setVisibility(View.GONE);
+        vh.QuoteTweetView.setVisibility(View.GONE);
+        vh.QuotePreviewImage.setVisibility(View.GONE);
 
         if(item.getUser().getId() == Variable.userID){
             vh.TweetStatus.setVisibility(View.VISIBLE);
@@ -115,14 +111,70 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.RTCount.setText("RT : " + item.getRetweetCount());
         vh.FavCount.setText("Fav : " + item.getFavoriteCount());
 
+        //画像処理
+        if(item.getExtendedMediaEntities().length != 0){
+            vh.PreviewImage.setVisibility(View.VISIBLE);
+        }
+
+        //引用ツイート関連
+        if(item.getQuotedStatus() != null){
+            QuoteTweetSetting(item.getQuotedStatus());
+        }
+
         //鍵垢判定
         if(item.getUser().isProtected()){
             vh.LockedStatus.setVisibility(View.VISIBLE);
         }else{
             vh.LockedStatus.setVisibility(View.GONE);
         }
+
+        //リンク処理
+        vh.TweetText.setOnTouchListener((view, event) -> {
+            TextView textView = (TextView) view;
+            //LinkMovementMethodを継承したもの 下記参照
+            MutableLinkMovementMethod m = new MutableLinkMovementMethod();
+            //リンクのチェックを行うため一時的にsetする
+            textView.setMovementMethod(m);
+            boolean mt = m.onTouchEvent(textView, (Spannable) textView.getText(), event);
+            //チェックが終わったので解除する しないと親view(listview)に行けない
+            textView.setMovementMethod(null);
+            //setMovementMethodを呼ぶとフォーカスがtrueになるのでfalseにする
+            textView.setFocusable(false);
+            //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
+            return mt;
+        });
+
         vh.listItemBase.setBackgroundResource(R.drawable.list_item);
        return convertView;
+    }
+
+    /**
+     * 引用ツイートの処理
+     * @param status
+     */
+    private void QuoteTweetSetting(Status status){
+        vh.QuoteTweetView.setVisibility(View.VISIBLE);
+        vh.QuoteName.setText(status.getUser().getName());
+        vh.QuoteScreenName.setText("@" + status.getUser().getScreenName());
+        vh.QuoteText.setText(status.getText());
+        replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
+        vh.QuoteText.setOnTouchListener((view, event) -> {
+            TextView textView = (TextView) view;
+            //LinkMovementMethodを継承したもの 下記参照
+            MutableLinkMovementMethod m = new MutableLinkMovementMethod();
+            //リンクのチェックを行うため一時的にsetする
+            textView.setMovementMethod(m);
+            boolean mt = m.onTouchEvent(textView, (Spannable) textView.getText(), event);
+            //チェックが終わったので解除する しないと親view(listview)に行けない
+            textView.setMovementMethod(null);
+            //setMovementMethodを呼ぶとフォーカスがtrueになるのでfalseにする
+            textView.setFocusable(false);
+            //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
+            return mt;
+        });
+        if(status.getExtendedMediaEntities().length != 0){
+            vh.QuotePreviewImage.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -149,6 +201,16 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.LockedStatus = (ImageView) cv.findViewById(R.id.LockedStatus);
         vh.TweetStatus = cv.findViewById(R.id.TweetStatus);
         vh.Time = (TextView) cv.findViewById(R.id.Time);
+
+        vh.PreviewImage = (LinearLayout) cv.findViewById(R.id.PreviewImage);
+
+        //引用ツイート関連
+        vh.QuoteTweetView = (LinearLayout) cv.findViewById(R.id.QuoteTweetView);
+        vh.QuoteName = (TextView) cv.findViewById(R.id.QuoteName);
+        vh.QuoteScreenName = (TextView) cv.findViewById(R.id.QuoteScreenName);
+        vh.QuoteText = (TextView) cv.findViewById(R.id.QuoteText);
+        vh.QuoteAtTime = (TextView) cv.findViewById(R.id.QuoteAtTime);
+        vh.QuotePreviewImage = (LinearLayout) cv.findViewById(R.id.QuotePreviewImage);
 
         return vh;
     }

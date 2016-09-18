@@ -58,10 +58,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         View v = inflater.inflate(R.layout.core_fragment, container, false);
 
         mListView = (ListView) v.findViewById(R.id.list);
-        mListView.setAdapter(Variable.TLAdapter);
-
         setItemClickListener();
         setLongItemClickListener();
+        mListView.setAdapter(Variable.TLAdapter);
         setScrollListener();
         setReceiver();
 
@@ -108,12 +107,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void setItemClickListener(){
         mListView.setOnItemClickListener((adapterView, view, i, l) -> {
-
+            MainActivity.showToast("Click!");
         });
     }
 
     private void setLongItemClickListener(){
         mListView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            MainActivity.showToast("LongClick!");
             return true;
         });
     }
