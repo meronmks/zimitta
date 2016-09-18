@@ -6,6 +6,7 @@ package com.meronmks.zimitta.Adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.text.Spannable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Datas.Variable;
 
 import java.text.DateFormat;
@@ -125,6 +127,35 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         time = time / 24;
         if (time != 0) {
             timeView.setText(DateFormat.getDateTimeInstance().format(CreatedAt));
+        }
+    }
+
+    /**
+     * 引用ツイートの処理
+     * @param status
+     */
+    protected void QuoteTweetSetting(Status status, ViewHolder vh){
+        vh.QuoteTweetView.setVisibility(View.VISIBLE);
+        vh.QuoteName.setText(status.getUser().getName());
+        vh.QuoteScreenName.setText("@" + status.getUser().getScreenName());
+        vh.QuoteText.setText(status.getText());
+        replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
+        vh.QuoteText.setOnTouchListener((view, event) -> {
+            TextView textView = (TextView) view;
+            //LinkMovementMethodを継承したもの 下記参照
+            MutableLinkMovementMethod m = new MutableLinkMovementMethod();
+            //リンクのチェックを行うため一時的にsetする
+            textView.setMovementMethod(m);
+            boolean mt = m.onTouchEvent(textView, (Spannable) textView.getText(), event);
+            //チェックが終わったので解除する しないと親view(listview)に行けない
+            textView.setMovementMethod(null);
+            //setMovementMethodを呼ぶとフォーカスがtrueになるのでfalseにする
+            textView.setFocusable(false);
+            //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
+            return mt;
+        });
+        if(status.getExtendedMediaEntities().length != 0){
+            vh.QuotePreviewImage.setVisibility(View.VISIBLE);
         }
     }
 

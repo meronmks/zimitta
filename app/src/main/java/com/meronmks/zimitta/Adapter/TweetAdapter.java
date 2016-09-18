@@ -30,7 +30,7 @@ import twitter4j.Status;
 public class TweetAdapter extends BaseAdapter<Status> {
     private LayoutInflater mInflater;
     private ViewHolder vh;
-    
+
     public TweetAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_1);
         mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -89,7 +89,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
 
         //引用ツイート関連
         if(item.getQuotedStatus() != null){
-            QuoteTweetSetting(item.getQuotedStatus());
+            QuoteTweetSetting(item.getQuotedStatus(), vh);
         }
 
         //鍵垢判定
@@ -119,34 +119,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
        return convertView;
     }
 
-    /**
-     * 引用ツイートの処理
-     * @param status
-     */
-    private void QuoteTweetSetting(Status status){
-        vh.QuoteTweetView.setVisibility(View.VISIBLE);
-        vh.QuoteName.setText(status.getUser().getName());
-        vh.QuoteScreenName.setText("@" + status.getUser().getScreenName());
-        vh.QuoteText.setText(status.getText());
-        replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
-        vh.QuoteText.setOnTouchListener((view, event) -> {
-            TextView textView = (TextView) view;
-            //LinkMovementMethodを継承したもの 下記参照
-            MutableLinkMovementMethod m = new MutableLinkMovementMethod();
-            //リンクのチェックを行うため一時的にsetする
-            textView.setMovementMethod(m);
-            boolean mt = m.onTouchEvent(textView, (Spannable) textView.getText(), event);
-            //チェックが終わったので解除する しないと親view(listview)に行けない
-            textView.setMovementMethod(null);
-            //setMovementMethodを呼ぶとフォーカスがtrueになるのでfalseにする
-            textView.setFocusable(false);
-            //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
-            return mt;
-        });
-        if(status.getExtendedMediaEntities().length != 0){
-            vh.QuotePreviewImage.setVisibility(View.VISIBLE);
-        }
-    }
+
 
     /**
      * Holderを初期化
