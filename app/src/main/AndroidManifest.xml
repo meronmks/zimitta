@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".OAuth.TwitterOAuthActivity"/>
+        <activity android:name=".Activity.ShowImageActivity"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>

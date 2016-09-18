@@ -4,10 +4,12 @@ package com.meronmks.zimitta.Adapter;
  * Created by meron on 2016/09/14.
  */
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.Spannable;
 import android.text.format.DateFormat;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -16,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.meronmks.zimitta.Activity.ShowImageActivity;
+import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.R;
 
@@ -141,11 +145,23 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         for(int i = 0; i < extendedMediaEntity.length; i++){
             imageViews[i].setVisibility(View.VISIBLE);
             Glide.with(getContext())
-                    .load(extendedMediaEntity[i].getMediaURL() + ":thumb")
+                    .load(extendedMediaEntity[i].getMediaURLHttps() + ":thumb")
                     .placeholder(R.mipmap.ic_sync_white_24dp)
                     .error(R.mipmap.ic_sync_problem_white_24dp)
                     .dontAnimate()
                     .into(imageViews[i]);
+
+            final int finalI = i;
+            imageViews[i].setOnClickListener(view -> {
+                if(extendedMediaEntity[finalI].getType().equals("photo")){
+                    String imageURL = extendedMediaEntity[finalI].getMediaURLHttps();
+                    Intent image = new Intent(getContext(), ShowImageActivity.class);
+                    image.putExtra("Images", imageURL);
+                    getContext().startActivity(image);
+                }else {
+                    MainActivity.showToast(extendedMediaEntity[finalI].getType());
+                }
+            });
         }
     }
 
