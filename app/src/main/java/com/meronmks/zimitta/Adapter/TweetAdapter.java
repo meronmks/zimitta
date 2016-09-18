@@ -30,36 +30,7 @@ import twitter4j.Status;
 public class TweetAdapter extends BaseAdapter<Status> {
     private LayoutInflater mInflater;
     private ViewHolder vh;
-
-    static class ViewHolder {
-        RelativeLayout listItemBase;
-        TextView Name;
-        ImageView UserIcon;
-        ImageView RTUserIcon;
-        TextView ScreenName;
-        TextView TweetText;
-        TextView Time;
-        TextView Via;
-        TextView RTCount;
-        TextView FavCount;
-
-        TextView RTUserName;
-
-        ImageView TweetDeletedStatus;
-        ImageView LockedStatus;
-        View TweetStatus;
-
-        LinearLayout PreviewImage;
-
-        //引用ツイート関連
-        LinearLayout QuoteTweetView;
-        TextView QuoteName;
-        TextView QuoteScreenName;
-        TextView QuoteText;
-        TextView QuoteAtTime;
-        LinearLayout QuotePreviewImage;
-    }
-
+    
     public TweetAdapter(Context context) {
         super(context, android.R.layout.simple_list_item_1);
         mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);

@@ -9,6 +9,9 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.meronmks.zimitta.Datas.Variable;
@@ -25,6 +28,35 @@ import twitter4j.Status;
 
 
 public class BaseAdapter<T> extends ArrayAdapter<T> {
+
+    static class ViewHolder {
+        RelativeLayout listItemBase;
+        TextView Name;
+        ImageView UserIcon;
+        ImageView RTUserIcon;
+        TextView ScreenName;
+        TextView TweetText;
+        TextView Time;
+        TextView Via;
+        TextView RTCount;
+        TextView FavCount;
+
+        TextView RTUserName;
+
+        ImageView TweetDeletedStatus;
+        ImageView LockedStatus;
+        View TweetStatus;
+
+        LinearLayout PreviewImage;
+
+        //引用ツイート関連
+        LinearLayout QuoteTweetView;
+        TextView QuoteName;
+        TextView QuoteScreenName;
+        TextView QuoteText;
+        TextView QuoteAtTime;
+        LinearLayout QuotePreviewImage;
+    }
 
     public BaseAdapter(Context context, int resources) {
         super(context, resources);
