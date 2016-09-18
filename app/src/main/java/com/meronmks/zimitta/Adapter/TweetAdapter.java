@@ -2,21 +2,15 @@ package com.meronmks.zimitta.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.provider.ContactsContract;
-import android.text.Spannable;
-import android.text.util.Linkify;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 
@@ -57,6 +51,12 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.PreviewImage.setVisibility(View.GONE);
         vh.QuoteTweetView.setVisibility(View.GONE);
         vh.QuotePreviewImage.setVisibility(View.GONE);
+        for(int i  = 0; i < vh.imagePreviewViews.length; i++){
+            vh.imagePreviewViews[i].setVisibility(View.GONE);
+        }
+        for(int i  = 0; i < vh.imageQuotePreviewViews.length; i++){
+            vh.imageQuotePreviewViews[i].setVisibility(View.GONE);
+        }
 
         if(item.getUser().getId() == Variable.userID){
             vh.TweetStatus.setVisibility(View.VISIBLE);
@@ -85,11 +85,13 @@ public class TweetAdapter extends BaseAdapter<Status> {
         //画像処理
         if(item.getExtendedMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
+            setPreviewImage(item.getExtendedMediaEntities(),vh.imagePreviewViews);
+            vh.TweetText.setText(deleteMediaURL(item.getText(), item.getExtendedMediaEntities()));
         }
 
         //引用ツイート関連
         if(item.getQuotedStatus() != null){
-            QuoteTweetSetting(item.getQuotedStatus(), vh);
+            quoteTweetSetting(item.getQuotedStatus(), vh);
         }
 
         //鍵垢判定
@@ -100,20 +102,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
         }
 
         //リンク処理
-        vh.TweetText.setOnTouchListener((view, event) -> {
-            TextView textView = (TextView) view;
-            //LinkMovementMethodを継承したもの 下記参照
-            MutableLinkMovementMethod m = new MutableLinkMovementMethod();
-            //リンクのチェックを行うため一時的にsetする
-            textView.setMovementMethod(m);
-            boolean mt = m.onTouchEvent(textView, (Spannable) textView.getText(), event);
-            //チェックが終わったので解除する しないと親view(listview)に行けない
-            textView.setMovementMethod(null);
-            //setMovementMethodを呼ぶとフォーカスがtrueになるのでfalseにする
-            textView.setFocusable(false);
-            //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
-            return mt;
-        });
+        mutableLinkMovement(vh.TweetText);
 
         vh.listItemBase.setBackgroundResource(R.drawable.list_item);
        return convertView;
@@ -147,6 +136,10 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.Time = (TextView) cv.findViewById(R.id.Time);
 
         vh.PreviewImage = (LinearLayout) cv.findViewById(R.id.PreviewImage);
+        vh.imagePreviewViews[0] = (ImageView) cv.findViewById(R.id.PreviewImageView1);
+        vh.imagePreviewViews[1] = (ImageView) cv.findViewById(R.id.PreviewImageView2);
+        vh.imagePreviewViews[2] = (ImageView) cv.findViewById(R.id.PreviewImageView3);
+        vh.imagePreviewViews[3] = (ImageView) cv.findViewById(R.id.PreviewImageView4);
 
         //引用ツイート関連
         vh.QuoteTweetView = (LinearLayout) cv.findViewById(R.id.QuoteTweetView);
@@ -155,6 +148,10 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.QuoteText = (TextView) cv.findViewById(R.id.QuoteText);
         vh.QuoteAtTime = (TextView) cv.findViewById(R.id.QuoteAtTime);
         vh.QuotePreviewImage = (LinearLayout) cv.findViewById(R.id.QuotePreviewImage);
+        vh.imageQuotePreviewViews[0] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView1);
+        vh.imageQuotePreviewViews[1] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView2);
+        vh.imageQuotePreviewViews[2] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView3);
+        vh.imageQuotePreviewViews[3] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView4);
 
         return vh;
     }

@@ -7,24 +7,24 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.Spannable;
+import android.text.format.DateFormat;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
-import com.meronmks.zimitta.Datas.Variable;
+import com.meronmks.zimitta.R;
 
-import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 
-import rx.subjects.PublishSubject;
+import twitter4j.ExtendedMediaEntity;
+import twitter4j.MediaEntity;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 
@@ -50,6 +50,7 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         View TweetStatus;
 
         LinearLayout PreviewImage;
+        ImageView[] imagePreviewViews = new ImageView[4];
 
         //引用ツイート関連
         LinearLayout QuoteTweetView;
@@ -58,6 +59,7 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         TextView QuoteText;
         TextView QuoteAtTime;
         LinearLayout QuotePreviewImage;
+        ImageView[] imageQuotePreviewViews = new ImageView[4];
     }
 
     public BaseAdapter(Context context, int resources) {
@@ -126,21 +128,63 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         }
         time = time / 24;
         if (time != 0) {
-            timeView.setText(DateFormat.getDateTimeInstance().format(CreatedAt));
+            timeView.setText(DateFormat.format("yyyy/MM/dd kk:mm:ss", CreatedAt));
         }
+    }
+
+    /**
+     * 画像のプレビュー表示
+     * @param extendedMediaEntity
+     * @param imageViews
+     */
+    protected void setPreviewImage(ExtendedMediaEntity[] extendedMediaEntity, ImageView[] imageViews){
+        for(int i = 0; i < extendedMediaEntity.length; i++){
+            imageViews[i].setVisibility(View.VISIBLE);
+            Glide.with(getContext())
+                    .load(extendedMediaEntity[i].getMediaURL() + ":thumb")
+                    .placeholder(R.mipmap.ic_sync_white_24dp)
+                    .error(R.mipmap.ic_sync_problem_white_24dp)
+                    .dontAnimate()
+                    .into(imageViews[i]);
+        }
+    }
+
+    /**
+     * 画像URLを消す
+     * @param tweet
+     * @param extendedMediaEntity
+     */
+    protected String deleteMediaURL(String tweet, ExtendedMediaEntity[] extendedMediaEntity){
+        for(MediaEntity media : extendedMediaEntity){
+            tweet = tweet.replaceAll(media.getURL(), "");
+        }
+        return tweet;
     }
 
     /**
      * 引用ツイートの処理
      * @param status
      */
-    protected void QuoteTweetSetting(Status status, ViewHolder vh){
+    protected void quoteTweetSetting(Status status, ViewHolder vh){
         vh.QuoteTweetView.setVisibility(View.VISIBLE);
         vh.QuoteName.setText(status.getUser().getName());
         vh.QuoteScreenName.setText("@" + status.getUser().getScreenName());
         vh.QuoteText.setText(status.getText());
         replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
-        vh.QuoteText.setOnTouchListener((view, event) -> {
+        mutableLinkMovement(vh.QuoteText);
+        if(status.getExtendedMediaEntities().length != 0){
+            vh.QuotePreviewImage.setVisibility(View.VISIBLE);
+            setPreviewImage(status.getExtendedMediaEntities(),vh.imageQuotePreviewViews);
+            vh.QuoteText.setText(deleteMediaURL(status.getText(), status.getExtendedMediaEntities()));
+        }
+    }
+
+    /**
+     * TextViewのリンク以外のクリックイベントを更に下のViewへ渡す
+     * @param TweetText
+     */
+    protected void mutableLinkMovement(TextView TweetText){
+        TweetText.setOnTouchListener((view, event) -> {
             TextView textView = (TextView) view;
             //LinkMovementMethodを継承したもの 下記参照
             MutableLinkMovementMethod m = new MutableLinkMovementMethod();
@@ -154,9 +198,6 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
             //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
             return mt;
         });
-        if(status.getExtendedMediaEntities().length != 0){
-            vh.QuotePreviewImage.setVisibility(View.VISIBLE);
-        }
     }
 
     /**

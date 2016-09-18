@@ -157,7 +157,7 @@
                 android:focusable="false"
                 android:id="@+id/PreviewImage"
                 android:layout_width="match_parent"
-                android:layout_height="40sp"
+                android:layout_height="60sp"
                 android:orientation="horizontal">
                 <ImageView
                     android:id="@+id/PreviewImageView1"
@@ -252,7 +252,7 @@
                     android:focusable="false"
                     android:id="@+id/QuotePreviewImage"
                     android:layout_width="match_parent"
-                    android:layout_height="40sp"
+                    android:layout_height="60sp"
                     android:orientation="horizontal">
                     <ImageView
                         android:id="@+id/QuotePreviewImageView1"
@@ -262,21 +262,21 @@
                         android:src="@mipmap/ic_sync_white_48dp"
                         android:scaleType="centerCrop"/>
                     <ImageView
-                        android:id="@+id/QuotePreviewreviewImageView2"
+                        android:id="@+id/QuotePreviewImageView2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:src="@mipmap/ic_sync_white_48dp"
                         android:scaleType="centerCrop"/>
                     <ImageView
-                        android:id="@+id/QuotePreviewreviewImageView3"
+                        android:id="@+id/QuotePreviewImageView3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:src="@mipmap/ic_sync_white_48dp"
                         android:scaleType="centerCrop"/>
                     <ImageView
-                        android:id="@+id/QuotePreviewreviewImageView4"
+                        android:id="@+id/QuotePreviewImageView4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
