@@ -162,7 +162,9 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.5">
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="2sp"
+                    android:layout_marginRight="2sp">
                     <ImageView
                         android:id="@+id/PreviewImageView1"
                         android:layout_width="match_parent"
@@ -184,21 +186,27 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:src="@mipmap/ic_sync_white_48dp"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:layout_marginLeft="2sp"
+                    android:layout_marginRight="2sp" />
                 <ImageView
                     android:id="@+id/PreviewImageView3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:src="@mipmap/ic_sync_white_48dp"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:layout_marginRight="2sp"
+                    android:layout_marginLeft="2sp" />
                 <ImageView
                     android:id="@+id/PreviewImageView4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:src="@mipmap/ic_sync_white_48dp"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop"
+                    android:layout_marginLeft="2sp"
+                    android:layout_marginRight="2sp" />
             </LinearLayout>
             <!-- 引用ツイート表示 -->
             <LinearLayout
@@ -269,7 +277,9 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.5">
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="2sp"
+                        android:layout_marginRight="2sp">
                         <ImageView
                             android:id="@+id/QuotePreviewImageView1"
                             android:layout_width="match_parent"
@@ -291,21 +301,27 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:src="@mipmap/ic_sync_white_48dp"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop"
+                        android:layout_marginRight="2sp"
+                        android:layout_marginLeft="2sp" />
                     <ImageView
                         android:id="@+id/QuotePreviewImageView3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:src="@mipmap/ic_sync_white_48dp"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="2sp"
+                        android:layout_marginRight="2sp" />
                     <ImageView
                         android:id="@+id/QuotePreviewImageView4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="0.5"
                         android:src="@mipmap/ic_sync_white_48dp"
-                        android:scaleType="centerCrop"/>
+                        android:scaleType="centerCrop"
+                        android:layout_marginLeft="2sp"
+                        android:layout_marginRight="2sp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
