@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.Spannable;
 import android.text.format.DateFormat;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -54,7 +53,8 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         View TweetStatus;
 
         LinearLayout PreviewImage;
-        ImageView[] imagePreviewViews = new ImageView[4];
+        ImageView[] ImagePreviewViews = new ImageView[4];
+        ImageView PreviewVideoView1;
 
         //引用ツイート関連
         LinearLayout QuoteTweetView;
@@ -63,7 +63,8 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         TextView QuoteText;
         TextView QuoteAtTime;
         LinearLayout QuotePreviewImage;
-        ImageView[] imageQuotePreviewViews = new ImageView[4];
+        ImageView[] ImageQuotePreviewViews = new ImageView[4];
+        ImageView QuotePreviewVideoView1;
     }
 
     public BaseAdapter(Context context, int resources) {
@@ -141,9 +142,14 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
      * @param extendedMediaEntity
      * @param imageViews
      */
-    protected void setPreviewImage(ExtendedMediaEntity[] extendedMediaEntity, ImageView[] imageViews){
+    protected void setPreviewImage(ExtendedMediaEntity[] extendedMediaEntity, ImageView[] imageViews, ImageView videoPlayView){
         for(int i = 0; i < extendedMediaEntity.length; i++){
             imageViews[i].setVisibility(View.VISIBLE);
+            if(extendedMediaEntity[i].getType().equals("photo")) {
+                videoPlayView.setVisibility(View.GONE);
+            }else{
+                videoPlayView.setVisibility(View.VISIBLE);
+            }
             Glide.with(getContext())
                     .load(extendedMediaEntity[i].getMediaURLHttps() + ":thumb")
                     .placeholder(R.mipmap.ic_sync_white_24dp)
@@ -190,7 +196,7 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         mutableLinkMovement(vh.QuoteText);
         if(status.getExtendedMediaEntities().length != 0){
             vh.QuotePreviewImage.setVisibility(View.VISIBLE);
-            setPreviewImage(status.getExtendedMediaEntities(),vh.imageQuotePreviewViews);
+            setPreviewImage(status.getExtendedMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
             vh.QuoteText.setText(deleteMediaURL(status.getText(), status.getExtendedMediaEntities()));
         }
     }
