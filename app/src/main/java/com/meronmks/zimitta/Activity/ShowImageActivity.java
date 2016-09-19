@@ -35,13 +35,12 @@ public class ShowImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // UncaughtExceptionHandlerを実装したクラスをセットする。
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         Intent intent = getIntent();
         String Image = intent.getStringExtra("Images");
 
         rootLayout = new RelativeLayout(this);
         surfaceView = new CustomSurfaceView(getApplicationContext());
-        surfaceView.setImageResourceId(R.mipmap.ic_sync_white_48dp);
+        surfaceView.setImageResourceId(R.mipmap.clear);
 
         progressBar = new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);
         setContentView(rootLayout);
@@ -88,7 +87,7 @@ public class ShowImageActivity extends AppCompatActivity {
                 if(result != null)
                 {
                     surfaceView.setImageBitmap(result);
-                    progressBar.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.GONE);
                 }else
                 {
                     showDialog("画像取得に失敗しました。");
