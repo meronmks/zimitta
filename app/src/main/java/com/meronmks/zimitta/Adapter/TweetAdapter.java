@@ -51,11 +51,11 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.PreviewImage.setVisibility(View.GONE);
         vh.QuoteTweetView.setVisibility(View.GONE);
         vh.QuotePreviewImage.setVisibility(View.GONE);
-        for(int i  = 0; i < vh.imagePreviewViews.length; i++){
-            vh.imagePreviewViews[i].setVisibility(View.GONE);
+        for(int i = 0; i < vh.ImagePreviewViews.length; i++){
+            vh.ImagePreviewViews[i].setVisibility(View.GONE);
         }
-        for(int i  = 0; i < vh.imageQuotePreviewViews.length; i++){
-            vh.imageQuotePreviewViews[i].setVisibility(View.GONE);
+        for(int i = 0; i < vh.ImageQuotePreviewViews.length; i++){
+            vh.ImageQuotePreviewViews[i].setVisibility(View.GONE);
         }
 
         if(item.getUser().getId() == Variable.userID){
@@ -85,7 +85,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
         //画像処理
         if(item.getExtendedMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
-            setPreviewImage(item.getExtendedMediaEntities(),vh.imagePreviewViews);
+            setPreviewImage(item.getExtendedMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
             vh.TweetText.setText(deleteMediaURL(item.getText(), item.getExtendedMediaEntities()));
         }
 
@@ -136,10 +136,11 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.Time = (TextView) cv.findViewById(R.id.Time);
 
         vh.PreviewImage = (LinearLayout) cv.findViewById(R.id.PreviewImage);
-        vh.imagePreviewViews[0] = (ImageView) cv.findViewById(R.id.PreviewImageView1);
-        vh.imagePreviewViews[1] = (ImageView) cv.findViewById(R.id.PreviewImageView2);
-        vh.imagePreviewViews[2] = (ImageView) cv.findViewById(R.id.PreviewImageView3);
-        vh.imagePreviewViews[3] = (ImageView) cv.findViewById(R.id.PreviewImageView4);
+        vh.ImagePreviewViews[0] = (ImageView) cv.findViewById(R.id.PreviewImageView1);
+        vh.ImagePreviewViews[1] = (ImageView) cv.findViewById(R.id.PreviewImageView2);
+        vh.ImagePreviewViews[2] = (ImageView) cv.findViewById(R.id.PreviewImageView3);
+        vh.ImagePreviewViews[3] = (ImageView) cv.findViewById(R.id.PreviewImageView4);
+        vh.PreviewVideoView1 = (ImageView) cv.findViewById(R.id.PreviewVideoView1);
 
         //引用ツイート関連
         vh.QuoteTweetView = (LinearLayout) cv.findViewById(R.id.QuoteTweetView);
@@ -148,10 +149,11 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.QuoteText = (TextView) cv.findViewById(R.id.QuoteText);
         vh.QuoteAtTime = (TextView) cv.findViewById(R.id.QuoteAtTime);
         vh.QuotePreviewImage = (LinearLayout) cv.findViewById(R.id.QuotePreviewImage);
-        vh.imageQuotePreviewViews[0] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView1);
-        vh.imageQuotePreviewViews[1] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView2);
-        vh.imageQuotePreviewViews[2] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView3);
-        vh.imageQuotePreviewViews[3] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView4);
+        vh.ImageQuotePreviewViews[0] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView1);
+        vh.ImageQuotePreviewViews[1] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView2);
+        vh.ImageQuotePreviewViews[2] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView3);
+        vh.ImageQuotePreviewViews[3] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView4);
+        vh.QuotePreviewVideoView1 = (ImageView) cv.findViewById(R.id.QuotePreviewVideoView1);
 
         return vh;
     }
