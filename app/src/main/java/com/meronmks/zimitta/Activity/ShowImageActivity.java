@@ -5,14 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.ImageMoveUtil.CustomSurfaceView;
 import com.meronmks.zimitta.Listener.MonitorInputStream;
 import com.meronmks.zimitta.R;
@@ -34,9 +31,8 @@ public class ShowImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // UncaughtExceptionHandlerを実装したクラスをセットする。
         Intent intent = getIntent();
-        String Image = intent.getStringExtra("Images");
+        String ImageURL = intent.getStringExtra("Images");
 
         rootLayout = new RelativeLayout(this);
         surfaceView = new CustomSurfaceView(getApplicationContext());
@@ -46,7 +42,7 @@ public class ShowImageActivity extends AppCompatActivity {
         setContentView(rootLayout);
         rootLayout.addView(surfaceView);
         rootLayout.addView(progressBar, new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-        getBitmapFromURL(Image);
+        getBitmapFromURL(ImageURL);
     }
 
     public Object fetch(String address) throws MalformedURLException,IOException {
@@ -87,11 +83,11 @@ public class ShowImageActivity extends AppCompatActivity {
                 if(result != null)
                 {
                     surfaceView.setImageBitmap(result);
-                    progressBar.setVisibility(View.GONE);
                 }else
                 {
                     showDialog("画像取得に失敗しました。");
                 }
+                progressBar.setVisibility(View.GONE);
             }
         };
         task.execute();

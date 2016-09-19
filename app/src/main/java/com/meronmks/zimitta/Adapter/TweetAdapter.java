@@ -85,7 +85,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
         //画像処理
         if(item.getExtendedMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
-            setPreviewImage(item.getExtendedMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
+            setPreviewMedia(item.getExtendedMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
             vh.TweetText.setText(deleteMediaURL(item.getText(), item.getExtendedMediaEntities()));
         }
 

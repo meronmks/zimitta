@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
@@ -138,11 +139,11 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
     }
 
     /**
-     * 画像のプレビュー表示
+     * メディアのプレビュー表示
      * @param extendedMediaEntity
      * @param imageViews
      */
-    protected void setPreviewImage(ExtendedMediaEntity[] extendedMediaEntity, ImageView[] imageViews, ImageView videoPlayView){
+    protected void setPreviewMedia(ExtendedMediaEntity[] extendedMediaEntity, ImageView[] imageViews, ImageView videoPlayView){
         for(int i = 0; i < extendedMediaEntity.length; i++){
             imageViews[i].setVisibility(View.VISIBLE);
             if(extendedMediaEntity[i].getType().equals("photo")) {
@@ -164,7 +165,12 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
                     Intent image = new Intent(getContext(), ShowImageActivity.class);
                     image.putExtra("Images", imageURL);
                     getContext().startActivity(image);
-                }else {
+                }else if(extendedMediaEntity[finalI].getType().equals("video")){
+                    String videoURL = extendedMediaEntity[finalI].getMediaURLHttps();
+                    Intent video = new Intent(getContext(), PlayVideoActivity.class);
+                    video.putExtra("Video", videoURL);
+                    getContext().startActivity(video);
+                }else{
                     MainActivity.showToast(extendedMediaEntity[finalI].getType());
                 }
             });
@@ -172,7 +178,7 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
     }
 
     /**
-     * 画像URLを消す
+     * メディアURLを消す
      * @param tweet
      * @param extendedMediaEntity
      */
@@ -196,7 +202,7 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         mutableLinkMovement(vh.QuoteText);
         if(status.getExtendedMediaEntities().length != 0){
             vh.QuotePreviewImage.setVisibility(View.VISIBLE);
-            setPreviewImage(status.getExtendedMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
+            setPreviewMedia(status.getExtendedMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
             vh.QuoteText.setText(deleteMediaURL(status.getText(), status.getExtendedMediaEntities()));
         }
     }
