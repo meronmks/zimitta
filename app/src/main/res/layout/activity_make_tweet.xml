@@ -20,7 +20,8 @@
             android:layout_height="match_parent"
             android:inputType="textMultiLine"
             android:gravity="left|top"
-            android:hint="@string/tweet_edittext_hinttext"/>
+            android:hint="@string/tweet_edittext_hinttext"
+            android:id="@+id/TweetTextInput" />
     </android.support.design.widget.TextInputLayout>
 
     <ImageButton

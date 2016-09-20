@@ -10,6 +10,7 @@ import com.meronmks.zimitta.R;
 import twitter4j.AsyncTwitter;
 import twitter4j.AsyncTwitterFactory;
 import twitter4j.Paging;
+import twitter4j.StatusUpdate;
 import twitter4j.TwitterListener;
 import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
@@ -63,6 +64,14 @@ public class TwitterAction {
         builder.setJSONStoreEnabled(true);
 
         Variable.conf = builder.build();
+    }
+
+    /**
+     * ツイート投稿
+     * @param statusUpdate
+     */
+    public void statusUpdate(StatusUpdate statusUpdate){
+        mTwitter.updateStatus(statusUpdate);
     }
 
     /**
