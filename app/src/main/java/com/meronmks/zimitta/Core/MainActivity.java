@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
         Variable.iniVariable(mContext);
-        Fabric.with(this, new Crashlytics());
-        Fabric.with(this, new Answers());
         TwitterAuthConfig authConfig = new TwitterAuthConfig(OAuthVariable.TWITTER_KEY, OAuthVariable.TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
+        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Answers());
         setContentView(R.layout.activity_main);
 
         preferences = getSharedPreferences(getString(R.string.Account), 0);
