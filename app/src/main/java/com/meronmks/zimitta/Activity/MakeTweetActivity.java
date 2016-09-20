@@ -1,5 +1,6 @@
 package com.meronmks.zimitta.Activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.EditText;
 
+import com.meronmks.zimitta.Core.BaseActivity;
 import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
@@ -26,14 +28,16 @@ import twitter4j.TwitterMethod;
 /**
  * Created by meron on 2016/09/20.
  */
-public class MakeTweetActivity extends AppCompatActivity {
+public class MakeTweetActivity extends BaseActivity {
 
     private TwitterAction mAction;
     private EditText mEditText;
+    private Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         setContentView(R.layout.activity_make_tweet);
         mAction = new TwitterAction(this, listener);
 
@@ -55,12 +59,12 @@ public class MakeTweetActivity extends AppCompatActivity {
 
         @Override
         public void updatedStatus(Status status) {
-            MainActivity.showToast("投稿しました");
+            showToast("投稿しました");
         }
 
         @Override
         public void onException(TwitterException te, TwitterMethod method) {
-            MainActivity.showToast("投稿に失敗しました");
+            showToast("投稿に失敗しました");
         }
     };
 }

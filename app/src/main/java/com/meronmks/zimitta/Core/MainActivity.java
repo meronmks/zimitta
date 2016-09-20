@@ -12,7 +12,6 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
-import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Adapter.MainPagerAdapter;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.OAuth.OAuthVariable;
@@ -31,18 +30,16 @@ import twitter4j.TwitterListener;
 import twitter4j.TwitterMethod;
 import twitter4j.User;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private SharedPreferences preferences;
-    private static Context mContext;
     private TwitterAction mAction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mContext = this;
-        Variable.iniVariable(mContext);
+        Variable.iniVariable(this);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(OAuthVariable.TWITTER_KEY, OAuthVariable.TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         Fabric.with(this, new Crashlytics());
@@ -132,12 +129,4 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     };
-
-    /**
-     * トースト表示処理
-     */
-    public static void showToast(String text){
-        if(mContext == null || text == null || text.length() == 0) return;
-        Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
-    }
 }
