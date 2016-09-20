@@ -10,6 +10,8 @@ import android.widget.Toast;
 public class BaseActivity extends AppCompatActivity {
     protected void showToast(String text){
         if(text == null || text.length() == 0) return;
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        runOnUiThread(() -> {
+            Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        });
     }
 }

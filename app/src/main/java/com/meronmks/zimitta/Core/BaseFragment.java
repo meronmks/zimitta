@@ -9,6 +9,9 @@ import android.widget.Toast;
 public class BaseFragment extends Fragment {
     protected void showToast(String text){
         if(text == null || text.length() == 0) return;
-        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+        getActivity().runOnUiThread(() -> {
+            Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+        });
+
     }
 }
