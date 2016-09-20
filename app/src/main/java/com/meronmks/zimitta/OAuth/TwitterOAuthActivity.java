@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.R;
@@ -24,6 +25,9 @@ public class TwitterOAuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_twitter_oauth);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.ToolBar);
+        toolbar.setTitle("Twitterログイン");
 
         twitterLoginButton = (TwitterLoginButton)findViewById(R.id.login_button);
         twitterLoginButton.setCallback(new Callback<TwitterSession>() {
