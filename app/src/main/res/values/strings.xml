@@ -6,4 +6,5 @@
     <string name="ActiveAccount">ActiveAccount</string>
     <string name="ScreanNameList">ScreanNameList</string>
     <string name="AccountNum">AccountNum</string>
+    <string name="tweet_edittext_hinttext">いまなにしてる？</string>
 </resources>

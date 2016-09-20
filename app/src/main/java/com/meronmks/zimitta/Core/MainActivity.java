@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.jakewharton.rxbinding.view.RxView;
+import com.meronmks.zimitta.Activity.MakeTweetActivity;
+import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Adapter.MainPagerAdapter;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.OAuth.OAuthVariable;
@@ -67,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         RxView.clicks(findViewById(R.id.tweet))
                 .subscribe(x -> {
-
+                    Intent intent = new Intent(this, MakeTweetActivity.class);
+                    startActivity(intent);
                 });
 
         RxView.clicks(findViewById(R.id.Menu_button))

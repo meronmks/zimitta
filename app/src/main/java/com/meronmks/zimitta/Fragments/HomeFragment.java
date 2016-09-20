@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mStreamReceiver = StreamReceiver.register(getContext(), status -> getActivity().runOnUiThread(() -> {
             int pos = 0;
             int top = 0;
-            if(!Variable.TLAdapter.isEmpty()) {
+            if (!Variable.TLAdapter.isEmpty()) {
                 pos = mListView.getFirstVisiblePosition();
                 top = mListView.getChildAt(0).getTop();
             }

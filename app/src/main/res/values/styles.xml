@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ToolbarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- ToolBarの背景色 -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!-- ToolBarのタイトルテキスト色 -->
+        <item name="android:textColorPrimary">@color/White</item>
+        <!-- ToolBarのオプションメニューのOverflowアイコンの色 -->
+        <item name="android:textColorSecondary">@color/White</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
 </resources>
