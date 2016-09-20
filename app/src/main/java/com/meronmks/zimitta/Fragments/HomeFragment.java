@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.meronmks.zimitta.Core.BaseFragment;
 import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
@@ -33,7 +34,7 @@ import twitter4j.TwitterMethod;
 /**
  * Created by meron on 2016/09/14.
  */
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private ListView mListView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -107,13 +108,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void setItemClickListener(){
         mListView.setOnItemClickListener((adapterView, view, i, l) -> {
-            MainActivity.showToast("Click!");
+            showToast("Click!");
         });
     }
 
     private void setLongItemClickListener(){
         mListView.setOnItemLongClickListener((adapterView, view, i, l) -> {
-            MainActivity.showToast("LongClick!");
+            showToast("LongClick!");
             return true;
         });
     }
@@ -186,7 +187,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             getActivity().runOnUiThread(() -> {
                 switch (method){
                     case HOME_TIMELINE:
-                        MainActivity.showToast("タイムラインの取得に失敗しました。");
+                        showToast("タイムラインの取得に失敗しました。");
                         isLimited = true;
                         limitTimer = new Timer();
                         limitTimer.schedule(new LimitTimer(), te.getRateLimitStatus().getSecondsUntilReset()*1000);
