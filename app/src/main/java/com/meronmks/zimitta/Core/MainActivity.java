@@ -3,11 +3,13 @@ package com.meronmks.zimitta.Core;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Adapter.MainPagerAdapter;
 import com.meronmks.zimitta.Datas.Variable;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
         Variable.iniVariable(mContext);
+        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Answers());
         TwitterAuthConfig authConfig = new TwitterAuthConfig(OAuthVariable.TWITTER_KEY, OAuthVariable.TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
