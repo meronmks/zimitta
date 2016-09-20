@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if(Variable.twitterStream != null) {
-            Variable.twitterStream.user();
+            Variable.twitterStream.shutdown();
         }
         Variable.Destroy();
     }
