@@ -165,7 +165,7 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
                     Intent image = new Intent(getContext(), ShowImageActivity.class);
                     image.putExtra("Images", imageURL);
                     getContext().startActivity(image);
-                }else if(extendedMediaEntity[finalI].getType().equals("video")){
+                }else{
                     ExtendedMediaEntity.Variant[] videoURLs = extendedMediaEntity[finalI].getVideoVariants();
                     ExtendedMediaEntity.Variant videoURL = videoURLs[0];
                     for(ExtendedMediaEntity.Variant var : videoURLs){
@@ -176,8 +176,6 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
                     Intent video = new Intent(getContext(), PlayVideoActivity.class);
                     video.putExtra("Video", videoURL.getUrl());
                     getContext().startActivity(video);
-                }else{
-                    MainActivity.showToast(extendedMediaEntity[finalI].getType());
                 }
             });
         }
