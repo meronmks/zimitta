@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -14,6 +16,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Adapter.MainPagerAdapter;
 import com.meronmks.zimitta.Datas.Variable;
+import com.meronmks.zimitta.Menus.MainMenu;
 import com.meronmks.zimitta.OAuth.OAuthVariable;
 import com.meronmks.zimitta.OAuth.OauthUtils;
 import com.meronmks.zimitta.OAuth.TwitterOAuthActivity;
@@ -71,9 +74,7 @@ public class MainActivity extends BaseActivity {
                 });
 
         RxView.clicks(findViewById(R.id.Menu_button))
-                .subscribe(x -> {
-
-                });
+                .subscribe(x -> showMenu());
     }
 
     @Override
@@ -88,6 +89,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    /**
+     * メニューの表示
+     */
+    private void showMenu(){
+        MainMenu mainMenu = new MainMenu(this);
+        mainMenu.show();
     }
 
     /**
