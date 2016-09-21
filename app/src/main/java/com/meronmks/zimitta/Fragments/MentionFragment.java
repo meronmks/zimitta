@@ -142,7 +142,7 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
                 top = mListView.getChildAt(0).getTop();
             }
 
-            if(status.getUser().getId() != Variable.userID){
+            if(status.getUser().getId() != Variable.userID && !status.isRetweet()){
                 for (UserMentionEntity entity : status.getUserMentionEntities()) {
                     if(!entity.getScreenName().equals(Variable.userName))continue;
                     Variable.MentionsAdapter.statusAdd(Variable.MentionsAdapter, status);
