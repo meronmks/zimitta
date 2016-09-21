@@ -2,8 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
 
-def VERSION_CODE = 42
+def VERSION_CODE = 45
 def VERSION_NAME = "5.0.0"
+def VERSION_NAME_SUFFIX = "-dev2"
 
 buildscript {
     repositories {
@@ -42,7 +43,7 @@ android {
             debuggable true
             buildConfigField "boolean", "DebugFlag", "true"
             applicationIdSuffix ".debug"
-            versionNameSuffix '-dev'
+            versionNameSuffix VERSION_NAME_SUFFIX
         }
         release {
             debuggable false

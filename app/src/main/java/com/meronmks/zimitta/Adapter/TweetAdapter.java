@@ -17,6 +17,7 @@ import com.meronmks.zimitta.R;
 import java.util.Date;
 
 import twitter4j.Status;
+import twitter4j.UserMentionEntity;
 
 /**
  * Created by meron on 2016/09/14.
@@ -61,8 +62,13 @@ public class TweetAdapter extends BaseAdapter<Status> {
         if(item.getUser().getId() == Variable.userID){
             vh.TweetStatus.setVisibility(View.VISIBLE);
             vh.TweetStatus.setBackgroundResource(R.color.Blue);
+        }else {
+            for (UserMentionEntity entity : item.getUserMentionEntities()) {
+                if(!entity.getScreenName().equals(Variable.userName))continue;
+                vh.TweetStatus.setVisibility(View.VISIBLE);
+                vh.TweetStatus.setBackgroundResource(R.color.Rad);
+            }
         }
-
         if(item.getRetweetedStatus() != null){
             vh.TweetStatus.setVisibility(View.VISIBLE);
             vh.TweetStatus.setBackgroundResource(R.color.Green);
