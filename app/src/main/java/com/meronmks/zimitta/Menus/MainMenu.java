@@ -2,6 +2,7 @@ package com.meronmks.zimitta.Menus;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.meronmks.zimitta.R;
+import com.meronmks.zimitta.Settings.SettingFragment;
+import com.meronmks.zimitta.Settings.SettingsActivity;
 
 /**
  * Created by meron on 2016/09/21.
@@ -43,6 +46,8 @@ public class MainMenu implements AdapterView.OnItemClickListener {
             case "アカウント切り替えと変更":
                 break;
             case "設定":
+                Intent intent = new Intent(activity, SettingsActivity.class);
+                activity.startActivity(intent);
                 break;
             case "API":
                 break;
