@@ -83,6 +83,14 @@ public class TwitterAction {
     }
 
     /**
+     * Mentionの取得
+     * @param p 取得時のオプション
+     */
+    public void getMentions(Paging p){
+        mTwitter.getMentions(p);
+    }
+
+    /**
      * ログインしているユーザの情報取得
      */
     public void getVerifyCredentials(){

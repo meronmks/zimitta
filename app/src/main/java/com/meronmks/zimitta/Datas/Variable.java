@@ -15,6 +15,7 @@ public class Variable {
     public static long[] muteList;
     public static String userName;
     public static TweetAdapter TLAdapter;
+    public static TweetAdapter MentionsAdapter;
     public static Configuration conf;
     public static TwitterStream twitterStream;
     public static final String ACTION_INVOKED = "com.meronmks.zimitta.ACTION_INVOKED";
@@ -26,6 +27,7 @@ public class Variable {
         Destroy();
         try{
             TLAdapter = new TweetAdapter(context);
+            MentionsAdapter = new TweetAdapter(context);
         }catch (Exception e){
             return false;
         }
