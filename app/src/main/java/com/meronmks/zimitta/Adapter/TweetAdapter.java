@@ -69,7 +69,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
                 vh.TweetStatus.setBackgroundResource(R.color.Rad);
             }
         }
-        if(item.getRetweetedStatus() != null){
+        if(item.isRetweet()){
             vh.TweetStatus.setVisibility(View.VISIBLE);
             vh.TweetStatus.setBackgroundResource(R.color.Green);
             vh.RTUserName.setVisibility(View.VISIBLE);
