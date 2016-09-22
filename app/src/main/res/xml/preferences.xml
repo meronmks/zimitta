@@ -45,7 +45,7 @@
             android:dependency="Stream_Flag"/>
         <CheckBoxPreference
             android:title="フォロー外のリプライを取得する"
-            android:summary="フォローしていない人へのリプを取得します（要再起動）"
+            android:summary="フォローしてる人のあなたが未フォローの人へのリプライを取得します（要再起動）"
             android:key="Streaming_FF_Mention"
             android:dependency="Stream_Flag"/>
         <CheckBoxPreference
@@ -60,6 +60,8 @@
                 android:title="通知設定"
                 android:layout="@layout/pre_tool_bar">
             </PreferenceCategory>
+            <PreferenceScreen
+                android:title="アプリ起動中に通知します" />
             <CheckBoxPreference
                 android:title="Mention通知"
                 android:key="NotificationMen"
