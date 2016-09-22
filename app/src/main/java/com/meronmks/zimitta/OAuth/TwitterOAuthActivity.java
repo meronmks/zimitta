@@ -27,6 +27,7 @@ public class TwitterOAuthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_twitter_oauth);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.ToolBar);
+        setSupportActionBar(toolbar);
         toolbar.setTitle("Twitterログイン");
 
         twitterLoginButton = (TwitterLoginButton)findViewById(R.id.login_button);
