@@ -18,24 +18,25 @@
         android:title="Streaming設定">
         <CheckBoxPreference
             android:title="Streamingを使用する"
-            android:key="Streem_Flug"
+            android:key="Stream_Flag"
             android:defaultValue="true"/>
         <CheckBoxPreference
             android:title="ツイートを貯める"
             android:summary="手動更新するとTLに反映されます"
-            android:key="Streeming_stok"/>
+            android:key="Streaming_stock"
+            android:dependency="Stream_Flag"/>
         <CheckBoxPreference
             android:title="ツイートが貯まったら通知"
             android:summary="トーストで通知します"
-            android:key="Streeming_Nof_Tost"/>
+            android:key="Streaming_Nof_Toast"/>
         <CheckBoxPreference
             android:title="フォロー外のリプライを取得する"
             android:summary="フォローしていない人へのリプを取得します（要再起動）"
-            android:key="Streeming_FF_Mention"/>
+            android:key="Streaming_FF_Mention"/>
         <CheckBoxPreference
             android:title="Wi-Fiのみで有効"
             android:summary="Wi-Fi接続時のみでStreamingを有効にします"
-            android:key="Streeming_Wifi"/>
+            android:key="Streaming_Wifi"/>
         <PreferenceScreen
             android:title="通知設定"
             android:summary="Streaming有効必須">
@@ -43,31 +44,31 @@
                 android:title="Mention通知"
                 android:key="NotificationMen"
                 android:enabled="false"
-                android:defaultValue="ture"
+                android:defaultValue="true"
                 android:selectable="true" />
             <CheckBoxPreference
                 android:title="RT通知"
                 android:key="NotificationRT"
                 android:enabled="false"
-                android:defaultValue="ture"
+                android:defaultValue="true"
                 android:selectable="true" />
             <CheckBoxPreference
                 android:title="Fav通知"
                 android:key="NotificationFav"
                 android:enabled="false"
-                android:defaultValue="ture"
+                android:defaultValue="true"
                 android:selectable="true" />
             <CheckBoxPreference
                 android:title="DM通知"
                 android:key="NotificationDM"
                 android:enabled="false"
-                android:defaultValue="ture"
+                android:defaultValue="true"
                 android:selectable="true" />
             <CheckBoxPreference
                 android:title="Follow通知"
                 android:key="NotificationFol"
                 android:enabled="false"
-                android:defaultValue="ture"
+                android:defaultValue="true"
                 android:selectable="true" />
         </PreferenceScreen>
     </PreferenceScreen>
