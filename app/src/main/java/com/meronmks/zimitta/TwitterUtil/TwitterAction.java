@@ -2,6 +2,7 @@ package com.meronmks.zimitta.TwitterUtil;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.OAuth.OAuthVariable;
@@ -62,7 +63,13 @@ public class TwitterAction {
         //HTTPタイムアウト設定(ミリ秒)
         builder.setHttpConnectionTimeout(10000);
         builder.setJSONStoreEnabled(true);
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        //ストリーミング時にリプも表示するかどうか？
+        if(sharedPreferences.getBoolean("Streaming_FF_Mention", false)) {
+            builder.setUserStreamRepliesAllEnabled(true);
+        }else{
+            builder.setUserStreamRepliesAllEnabled(false);
+        }
         Variable.conf = builder.build();
     }
 

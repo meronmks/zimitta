@@ -79,7 +79,7 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
         isStatusAdd = false;
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         Paging p = new Paging();
-        p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+        p.count(Integer.parseInt(sp.getString("LoadTweetCount", "20")));
         mAction.getMentions(p);
     }
 
@@ -123,7 +123,7 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
                     SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
                     Paging p = new Paging();
                     p.setMaxId(Variable.MentionsAdapter.getItem(Variable.MentionsAdapter.getCount()-1).getId());
-                    p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+                    p.count(Integer.parseInt(sp.getString("LoadTweetCount", "20")));
                     mAction.getMentions(p);
                 }
             }
@@ -160,7 +160,7 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         isStatusAdd = false;
         Paging p = new Paging();
-        p.count(Integer.parseInt(sp.getString("Load_Tweet", "20")));
+        p.count(Integer.parseInt(sp.getString("LoadTweetCount", "20")));
         mAction.getMentions(p);
     }
 
