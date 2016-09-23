@@ -23,9 +23,16 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         ListPreference list_preference = (ListPreference)getPreferenceScreen().findPreference("LoadTweetCount");
         list_preference.setSummary(list_preference.getEntry());
 
-        Preference nextMove1 = findPreference("About");
-        nextMove1.setOnPreferenceClickListener(preference -> {
+        Preference About = findPreference("About");
+        About.setOnPreferenceClickListener(preference -> {
             Intent nextActivity = new Intent(getActivity() ,About.class);
+            startActivity(nextActivity);
+            return true;
+        });
+
+        Preference ErrorLog = findPreference("ErrorLog");
+        ErrorLog.setOnPreferenceClickListener(preference -> {
+            Intent nextActivity = new Intent(getActivity() ,ErrorLogActivity.class);
             startActivity(nextActivity);
             return true;
         });
