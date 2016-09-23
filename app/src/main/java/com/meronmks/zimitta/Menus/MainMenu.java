@@ -21,6 +21,7 @@ public class MainMenu implements AdapterView.OnItemClickListener {
 
     private Activity activity;
     private ArrayAdapter<String> mAdapter;
+    private AlertDialog alertDialog;
 
     public MainMenu(Activity activity){
         this.activity = activity;
@@ -33,7 +34,7 @@ public class MainMenu implements AdapterView.OnItemClickListener {
         String[] members = { "プロフィール表示", "アカウント切り替えと変更", "設定", "API"};
         mAdapter = new ArrayAdapter<>(activity.getBaseContext(), android.R.layout.simple_expandable_list_item_1, members);
         listView.setAdapter(mAdapter);
-        new AlertDialog.Builder(activity)
+        alertDialog = new AlertDialog.Builder(activity)
                 .setView(view)
                 .show();
     }
@@ -48,6 +49,7 @@ public class MainMenu implements AdapterView.OnItemClickListener {
             case "設定":
                 Intent intent = new Intent(activity, SettingsActivity.class);
                 activity.startActivity(intent);
+                alertDialog.dismiss();
                 break;
             case "API":
                 break;
