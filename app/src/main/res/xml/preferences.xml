@@ -23,6 +23,23 @@
     </PreferenceScreen>
 
     <PreferenceScreen
+        android:title="ツイート投稿設定">
+        <PreferenceCategory
+            android:title="ツイート投稿設定"
+            android:layout="@layout/pre_tool_bar">
+        </PreferenceCategory>
+        <CheckBoxPreference
+            android:title="送信ボタンを上部へ"
+            android:summary="チェックを外すと下部になります"
+            android:key="TweetPostButtonPos"
+            android:defaultValue="true"/>
+        <CheckBoxPreference
+            android:title="文字数カウント表示"
+            android:key="TextCountVisible"
+            android:defaultValue="true"/>
+    </PreferenceScreen>
+
+    <PreferenceScreen
         android:title="Streaming設定">
         <PreferenceCategory
             android:title="Streaming設定"
