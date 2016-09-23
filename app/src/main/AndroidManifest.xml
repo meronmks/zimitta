@@ -29,6 +29,7 @@
         <activity android:name=".Activity.MakeTweetActivity"
             android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".Settings.SettingsActivity"/>
+        <activity android:name=".Settings.About"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>

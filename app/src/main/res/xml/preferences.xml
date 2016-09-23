@@ -107,11 +107,13 @@
         </PreferenceScreen>
     </PreferenceScreen>
 
-    <PreferenceScreen
+    <Preference
         android:title="エラーログ"
-        android:key="ErrorLog"/>
+        android:key="ErrorLog">
+    </Preference>
 
-    <PreferenceScreen
+    <Preference
         android:title="About"
-        android:key="About"/>
+        android:key="About">
+    </Preference>
 </PreferenceScreen>
