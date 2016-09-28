@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="40sp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ErrorOverview"
+        android:id="@+id/errorOverview"
+        android:layout_weight="1"
+        android:layout_marginLeft="4sp"
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="8sp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ErrorCreatedAt"
+        android:id="@+id/errorCreatedAt"
+        android:layout_weight="0.2"
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="8sp"
+        android:gravity="right"
+        android:textSize="14sp"
+        android:layout_marginRight="4sp" />
+</LinearLayout>

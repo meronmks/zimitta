@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.ParcelStatus;
 import com.meronmks.zimitta.Datas.Variable;
 
@@ -32,6 +33,6 @@ public class StreamAdapter extends UserStreamAdapter {
     @Override
     public void onException(Exception ex) {
         super.onException(ex);
-        Log.e("StreamAdapter",ex.getMessage());
+        ErrorLogs.putErrorLog("ストリーミング内部エラー", ex.getMessage());
     }
 }

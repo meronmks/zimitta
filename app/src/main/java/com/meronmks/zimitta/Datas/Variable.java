@@ -1,8 +1,14 @@
 package com.meronmks.zimitta.Datas;
 
 import android.content.Context;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 
+import com.meronmks.zimitta.Adapter.ErrorAdapter;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import twitter4j.TwitterStream;
 import twitter4j.conf.Configuration;
@@ -22,13 +28,16 @@ public class Variable {
     public static final String STREAM_PARCELABLE = "STREAM_PARCELABLE";
     public static final String STREAM_BUNDLE = "STREAM_BUNDLE";
     public static RateLimits rateLimits;
-
+    public static ErrorAdapter errorLogs;
 
     public static boolean iniVariable(Context context){
         Destroy();
         try{
             TLAdapter = new TweetAdapter(context);
             MentionsAdapter = new TweetAdapter(context);
+            if(errorLogs == null) {
+                errorLogs = new ErrorAdapter(context);
+            }
         }catch (Exception e){
             return false;
         }

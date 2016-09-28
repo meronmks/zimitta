@@ -13,6 +13,7 @@
 * [RxJava](https://github.com/ReactiveX/RxJava)  
 * [RxBinding](https://github.com/JakeWharton/RxBinding)
 * gradle 2.10
+* [Gson](https://github.com/google/gson)
 
 ## 参考にしたサイト等 ##
 * [[Android] 様々なジェスチャーを処理する(1) 拡大縮小](http://chicketen.blog.jp/archives/1579621.html)

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Settings.SettingFragment;
 import com.meronmks.zimitta.Settings.SettingsActivity;
@@ -52,6 +53,7 @@ public class MainMenu implements AdapterView.OnItemClickListener {
                 alertDialog.dismiss();
                 break;
             case "API":
+                ErrorLogs.putErrorLog("APITest", "Test");
                 break;
         }
     }

@@ -13,6 +13,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import com.meronmks.zimitta.Core.BaseFragment;
+import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
@@ -192,6 +193,7 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
                 switch (method){
                     case MENTIONS_TIMELINE:
                         showToast("リプライの取得に失敗しました。");
+                        ErrorLogs.putErrorLog("リプライの取得に失敗しました", te.getMessage());
                         isLimited = true;
                         limitTimer = new Timer();
                         limitTimer.schedule(new LimitTimer(), te.getRateLimitStatus().getSecondsUntilReset()*1000);

@@ -14,11 +14,13 @@ import android.widget.ListView;
 
 import com.meronmks.zimitta.Core.BaseFragment;
 import com.meronmks.zimitta.Core.MainActivity;
+import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -188,6 +190,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 switch (method){
                     case HOME_TIMELINE:
                         showToast("タイムラインの取得に失敗しました。");
+                        ErrorLogs.putErrorLog("タイムラインの取得に失敗しました", te.getMessage());
                         isLimited = true;
                         limitTimer = new Timer();
                         limitTimer.schedule(new LimitTimer(), te.getRateLimitStatus().getSecondsUntilReset()*1000);
