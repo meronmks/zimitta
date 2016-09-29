@@ -10,6 +10,7 @@ import com.crashlytics.android.answers.Answers;
 import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Adapter.MainPagerAdapter;
+import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.Menus.MainMenu;
 import com.meronmks.zimitta.OAuth.OAuthVariable;
@@ -36,6 +37,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionUtil());
 
         Variable.iniVariable(this);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(OAuthVariable.TWITTER_KEY, OAuthVariable.TWITTER_SECRET);
@@ -125,9 +128,11 @@ public class MainActivity extends BaseActivity {
                 switch (method){
                     case VERIFY_CREDENTIALS:
                         showToast("ユーザの情報取得に失敗しました");
+                        ErrorLogs.putErrorLog("ユーザの情報取得に失敗しました", te.getMessage());
                         break;
                     case MUTE_LIST_IDS:
                         showToast("ミュート一覧の取得に失敗しました");
+                        ErrorLogs.putErrorLog("ミュート一覧の取得に失敗しました", te.getMessage());
                         break;
                 }
             });
