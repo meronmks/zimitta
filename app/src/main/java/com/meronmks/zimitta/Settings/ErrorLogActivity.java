@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.meronmks.zimitta.Adapter.ErrorAdapter;
@@ -29,8 +30,8 @@ public class ErrorLogActivity extends AppCompatActivity {
 
         listView.setAdapter(Variable.errorLogs);
 
-        listView.setOnClickListener(view -> {
-            ErrorLogs errorLogs = (ErrorLogs) listView.getSelectedItem();
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            ErrorLogs errorLogs = (ErrorLogs) adapterView.getItemAtPosition(i);
             new AlertDialog.Builder(this)
                     .setTitle("詳細")
                     .setMessage(errorLogs.message)
