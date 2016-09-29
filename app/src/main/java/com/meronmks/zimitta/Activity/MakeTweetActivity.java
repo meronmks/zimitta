@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.meronmks.zimitta.Core.BaseActivity;
 import com.meronmks.zimitta.Core.MainActivity;
+import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
@@ -65,6 +66,7 @@ public class MakeTweetActivity extends BaseActivity {
         @Override
         public void onException(TwitterException te, TwitterMethod method) {
             showToast("投稿に失敗しました");
+            ErrorLogs.putErrorLog("投稿に失敗しました", te.getMessage());
         }
     };
 }

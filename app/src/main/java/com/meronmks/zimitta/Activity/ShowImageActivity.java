@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.meronmks.zimitta.Core.BaseActivity;
+import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.ImageMoveUtil.CustomSurfaceView;
 import com.meronmks.zimitta.Listener.MonitorInputStream;
 import com.meronmks.zimitta.R;
@@ -23,7 +25,7 @@ import java.net.URL;
 /**
  * Created by meron on 2016/09/18.
  */
-public class ShowImageActivity extends AppCompatActivity {
+public class ShowImageActivity extends BaseActivity {
     private static CustomSurfaceView surfaceView;
     private RelativeLayout rootLayout;
     private ProgressBar progressBar;
@@ -74,6 +76,7 @@ public class ShowImageActivity extends AppCompatActivity {
                     return myBitmap;
                 } catch (IOException e) {
                     e.printStackTrace();
+                    ErrorLogs.putErrorLog("画像取得に失敗しました", e.getMessage());
                     return null;
                 }
             }
@@ -85,27 +88,11 @@ public class ShowImageActivity extends AppCompatActivity {
                     surfaceView.setImageBitmap(result);
                 }else
                 {
-                    showDialog("画像取得に失敗しました。");
+                    showToast("画像取得に失敗しました。");
                 }
                 progressBar.setVisibility(View.GONE);
             }
         };
         task.execute();
-    }
-
-    /**
-     * エラーが発生時のダイアログ表示
-     * @param text
-     */
-    private void showDialog(String text){
-        android.app.AlertDialog.Builder alertDialog=new android.app.AlertDialog.Builder(this);
-        alertDialog.setTitle("Error!");      //タイトル設定
-        alertDialog.setMessage(text);  //内容(メッセージ)設定
-
-        // OK(肯定的な)ボタンの設定
-        alertDialog.setPositiveButton("OK", (dialog, which) -> {
-            // OKボタン押下時の処理
-        });
-        alertDialog.show();
     }
 }
