@@ -1,8 +1,10 @@
 package com.meronmks.zimitta.Settings;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ListView;
 
 import com.meronmks.zimitta.Adapter.ErrorAdapter;
@@ -26,5 +28,14 @@ public class ErrorLogActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.ErrorListView);
 
         listView.setAdapter(Variable.errorLogs);
+
+        listView.setOnClickListener(view -> {
+            ErrorLogs errorLogs = (ErrorLogs) listView.getSelectedItem();
+            new AlertDialog.Builder(this)
+                    .setTitle("詳細")
+                    .setMessage(errorLogs.message)
+                    .setPositiveButton("閉じる", null)
+                    .show();
+        });
     }
 }

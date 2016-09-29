@@ -4,6 +4,7 @@ import com.meronmks.zimitta.Datas.ErrorLogs;
 
 /**
  * Created by p-user on 2016/09/29.
+ * キャッチされなかった例外処理
  */
 public class UncaughtExceptionUtil implements Thread.UncaughtExceptionHandler {
     @Override
