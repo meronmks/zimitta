@@ -49,12 +49,12 @@ public class MainActivity extends BaseActivity {
 
         preferences = getSharedPreferences(getString(R.string.Account), 0);
 
-        if(!OauthUtils.hasAccessToken(this, preferences.getLong(getString(R.string.ActiveAccount), 0))){
+        if(NetStatusUtil.isOnline(this) && !OauthUtils.hasAccessToken(this, preferences.getLong(getString(R.string.ActiveAccount), 0))){
             Intent intent = new Intent(this, TwitterOAuthActivity.class);
             intent.putExtra("Flag", false);
             startActivity(intent);
             finish();
-        }else{
+        }else if(NetStatusUtil.isOnline(this)){
             //Fragment準備
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
             MainPagerAdapter pagerAdapter = new MainPagerAdapter(fragmentManager,this);
