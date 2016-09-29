@@ -89,7 +89,8 @@
                     android:layout_height="24sp"
                     android:id="@+id/LockedStatus"
                     android:src="@mipmap/ic_lock_white_24dp"
-                    android:layout_weight="0" />
+                    android:layout_weight="0"
+                    android:layout_gravity="right" />
             </LinearLayout>
             <!-- 本文表示 -->
             <TextView
