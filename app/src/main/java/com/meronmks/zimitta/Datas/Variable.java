@@ -1,14 +1,9 @@
 package com.meronmks.zimitta.Datas;
 
 import android.content.Context;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 import com.meronmks.zimitta.Adapter.ErrorAdapter;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import twitter4j.TwitterStream;
 import twitter4j.conf.Configuration;
@@ -17,9 +12,8 @@ import twitter4j.conf.Configuration;
  * Created by meron on 2016/09/15.
  */
 public class Variable {
-    public static long userID;
+    public static UserInfo userInfo;
     public static long[] muteList;
-    public static String userName;
     public static TweetAdapter TLAdapter;
     public static TweetAdapter MentionsAdapter;
     public static Configuration conf;
@@ -45,9 +39,7 @@ public class Variable {
     }
 
     public static void Destroy(){
-        userID = 0;
         muteList = null;
-        userName = "";
         TLAdapter = null;
         conf = null;
         twitterStream = null;

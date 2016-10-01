@@ -3,6 +3,8 @@ package com.meronmks.zimitta.OAuth;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.meronmks.zimitta.Datas.UserInfo;
+import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 import com.twitter.sdk.android.core.TwitterSession;
 
@@ -48,11 +50,12 @@ public class OauthUtils {
      * @param twitterSession
      */
     public static void storeAccessToken(Context context, TwitterSession twitterSession, long ID) {
-        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.PREF_NAME) + ID, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(context.getString(R.string.TOKEN), twitterSession.getAuthToken().token);
-        editor.putString(context.getString(R.string.TOKEN_SECRET), twitterSession.getAuthToken().secret);
-        editor.commit();
+        Variable.userInfo = UserInfo.getInstance(context, ID);
+        Variable.userInfo.token = twitterSession.getAuthToken().token;
+        Variable.userInfo.tokenSecret = twitterSession.getAuthToken().secret;
+        Variable.userInfo.userID = twitterSession.getUserId();
+        Variable.userInfo.userName = twitterSession.getUserName();
+        Variable.userInfo.saveInstance(context, ID);
     }
 
     /**
@@ -62,11 +65,9 @@ public class OauthUtils {
      * @return
      */
     public static AccessToken loadAccessToken(Context context,long ID) {
-        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.PREF_NAME) + ID, Context.MODE_PRIVATE);
-        String token = preferences.getString(context.getString(R.string.TOKEN), null);
-        String tokenSecret = preferences.getString(context.getString(R.string.TOKEN_SECRET), null);
-        if (token != null && tokenSecret != null) {
-            return new AccessToken(token, tokenSecret);
+        Variable.userInfo = UserInfo.getInstance(context, ID);
+        if (!Variable.userInfo.token.equals("") && !Variable.userInfo.tokenSecret.equals("")) {
+            return new AccessToken(Variable.userInfo.token, Variable.userInfo.tokenSecret);
         } else {
             return null;
         }

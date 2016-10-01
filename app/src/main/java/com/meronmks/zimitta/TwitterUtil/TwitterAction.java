@@ -52,14 +52,13 @@ public class TwitterAction {
     private void makeConfigurationBuilder(Context context){
         builder = new ConfigurationBuilder();
         SharedPreferences accountIDCount = context.getSharedPreferences(context.getString(R.string.Account), 0);
-        SharedPreferences spOauth = context.getSharedPreferences(context.getString(R.string.PREF_NAME) + accountIDCount.getLong(context.getString(R.string.ActiveAccount), 0), Context.MODE_PRIVATE);
         // Twitter4Jに対してOAuth情報を設定
         // アプリ固有の情報
         builder.setOAuthConsumerKey(OAuthVariable.TWITTER_KEY);
         builder.setOAuthConsumerSecret(OAuthVariable.TWITTER_SECRET);
         // アプリ＋ユーザー固有の情報
-        builder.setOAuthAccessToken(spOauth.getString(context.getString(R.string.TOKEN), null));
-        builder.setOAuthAccessTokenSecret(spOauth.getString(context.getString(R.string.TOKEN_SECRET), null));
+        builder.setOAuthAccessToken(Variable.userInfo.token);
+        builder.setOAuthAccessTokenSecret(Variable.userInfo.tokenSecret);
         //HTTPタイムアウト設定(ミリ秒)
         builder.setHttpConnectionTimeout(10000);
         builder.setJSONStoreEnabled(true);

@@ -11,6 +11,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Adapter.MainPagerAdapter;
 import com.meronmks.zimitta.Datas.ErrorLogs;
+import com.meronmks.zimitta.Datas.UserInfo;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.Menus.MainMenu;
 import com.meronmks.zimitta.OAuth.OAuthVariable;
@@ -61,7 +62,6 @@ public class MainActivity extends BaseActivity {
             ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
             viewPager.setAdapter(pagerAdapter);
             mAction = new TwitterAction(this, listener);
-            mAction.getVerifyCredentials();
             mAction.getMutesIDs();
         }
 
@@ -78,6 +78,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Variable.userInfo.saveInstance(getApplicationContext(), getSharedPreferences(getString(R.string.Account), 0).getLong(getString(R.string.ActiveAccount), 0));
         if(Variable.twitterStream != null) {
             Variable.twitterStream.shutdown();
         }
@@ -104,8 +105,8 @@ public class MainActivity extends BaseActivity {
         @Override
         public void verifiedCredentials(User user) {
             if(user != null){
-                Variable.userID = user.getId();
-                Variable.userName = user.getScreenName();
+                Variable.userInfo.userID = user.getId();
+                Variable.userInfo.userName = user.getScreenName();
             }
         }
 

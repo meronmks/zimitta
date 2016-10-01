@@ -59,12 +59,12 @@ public class TweetAdapter extends BaseAdapter<Status> {
             vh.ImageQuotePreviewViews[i].setVisibility(View.GONE);
         }
 
-        if(item.getUser().getId() == Variable.userID){
+        if(item.getUser().getId() == Variable.userInfo.userID){
             vh.TweetStatus.setVisibility(View.VISIBLE);
             vh.TweetStatus.setBackgroundResource(R.color.Blue);
         }else {
             for (UserMentionEntity entity : item.getUserMentionEntities()) {
-                if(!entity.getScreenName().equals(Variable.userName))continue;
+                if(!entity.getScreenName().equals(Variable.userInfo.userName))continue;
                 vh.TweetStatus.setVisibility(View.VISIBLE);
                 vh.TweetStatus.setBackgroundResource(R.color.Rad);
             }
