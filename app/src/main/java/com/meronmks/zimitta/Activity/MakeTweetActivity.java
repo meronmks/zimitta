@@ -9,6 +9,7 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.EditText;
 
+import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Core.BaseActivity;
 import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Datas.ErrorLogs;
@@ -47,10 +48,11 @@ public class MakeTweetActivity extends BaseActivity {
 
         mEditText = (EditText) findViewById(R.id.TweetTextInput);
 
-        findViewById(R.id.TweetPostButton).setOnClickListener(view -> {
-            if(mEditText.getText().length() < 0)return;
-            mAction.statusUpdate(new StatusUpdate(mEditText.getText().toString()));
-        });
+        RxView.clicks(findViewById(R.id.TweetPostButton))
+                .subscribe(x -> {
+                    if(mEditText.getText().length() < 0)return;
+                    mAction.statusUpdate(new StatusUpdate(mEditText.getText().toString()));
+                });
     }
 
     /**
