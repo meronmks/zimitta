@@ -8,26 +8,20 @@
         android:title="タイムライン設定">
         <PreferenceCategory
             android:title="タイムライン設定"
-            android:layout="@layout/pre_tool_bar">
-        </PreferenceCategory>
+            android:layout="@layout/pre_tool_bar" />
         <ListPreference
             android:title="取得するツイート数"
             android:key="LoadTweetCount"
             android:entries="@array/entriesListPreference"
             android:entryValues="@array/entryvaluesListPreference"
             android:defaultValue="20"/>
-        <CheckBoxPreference
-            android:title="公式のミュートを使う"
-            android:key="mute_flag"
-            android:defaultValue="true"/>
     </PreferenceScreen>
 
     <PreferenceScreen
         android:title="ツイート投稿設定">
         <PreferenceCategory
             android:title="ツイート投稿設定"
-            android:layout="@layout/pre_tool_bar">
-        </PreferenceCategory>
+            android:layout="@layout/pre_tool_bar" />
         <CheckBoxPreference
             android:title="送信ボタンを上部へ"
             android:summary="チェックを外すと下部になります"
@@ -43,8 +37,7 @@
         android:title="Streaming設定">
         <PreferenceCategory
             android:title="Streaming設定"
-            android:layout="@layout/pre_tool_bar">
-        </PreferenceCategory>
+            android:layout="@layout/pre_tool_bar" />
         <CheckBoxPreference
             android:title="Streamingを使用する"
             android:key="Stream_Flag"
@@ -75,8 +68,7 @@
             android:summary="Streaming有効必須">
             <PreferenceCategory
                 android:title="通知設定"
-                android:layout="@layout/pre_tool_bar">
-            </PreferenceCategory>
+                android:layout="@layout/pre_tool_bar" />
             <PreferenceScreen
                 android:title="アプリ起動中に通知します" />
             <CheckBoxPreference
@@ -105,6 +97,17 @@
                 android:defaultValue="true"
                 android:dependency="Stream_Flag"/>
         </PreferenceScreen>
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:title="ミュート設定">
+        <PreferenceCategory
+            android:title="ミュート設定"
+            android:layout="@layout/pre_tool_bar"/>
+        <CheckBoxPreference
+            android:title="公式のミュートを使う"
+            android:key="mute_flag"
+            android:defaultValue="true"/>
     </PreferenceScreen>
 
     <Preference
