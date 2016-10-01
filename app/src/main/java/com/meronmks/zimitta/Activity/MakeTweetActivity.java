@@ -63,6 +63,7 @@ public class MakeTweetActivity extends BaseActivity {
         @Override
         public void updatedStatus(Status status) {
             showToast("投稿しました");
+            finish();
         }
 
         @Override
