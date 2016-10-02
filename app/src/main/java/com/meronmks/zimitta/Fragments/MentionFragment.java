@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.meronmks.zimitta.Core.BaseFragment;
 import com.meronmks.zimitta.Datas.ErrorLogs;
+import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
@@ -78,9 +79,8 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
         if(!Variable.MentionsAdapter.isEmpty())return;
         mSwipeRefreshLayout.setRefreshing(true);
         isStatusAdd = false;
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         Paging p = new Paging();
-        p.count(Integer.parseInt(sp.getString("LoadTweetCount", "20")));
+        p.count(UserSetting.LoadTweetCount(getContext()));
         mAction.getMentions(p);
     }
 
@@ -121,10 +121,9 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
                 if (totalItemCount != 0 && !mSwipeRefreshLayout.isRefreshing() && !isLimited && totalItemCount == firstVisibleItem + visibleItemCount) {
                     mSwipeRefreshLayout.setRefreshing(true);
                     isStatusAdd = true;
-                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
                     Paging p = new Paging();
                     p.setMaxId(Variable.MentionsAdapter.getItem(Variable.MentionsAdapter.getCount()-1).getId());
-                    p.count(Integer.parseInt(sp.getString("LoadTweetCount", "20")));
+                    p.count(UserSetting.LoadTweetCount(getContext()));
                     mAction.getMentions(p);
                 }
             }
@@ -158,10 +157,9 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
     
     @Override
     public void onRefresh() {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         isStatusAdd = false;
         Paging p = new Paging();
-        p.count(Integer.parseInt(sp.getString("LoadTweetCount", "20")));
+        p.count(UserSetting.LoadTweetCount(getContext()));
         mAction.getMentions(p);
     }
 
