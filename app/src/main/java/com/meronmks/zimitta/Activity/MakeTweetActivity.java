@@ -9,6 +9,8 @@ import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.EditText;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Core.BaseActivity;
 import com.meronmks.zimitta.Core.MainActivity;
@@ -63,6 +65,7 @@ public class MakeTweetActivity extends BaseActivity {
         @Override
         public void updatedStatus(Status status) {
             showToast("投稿しました");
+            Answers.getInstance().logCustom(new CustomEvent("Tweet Post"));
             finish();
         }
 
