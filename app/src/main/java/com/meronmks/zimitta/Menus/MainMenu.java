@@ -1,10 +1,8 @@
 package com.meronmks.zimitta.Menus;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +10,6 @@ import android.widget.ListView;
 
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.R;
-import com.meronmks.zimitta.Settings.SettingFragment;
 import com.meronmks.zimitta.Settings.SettingsActivity;
 
 /**
@@ -21,7 +18,7 @@ import com.meronmks.zimitta.Settings.SettingsActivity;
 public class MainMenu implements AdapterView.OnItemClickListener {
 
     private Activity activity;
-    private ArrayAdapter<String> mAdapter;
+    private ArrayAdapter<String> adapter;
     private AlertDialog alertDialog;
 
     public MainMenu(Activity activity){
@@ -33,8 +30,8 @@ public class MainMenu implements AdapterView.OnItemClickListener {
         ListView listView = (ListView) view.findViewById(R.id.MenuList);
         listView.setOnItemClickListener(this);
         String[] members = { "プロフィール表示", "アカウント切り替えと変更", "設定", "API"};
-        mAdapter = new ArrayAdapter<>(activity.getBaseContext(), android.R.layout.simple_expandable_list_item_1, members);
-        listView.setAdapter(mAdapter);
+        adapter = new ArrayAdapter<>(activity.getBaseContext(), android.R.layout.simple_expandable_list_item_1, members);
+        listView.setAdapter(adapter);
         alertDialog = new AlertDialog.Builder(activity)
                 .setView(view)
                 .show();

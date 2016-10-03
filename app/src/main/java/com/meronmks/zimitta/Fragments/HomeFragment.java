@@ -17,6 +17,8 @@ import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
+import com.meronmks.zimitta.Menus.ItemMenu;
+import com.meronmks.zimitta.Menus.MainMenu;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
@@ -109,6 +111,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private void setItemClickListener(){
         mListView.setOnItemClickListener((adapterView, view, i, l) -> {
+            showMenu((Status) adapterView.getItemAtPosition(i));
             showToast("Click!");
         });
     }
@@ -139,6 +142,14 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
             }
         });
+    }
+
+    /**
+     * メニューの表示
+     */
+    private void showMenu(Status status){
+        ItemMenu itemMenu = new ItemMenu(getActivity());
+        itemMenu.show(status);
     }
 
     /**
