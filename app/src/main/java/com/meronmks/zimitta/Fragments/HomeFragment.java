@@ -112,7 +112,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private void setItemClickListener(){
         mListView.setOnItemClickListener((adapterView, view, i, l) -> {
             showMenu((Status) adapterView.getItemAtPosition(i));
-            showToast("Click!");
         });
     }
 
