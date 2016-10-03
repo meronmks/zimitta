@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:paddingTop="2sp"
     android:paddingBottom="2sp"
-    android:id="@+id/listItemBase"
     android:descendantFocusability="blocksDescendants">
 
     <ImageView

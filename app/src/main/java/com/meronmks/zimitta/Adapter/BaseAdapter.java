@@ -36,7 +36,6 @@ import twitter4j.Status;
 public class BaseAdapter<T> extends ArrayAdapter<T> {
 
     static class ViewHolder {
-        RelativeLayout listItemBase;
         TextView Name;
         ImageView UserIcon;
         ImageView RTUserIcon;

@@ -110,7 +110,6 @@ public class TweetAdapter extends BaseAdapter<Status> {
         //リンク処理
         mutableLinkMovement(vh.TweetText);
 
-        vh.listItemBase.setBackgroundResource(R.drawable.list_item);
        return convertView;
     }
 
@@ -124,7 +123,6 @@ public class TweetAdapter extends BaseAdapter<Status> {
     private ViewHolder iniViewHolder(View cv){
         vh = new ViewHolder();
 
-        vh.listItemBase = (RelativeLayout) cv.findViewById(R.id.listItemBase);
         vh.Name = (TextView) cv.findViewById(R.id.Name);
         vh.UserIcon = (ImageView) cv.findViewById(R.id.UserIcon);
         vh.RTUserIcon = (ImageView) cv.findViewById(R.id.RTUserIcon);
