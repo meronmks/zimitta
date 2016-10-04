@@ -42,10 +42,11 @@ public class MainActivity extends BaseActivity {
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionUtil());
 
         Variable.iniVariable(this);
-        Fabric.with(this, new Crashlytics());
-        Fabric.with(this, new Answers());
         TwitterAuthConfig authConfig = new TwitterAuthConfig(OAuthVariable.TWITTER_KEY, OAuthVariable.TWITTER_SECRET);
-        Fabric.with(this, new Twitter(authConfig));
+
+        Fabric.Builder builder = new Fabric.Builder(this)
+                .kits(new Twitter(authConfig), new Crashlytics(), new Answers());
+        Fabric.with(builder.build());
         setContentView(R.layout.activity_main);
 
         preferences = getSharedPreferences(getString(R.string.Account), 0);
