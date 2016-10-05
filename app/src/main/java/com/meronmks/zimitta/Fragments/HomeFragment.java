@@ -150,7 +150,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mStreamReceiver = StreamReceiver.register(getContext(), status -> getActivity().runOnUiThread(() -> {
             int pos = 0;
             int top = 0;
-            if (!Variable.TLAdapter.isEmpty() && mListView.getCount() != 0) {
+            if (!Variable.TLAdapter.isEmpty() && mListView.getChildAt(0) != null) {
                 pos = mListView.getFirstVisiblePosition();
                 top = mListView.getChildAt(0).getTop();
             }
@@ -172,7 +172,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 int pos = 0;
                 int top = 0;
                 int tmpCount = Variable.TLAdapter.getCount();
-                if(!Variable.TLAdapter.isEmpty() && mListView.getCount() != 0) {
+                if(!Variable.TLAdapter.isEmpty() && mListView.getChildAt(0) != null) {
                     pos = mListView.getFirstVisiblePosition();
                     top = mListView.getChildAt(0).getTop();
                 }
