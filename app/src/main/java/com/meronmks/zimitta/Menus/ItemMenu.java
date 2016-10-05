@@ -118,6 +118,9 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         for (UserMentionEntity entity : status.getUserMentionEntities()) {
             menuItem.add("@" + entity.getScreenName());
         }
+        if(Variable.userInfo.userID == status.getUser().getId()){
+            menuItem.add("削除");
+        }
         menuItem.add("共有");
         return menuItem.toArray(new String[menuItem.size()]);
     }
@@ -136,6 +139,8 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
             case "お気に入り+リツイート":
                 break;
             case "共有":
+                break;
+            case "削除":
                 break;
             default:    //IDに対する処理
                 break;
