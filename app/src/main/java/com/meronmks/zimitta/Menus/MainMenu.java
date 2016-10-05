@@ -47,11 +47,11 @@ public class MainMenu implements AdapterView.OnItemClickListener {
             case "設定":
                 Intent intent = new Intent(activity, SettingsActivity.class);
                 activity.startActivity(intent);
-                alertDialog.dismiss();
                 break;
             case "API":
                 ErrorLogs.putErrorLog("APITest", "Test");
                 break;
         }
+        alertDialog.dismiss();
     }
 }

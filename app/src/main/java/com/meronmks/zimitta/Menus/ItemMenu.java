@@ -161,6 +161,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
             default:    //IDに対する処理
                 break;
         }
+        alertDialog.dismiss();
     }
 
     /**
