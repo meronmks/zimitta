@@ -38,8 +38,8 @@ public class MainMenu implements AdapterView.OnItemClickListener {
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (adapterView.getItemAtPosition(i).toString()){
+    public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+        switch (parent.getItemAtPosition(position).toString()){
             case "プロフィール表示":
                 break;
             case "アカウント切り替えと変更":

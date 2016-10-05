@@ -3,6 +3,7 @@ package com.meronmks.zimitta.Menus;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.text.format.DateFormat;
@@ -19,8 +20,10 @@ import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Adapter.BaseAdapter;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
+import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
+import com.meronmks.zimitta.Settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -99,6 +102,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
      * @param status
      * @return
      */
+    @NonNull
     private String[] makeItemMenu(Status status){
         List<String> menuItem = new ArrayList<>();
         menuItem.add("詳細");
@@ -120,7 +124,22 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        switch (parent.getItemAtPosition(position).toString()){
+            case "詳細":
+                break;
+            case "返信":
+                break;
+            case "リツイート":
+                break;
+            case "お気に入り":
+                break;
+            case "お気に入り+リツイート":
+                break;
+            case "共有":
+                break;
+            default:    //IDに対する処理
+                break;
+        }
     }
 
     private void settingItemVIew(Status status, View cv){
