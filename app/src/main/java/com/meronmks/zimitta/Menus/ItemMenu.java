@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Activity.PlayVideoActivity;
@@ -22,17 +23,25 @@ import com.meronmks.zimitta.Adapter.BaseAdapter;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.Variable;
+import com.meronmks.zimitta.Fragments.HomeFragment;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Settings.SettingsActivity;
+import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 import twitter4j.ExtendedMediaEntity;
 import twitter4j.MediaEntity;
+import twitter4j.ResponseList;
 import twitter4j.Status;
+import twitter4j.TwitterAdapter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterListener;
+import twitter4j.TwitterMethod;
 import twitter4j.UserMentionEntity;
 
 /**
@@ -45,6 +54,8 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
     private ArrayAdapter<String> adapter;
     private AlertDialog alertDialog;
     private ViewHolder vh;
+    private TwitterAction mAction;
+    private Status status;
 
     static class ViewHolder {
         TextView Name;
@@ -80,16 +91,17 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
 
     public ItemMenu(Activity activity){
         this.activity = activity;
+        mAction = new TwitterAction(activity.getApplicationContext(), listener);
     }
 
     public void show(Status status){
         View view = activity.getLayoutInflater().inflate(R.layout.list_item_dialog, null);
-
+        this.status = status;
         settingItemVIew(status, view);
 
         ListView listView = (ListView) view.findViewById(R.id.listItemMenu);
         listView.setOnItemClickListener(this);
-        String[] members = makeItemMenu(status);
+        String[] members = makeItemMenu();
         adapter = new ArrayAdapter<>(activity.getBaseContext(), android.R.layout.simple_expandable_list_item_1, members);
         listView.setAdapter(adapter);
         alertDialog = new AlertDialog.Builder(activity)
@@ -99,11 +111,10 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
 
     /**
      * 動的にメニュー内容生成
-     * @param status
      * @return
      */
     @NonNull
-    private String[] makeItemMenu(Status status){
+    private String[] makeItemMenu(){
         List<String> menuItem = new ArrayList<>();
         menuItem.add("詳細");
         menuItem.add("返信");
@@ -133,18 +144,82 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
             case "返信":
                 break;
             case "リツイート":
+                mAction.retweetStatus(status.getId());
                 break;
             case "お気に入り":
+                mAction.createFavorite(status.getId());
                 break;
             case "お気に入り+リツイート":
+                mAction.retweetStatus(status.getId());
+                mAction.createFavorite(status.getId());
                 break;
             case "共有":
                 break;
             case "削除":
+                mAction.destroyStatus(status.getId());
                 break;
             default:    //IDに対する処理
                 break;
         }
+    }
+
+    /**
+     * Listener定義
+     */
+    private TwitterListener listener = new TwitterAdapter() {
+
+        @Override
+        public void retweetedStatus(Status retweetedStatus) {
+            showToast("リツイートしました");
+        }
+
+        @Override
+        public void createdFavorite(Status status) {
+            showToast("お気に入りしました");
+        }
+
+        @Override
+        public void destroyedFavorite(Status status) {
+            super.destroyedFavorite(status);
+            showToast("お気に入りを解除しました");
+        }
+
+        @Override
+        public void destroyedStatus(Status destroyedStatus) {
+            super.destroyedStatus(destroyedStatus);
+            showToast("ツイートの削除完了");
+        }
+
+        @Override
+        public void onException(TwitterException te, TwitterMethod method) {
+            activity.runOnUiThread(() -> {
+                switch (method){
+                    case RETWEET_STATUS:
+                        showToast("リツイートに失敗しました");
+                        ErrorLogs.putErrorLog("リツイートに失敗しました", te.getMessage());
+                        break;
+                    case CREATE_FAVORITE:
+                        showToast("お気に入りに失敗しました");
+                        ErrorLogs.putErrorLog("お気に入りに失敗しました", te.getMessage());
+                        break;
+                    case DESTROY_STATUS:
+                        showToast("ツイートの削除に失敗しました");
+                        ErrorLogs.putErrorLog("ツイートの削除に失敗しました", te.getMessage());
+                        break;
+                    case DESTROY_FAVORITE:
+                        showToast("お気に入りの解除に失敗しました");
+                        ErrorLogs.putErrorLog("お気に入りの解除に失敗しました", te.getMessage());
+                        break;
+                }
+            });
+        }
+    };
+
+    private void showToast(String text){
+        if(text == null || text.length() == 0) return;
+        activity.runOnUiThread(() -> {
+            Toast.makeText(activity.getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+        });
     }
 
     /**

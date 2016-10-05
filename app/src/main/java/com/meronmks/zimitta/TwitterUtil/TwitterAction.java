@@ -74,7 +74,7 @@ public class TwitterAction {
 
     /**
      * ツイート投稿
-     * @param statusUpdate
+     * @param statusUpdate 投稿する内容
      */
     public void statusUpdate(StatusUpdate statusUpdate){
         mTwitter.updateStatus(statusUpdate);
@@ -112,7 +112,7 @@ public class TwitterAction {
 
     /**
      * 指定IDのツイートをリツイートする
-     * @param ID
+     * @param ID ツイートのID
      */
     public void retweetStatus(long ID){
         mTwitter.retweetStatus(ID);
@@ -120,9 +120,25 @@ public class TwitterAction {
 
     /**
      * 指定IDのツイートをお気に入りする
-     * @param ID
+     * @param ID ツイートのID
      */
     public void createFavorite(long ID){
         mTwitter.createFavorite(ID);
+    }
+
+    /**
+     * 指定IDのツイートのお気に入りを解除する
+     * @param ID ツイートのID
+     */
+    public void destroyFavorite(long ID){
+        mTwitter.destroyFavorite(ID);
+    }
+
+    /**
+     * 指定IDのツイートを削除する
+     * @param ID ツイートのID
+     */
+    public void destroyStatus(long ID){
+        mTwitter.destroyStatus(ID);
     }
 }
