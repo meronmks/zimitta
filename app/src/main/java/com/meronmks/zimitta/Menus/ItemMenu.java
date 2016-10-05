@@ -22,8 +22,10 @@ import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import twitter4j.ExtendedMediaEntity;
 import twitter4j.MediaEntity;
@@ -84,12 +86,36 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
 
         ListView listView = (ListView) view.findViewById(R.id.listItemMenu);
         listView.setOnItemClickListener(this);
-        String[] members = { "プロフィール表示", "アカウント切り替えと変更", "設定", "API"};
+        String[] members = makeItemMenu(status);
         adapter = new ArrayAdapter<>(activity.getBaseContext(), android.R.layout.simple_expandable_list_item_1, members);
         listView.setAdapter(adapter);
         alertDialog = new AlertDialog.Builder(activity)
                 .setView(view)
                 .show();
+    }
+
+    /**
+     * 動的にメニュー内容生成
+     * @param status
+     * @return
+     */
+    private String[] makeItemMenu(Status status){
+        List<String> menuItem = new ArrayList<>();
+        menuItem.add("詳細");
+        menuItem.add("返信");
+        menuItem.add("リツイート");
+        menuItem.add("お気に入り");
+        menuItem.add("お気に入り+リツイート");
+        menuItem.add("@" + status.getUser().getScreenName());
+        if(status.getRetweetedStatus() != null){
+            menuItem.add("@" + status.getRetweetedStatus().getUser().getScreenName());
+            status = status.getRetweetedStatus();
+        }
+        for (UserMentionEntity entity : status.getUserMentionEntities()) {
+            menuItem.add("@" + entity.getScreenName());
+        }
+        menuItem.add("共有");
+        return menuItem.toArray(new String[menuItem.size()]);
     }
 
     @Override

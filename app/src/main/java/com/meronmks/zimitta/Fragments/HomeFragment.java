@@ -144,14 +144,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     /**
-     * メニューの表示
-     */
-    private void showMenu(Status status){
-        ItemMenu itemMenu = new ItemMenu(getActivity());
-        itemMenu.show(status);
-    }
-
-    /**
      * レシーバの受け取り口作成
      */
     private void setReceiver(){

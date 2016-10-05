@@ -16,6 +16,7 @@ import com.meronmks.zimitta.Core.BaseFragment;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
+import com.meronmks.zimitta.Menus.ItemMenu;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
@@ -98,7 +99,7 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
 
     private void setItemClickListener(){
         mListView.setOnItemClickListener((adapterView, view, i, l) -> {
-            showToast("Click!");
+            showMenu((Status) adapterView.getItemAtPosition(i));
         });
     }
 
