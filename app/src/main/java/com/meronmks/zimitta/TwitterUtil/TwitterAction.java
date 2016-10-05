@@ -52,7 +52,6 @@ public class TwitterAction {
      */
     private void makeConfigurationBuilder(Context context){
         builder = new ConfigurationBuilder();
-        SharedPreferences accountIDCount = context.getSharedPreferences(context.getString(R.string.Account), 0);
         // Twitter4Jに対してOAuth情報を設定
         // アプリ固有の情報
         builder.setOAuthConsumerKey(OAuthVariable.TWITTER_KEY);
