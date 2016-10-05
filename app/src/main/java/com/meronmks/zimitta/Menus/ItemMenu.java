@@ -142,6 +142,11 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         }
     }
 
+    /**
+     * ツイートの表示部分
+     * @param status
+     * @param cv
+     */
     private void settingItemVIew(Status status, View cv){
 
         vh = iniViewHolder(cv);

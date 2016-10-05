@@ -109,4 +109,20 @@ public class TwitterAction {
     public void getMutesIDs(){
         mTwitter.getMutesIDs(-1);
     }
+
+    /**
+     * 指定IDのツイートをリツイートする
+     * @param ID
+     */
+    public void retweetStatus(long ID){
+        mTwitter.retweetStatus(ID);
+    }
+
+    /**
+     * 指定IDのツイートをお気に入りする
+     * @param ID
+     */
+    public void createFavorite(long ID){
+        mTwitter.createFavorite(ID);
+    }
 }
