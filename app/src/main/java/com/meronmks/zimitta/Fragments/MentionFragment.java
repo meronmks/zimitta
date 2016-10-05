@@ -174,7 +174,7 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
                 int pos = 0;
                 int top = 0;
                 int tmpCount = Variable.MentionsAdapter.getCount();
-                if(!Variable.MentionsAdapter.isEmpty()) {
+                if(!Variable.MentionsAdapter.isEmpty() && mListView.getCount() != 0) {
                     pos = mListView.getFirstVisiblePosition();
                     top = mListView.getChildAt(0).getTop();
                 }

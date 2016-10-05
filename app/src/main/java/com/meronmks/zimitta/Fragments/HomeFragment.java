@@ -172,7 +172,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 int pos = 0;
                 int top = 0;
                 int tmpCount = Variable.TLAdapter.getCount();
-                if(!Variable.TLAdapter.isEmpty()) {
+                if(!Variable.TLAdapter.isEmpty() && mListView.getCount() != 0) {
                     pos = mListView.getFirstVisiblePosition();
                     top = mListView.getChildAt(0).getTop();
                 }
