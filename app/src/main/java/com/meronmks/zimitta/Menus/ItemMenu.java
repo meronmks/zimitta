@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Timer;
 
 import twitter4j.ExtendedMediaEntity;
+import twitter4j.HashtagEntity;
 import twitter4j.MediaEntity;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -129,10 +130,12 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         for (UserMentionEntity entity : status.getUserMentionEntities()) {
             menuItem.add("@" + entity.getScreenName());
         }
+        for(HashtagEntity entity : status.getHashtagEntities()){
+            menuItem.add("#" + entity.getText());
+        }
         if(Variable.userInfo.userID == status.getUser().getId()){
             menuItem.add("削除");
         }
-        menuItem.add("共有");
         return menuItem.toArray(new String[menuItem.size()]);
     }
 
@@ -158,7 +161,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
             case "削除":
                 mAction.destroyStatus(status.getId());
                 break;
-            default:    //IDに対する処理
+            default:    //IDとハッシュタグに対する処理
                 break;
         }
         alertDialog.dismiss();
