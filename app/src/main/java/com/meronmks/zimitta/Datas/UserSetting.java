@@ -40,4 +40,14 @@ public class UserSetting {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getBoolean("LongItemClickMenu", true);
     }
+
+    /**
+     * ツイートのカウント表示をするか
+     * @param context
+     * @return
+     */
+    public static boolean TextCountVisible(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("TextCountVisible", true);
+    }
 }

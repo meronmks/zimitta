@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.SpannableStringBuilder;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.crashlytics.android.answers.Answers;
@@ -37,6 +40,7 @@ public class MakeTweetActivity extends BaseActivity {
     private TwitterAction mAction;
     private EditText mEditText;
     private Context mContext;
+    private Button tweetButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +54,28 @@ public class MakeTweetActivity extends BaseActivity {
 
         mEditText = (EditText) findViewById(R.id.TweetTextInput);
 
-        RxView.clicks(findViewById(R.id.TweetPostButton))
+        tweetButton = (Button)findViewById(R.id.TweetPostButton);
+
+        mEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String txtLength = Integer.toString(s.length());
+
+                tweetButton.setText("ツイート\n" + txtLength + "/140");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        RxView.clicks(tweetButton)
                 .subscribe(x -> {
                     if(mEditText.getText().length() < 0)return;
                     mAction.statusUpdate(new StatusUpdate(mEditText.getText().toString()));
