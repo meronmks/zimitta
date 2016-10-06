@@ -38,7 +38,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ツイート\n0/140"
+        android:text="ツイート\n140"
         android:id="@+id/TweetPostButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

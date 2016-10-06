@@ -64,9 +64,9 @@ public class MakeTweetActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String txtLength = Integer.toString(s.length());
+                String txtLength = Integer.toString(140 - s.length());
 
-                tweetButton.setText("ツイート\n" + txtLength + "/140");
+                tweetButton.setText("ツイート\n" + txtLength);
             }
 
             @Override
