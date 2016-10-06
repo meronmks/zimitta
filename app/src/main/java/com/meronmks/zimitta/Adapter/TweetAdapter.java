@@ -82,18 +82,23 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.Name.setText(item.getUser().getName());
         Glide.with(getContext()).load(item.getUser().getProfileImageURLHttps()).into(vh.UserIcon);
         vh.ScreenName.setText("@" + item.getUser().getScreenName());
-        vh.TweetText.setText(mutableIDMobement(item.getText()));
-        replacrTimeAt(new Date(), item.getCreatedAt(), vh.Time);
-        vh.Via.setText(item.getSource().replaceAll("<.+?>", "") + " : より");
-        vh.RTCount.setText("RT : " + item.getRetweetCount());
-        vh.FavCount.setText("Fav : " + item.getFavoriteCount());
-
+        String text = item.getText();
         //画像処理
         if(item.getExtendedMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
             setPreviewMedia(item.getExtendedMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
-            vh.TweetText.setText(deleteMediaURL(item.getText(), item.getExtendedMediaEntities()));
+            text = deleteMediaURL(text, item.getExtendedMediaEntities());
         }
+        vh.TweetText.setText(mutableIDMobement(text));
+        if(vh.TweetText.length() == 0){
+            vh.TweetText.setVisibility(View.GONE);
+        }else{
+            vh.TweetText.setVisibility(View.VISIBLE);
+        }
+        replacrTimeAt(new Date(), item.getCreatedAt(), vh.Time);
+        vh.Via.setText(item.getSource().replaceAll("<.+?>", "") + " : より");
+        vh.RTCount.setText("RT : " + item.getRetweetCount());
+        vh.FavCount.setText("Fav : " + item.getFavoriteCount());
 
         //引用ツイート関連
         if(item.getQuotedStatus() != null){

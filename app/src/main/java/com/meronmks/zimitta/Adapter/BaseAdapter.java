@@ -205,14 +205,20 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         vh.QuoteTweetView.setVisibility(View.VISIBLE);
         vh.QuoteName.setText(status.getUser().getName());
         vh.QuoteScreenName.setText("@" + status.getUser().getScreenName());
-        vh.QuoteText.setText(mutableIDMobement(status.getText()));
-        replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
-        mutableLinkMovement(vh.QuoteText);
+        String text = status.getText();
         if(status.getExtendedMediaEntities().length != 0){
             vh.QuotePreviewImage.setVisibility(View.VISIBLE);
             setPreviewMedia(status.getExtendedMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
-            vh.QuoteText.setText(deleteMediaURL(status.getText(), status.getExtendedMediaEntities()));
+            text = deleteMediaURL(text, status.getExtendedMediaEntities());
         }
+        vh.QuoteText.setText(mutableIDMobement(text));
+        if(vh.QuoteText.length() == 0){
+            vh.QuoteText.setVisibility(View.GONE);
+        }else{
+            vh.QuoteText.setVisibility(View.VISIBLE);
+        }
+        replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
+        mutableLinkMovement(vh.QuoteText);
     }
 
     /**
