@@ -1,10 +1,7 @@
 package com.meronmks.zimitta.Fragments;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +13,6 @@ import com.meronmks.zimitta.Core.BaseFragment;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
-import com.meronmks.zimitta.Menus.ItemMenu;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
@@ -38,7 +34,6 @@ import twitter4j.UserMentionEntity;
  */
 public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private ListView mListView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private TwitterAction mAction;
@@ -61,8 +56,8 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
         View v = inflater.inflate(R.layout.core_fragment, container, false);
 
         mListView = (ListView) v.findViewById(R.id.list);
-        setItemClickListener();
-        setLongItemClickListener();
+        setStatusItemClickListener();
+        setLongStatusItemClickListener();
         mListView.setAdapter(Variable.MentionsAdapter);
         setScrollListener();
         setReceiver();
@@ -95,19 +90,6 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
     public void onDestroy() {
         super.onDestroy();
         mStreamReceiver.unregister();
-    }
-
-    private void setItemClickListener(){
-        mListView.setOnItemClickListener((adapterView, view, i, l) -> {
-            showMenu((Status) adapterView.getItemAtPosition(i));
-        });
-    }
-
-    private void setLongItemClickListener(){
-        mListView.setOnItemLongClickListener((adapterView, view, i, l) -> {
-            showToast("LongClick!");
-            return true;
-        });
     }
 
     private void setScrollListener(){

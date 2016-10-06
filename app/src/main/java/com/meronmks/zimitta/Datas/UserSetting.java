@@ -30,4 +30,14 @@ public class UserSetting {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getBoolean("Streaming_FF_Mention", false);
     }
+
+    /**
+     * 長押しでメニューを表示するか
+     * @param context
+     * @return
+     */
+    public static boolean LongItemClickMenu(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("LongItemClickMenu", true);
+    }
 }
