@@ -24,6 +24,7 @@
 * [イベントの通知にインテントのブロードキャストを使う話](http://qiita.com/kazhida/items/91a15a1cf8ec0c443dbb)
 * [ListViewの挙動をいい感じにした](http://saku-na63.hatenablog.com/entry/2014/06/06/013014)
 * [設定画面にPreferenceを継承していないViewを表示する](http://serenegiant.com/blog/?p=2533)
+* [Androidでテキストの中の一部をクリックできるようにする](http://d.hatena.ne.jp/chaoruko/20111007/1317997853)
 
 ## 直さないといけないバグ ##
 * 実機でもOutOfMemoryで落ちることがある

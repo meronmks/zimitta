@@ -33,15 +33,6 @@ import twitter4j.TwitterMethod;
  */
 public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-
-    private TwitterAction mAction;
-    private boolean isStatusAdd;
-    private StreamReceiver mStreamReceiver;
-
-    private Timer  limitTimer;
-    private boolean isLimited;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +81,6 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         mSwipeRefreshLayout.removeAllViews();   //残像バグ対策
     }
 
@@ -179,12 +169,4 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             });
         }
     };
-
-    private class LimitTimer extends TimerTask{
-        @Override
-        public void run() {
-            isLimited = false;
-            limitTimer.cancel();
-        }
-    }
 }

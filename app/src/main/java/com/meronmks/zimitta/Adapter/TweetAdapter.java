@@ -82,7 +82,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.Name.setText(item.getUser().getName());
         Glide.with(getContext()).load(item.getUser().getProfileImageURLHttps()).into(vh.UserIcon);
         vh.ScreenName.setText("@" + item.getUser().getScreenName());
-        vh.TweetText.setText(item.getText());
+        vh.TweetText.setText(mutableIDMobement(item.getText()));
         replacrTimeAt(new Date(), item.getCreatedAt(), vh.Time);
         vh.Via.setText(item.getSource().replaceAll("<.+?>", "") + " : より");
         vh.RTCount.setText("RT : " + item.getRetweetCount());

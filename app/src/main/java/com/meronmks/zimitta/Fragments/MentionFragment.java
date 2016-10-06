@@ -34,14 +34,7 @@ import twitter4j.UserMentionEntity;
  */
 public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private TwitterAction mAction;
-    private boolean isStatusAdd;
-    private StreamReceiver mStreamReceiver;
-
-    private Timer limitTimer;
-    private boolean isLimited;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -185,12 +178,4 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
             });
         }
     };
-
-    private class LimitTimer extends TimerTask {
-        @Override
-        public void run() {
-            isLimited = false;
-            limitTimer.cancel();
-        }
-    }
 }

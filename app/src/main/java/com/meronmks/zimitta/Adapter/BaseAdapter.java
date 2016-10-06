@@ -8,24 +8,27 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
-import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
+import com.meronmks.zimitta.Core.UserIDClickable;
 import com.meronmks.zimitta.R;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import twitter4j.ExtendedMediaEntity;
 import twitter4j.MediaEntity;
@@ -66,6 +69,8 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         ImageView[] ImageQuotePreviewViews = new ImageView[4];
         ImageView QuotePreviewVideoView1;
     }
+
+    private static final Pattern ID_MATCH_PATTERN = Pattern.compile("@[a-zA-Z0-9_]+", Pattern.CASE_INSENSITIVE);
 
     public BaseAdapter(Context context, int resources) {
         super(context, resources);
@@ -200,7 +205,7 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         vh.QuoteTweetView.setVisibility(View.VISIBLE);
         vh.QuoteName.setText(status.getUser().getName());
         vh.QuoteScreenName.setText("@" + status.getUser().getScreenName());
-        vh.QuoteText.setText(status.getText());
+        vh.QuoteText.setText(mutableIDMobement(status.getText()));
         replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
         mutableLinkMovement(vh.QuoteText);
         if(status.getExtendedMediaEntities().length != 0){
@@ -229,6 +234,21 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
             //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
             return mt;
         });
+    }
+
+    /**
+     * テキストからIDを抽出してクリック可能に
+     * @param string
+     * @return
+     */
+    protected SpannableString mutableIDMobement(String string){
+        SpannableString spannable = new SpannableString(string);
+        Matcher matcher = ID_MATCH_PATTERN.matcher(string);
+        while (matcher.find()){
+            UserIDClickable span = new UserIDClickable();
+            spannable.setSpan(span, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spannable;
     }
 
     /**
