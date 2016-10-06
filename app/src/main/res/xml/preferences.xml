@@ -15,6 +15,10 @@
             android:entries="@array/entriesListPreference"
             android:entryValues="@array/entryvaluesListPreference"
             android:defaultValue="20"/>
+        <CheckBoxPreference
+            android:title="長押しでメニュー表示"
+            android:key="LongItemClickMenu"
+            android:defaultValue="true"/>
     </PreferenceScreen>
 
     <PreferenceScreen
