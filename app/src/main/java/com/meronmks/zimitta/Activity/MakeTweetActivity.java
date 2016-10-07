@@ -18,6 +18,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Core.BaseActivity;
 import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Datas.ErrorLogs;
+import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
@@ -56,6 +57,12 @@ public class MakeTweetActivity extends BaseActivity {
 
         tweetButton = (Button)findViewById(R.id.TweetPostButton);
 
+        if(UserSetting.TextCountVisible(getApplicationContext())){
+            tweetButton.setText("ツイート\n140");
+        }else{
+            tweetButton.setText("ツイート");
+        }
+
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -64,8 +71,9 @@ public class MakeTweetActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String txtLength = Integer.toString(140 - s.length());
+                if(!UserSetting.TextCountVisible(getApplicationContext()))return;
 
+                String txtLength = Integer.toString(140 - s.length());
                 tweetButton.setText("ツイート\n" + txtLength);
             }
 
