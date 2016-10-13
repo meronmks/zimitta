@@ -86,8 +86,33 @@
     <!-- プレビューした画像とともに表示する削除ボタン -->
     <ImageButton
         android:id="@+id/imageDelButton1"
-        android:layout_width="16sp"
-        android:layout_height="16sp"
+        android:layout_width="18sp"
+        android:layout_height="18sp"
         android:layout_alignRight="@+id/selectImageView1"
-        android:layout_alignTop="@+id/selectImageView1"/>
+        android:layout_alignTop="@+id/selectImageView1"
+        android:src="@mipmap/ic_clear_white_18dp"/>
+
+    <ImageButton
+        android:id="@+id/imageDelButton2"
+        android:layout_width="18sp"
+        android:layout_height="18sp"
+        android:layout_alignRight="@+id/selectImageView2"
+        android:layout_alignTop="@+id/selectImageView2"
+        android:src="@mipmap/ic_clear_white_18dp"/>
+
+    <ImageButton
+        android:id="@+id/imageDelButton3"
+        android:layout_width="18sp"
+        android:layout_height="18sp"
+        android:layout_alignRight="@+id/selectImageView3"
+        android:layout_alignTop="@+id/selectImageView3"
+        android:src="@mipmap/ic_clear_white_18dp"/>
+
+    <ImageButton
+        android:id="@+id/imageDelButton4"
+        android:layout_width="18sp"
+        android:layout_height="18sp"
+        android:layout_alignRight="@+id/selectImageView4"
+        android:layout_alignTop="@+id/selectImageView4"
+        android:src="@mipmap/ic_clear_white_18dp"/>
 </RelativeLayout>
