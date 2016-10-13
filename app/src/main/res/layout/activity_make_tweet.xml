@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -10,11 +12,13 @@
         android:id="@+id/ToolBar" />
 
     <android.support.design.widget.TextInputLayout
+        android:id="@+id/TweetTextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/AddImageButton"
         android:layout_below="@+id/ToolBar"
         android:padding="14sp">
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -45,4 +49,45 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="14sp"
         android:layout_marginRight="14sp"/>
+
+    <!-- 添付したい画像のプレビュー部分 -->
+
+    <ImageView
+        android:layout_width="64sp"
+        android:layout_height="64sp"
+        app:srcCompat="@mipmap/clear"
+        android:id="@+id/selectImageView1"
+        android:layout_alignBottom="@+id/TweetTextInputLayout"/>
+
+    <ImageView
+        android:layout_width="64sp"
+        android:layout_height="64sp"
+        app:srcCompat="@mipmap/clear"
+        android:id="@+id/selectImageView2"
+        android:layout_toRightOf="@+id/selectImageView1"
+        android:layout_alignBottom="@+id/TweetTextInputLayout"/>
+
+    <ImageView
+        android:layout_width="64sp"
+        android:layout_height="64sp"
+        app:srcCompat="@mipmap/clear"
+        android:id="@+id/selectImageView3"
+        android:layout_toRightOf="@+id/selectImageView2"
+        android:layout_alignBottom="@+id/TweetTextInputLayout"/>
+
+    <ImageView
+        android:layout_width="64sp"
+        android:layout_height="64sp"
+        app:srcCompat="@mipmap/clear"
+        android:id="@+id/selectImageView4"
+        android:layout_toRightOf="@+id/selectImageView3"
+        android:layout_alignBottom="@+id/TweetTextInputLayout"/>
+
+    <!-- プレビューした画像とともに表示する削除ボタン -->
+    <ImageButton
+        android:id="@+id/imageDelButton1"
+        android:layout_width="16sp"
+        android:layout_height="16sp"
+        android:layout_alignRight="@+id/selectImageView1"
+        android:layout_alignTop="@+id/selectImageView1"/>
 </RelativeLayout>

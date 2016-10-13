@@ -21,6 +21,8 @@ public class Variable {
     public static final String ACTION_INVOKED = "com.meronmks.zimitta.ACTION_INVOKED";
     public static final String STREAM_PARCELABLE = "STREAM_PARCELABLE";
     public static final String STREAM_BUNDLE = "STREAM_BUNDLE";
+    public static final int REQUEST_PICK_CONTENT = 0;
+    public static final int REQUEST_KITKAT_PICK_CONTENT = 1;
     public static RateLimits rateLimits;
     public static ErrorAdapter errorLogs;
 

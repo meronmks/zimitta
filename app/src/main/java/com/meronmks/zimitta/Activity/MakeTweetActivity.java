@@ -1,8 +1,13 @@
 package com.meronmks.zimitta.Activity;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -11,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
@@ -42,6 +48,7 @@ public class MakeTweetActivity extends BaseActivity {
     private EditText mEditText;
     private Context mContext;
     private Button tweetButton;
+    private ImageButton[] imageClearButton = new ImageButton[4];
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,6 +95,26 @@ public class MakeTweetActivity extends BaseActivity {
                     if(mEditText.getText().length() < 0)return;
                     mAction.statusUpdate(new StatusUpdate(mEditText.getText().toString()));
                 });
+
+        RxView.clicks(findViewById(R.id.AddImageButton))
+                .subscribe(x -> {
+                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                        Intent intent = new Intent(Intent.ACTION_PICK);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, 1);
+                    }else {
+                        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode != RESULT_OK && (requestCode == Variable.REQUEST_PICK_CONTENT || requestCode == Variable.REQUEST_KITKAT_PICK_CONTENT)) return;
+
+
     }
 
     /**
