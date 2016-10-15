@@ -266,8 +266,10 @@ public class MakeTweetActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Uri uri = data.getData();
+
         if(requestCode == Variable.REQUEST_PICK_CONTENT){
+            if(data == null)return;
+            Uri uri = data.getData();
             String[] columns = new String[]{ MediaStore.Images.Media.DATA };
             for(int i = 0; i < 4; i++){
                 if(filePaths[i] != null) continue;
