@@ -69,6 +69,7 @@ public class MainActivity extends BaseActivity {
         RxView.clicks(findViewById(R.id.tweet))
                 .subscribe(x -> {
                     Intent intent = new Intent(this, MakeTweetActivity.class);
+                    intent.putExtra("mention", false);
                     startActivity(intent);
                 });
 

@@ -17,11 +17,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Adapter.BaseAdapter;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Datas.ErrorLogs;
+import com.meronmks.zimitta.Datas.ParcelStatus;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.Fragments.HomeFragment;
 import com.meronmks.zimitta.R;
@@ -145,6 +147,12 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
             case "詳細":
                 break;
             case "返信":
+                Intent intent = new Intent(activity, MakeTweetActivity.class);
+                intent.putExtra("mention", true);
+                ParcelStatus ps = new ParcelStatus();
+                ps.status = status;
+                intent.putExtra("status", ps);
+                activity.startActivity(intent);
                 break;
             case "リツイート":
                 mAction.retweetStatus(status.getId());
