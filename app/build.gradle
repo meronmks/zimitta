@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
 
-def VERSION_CODE = 48
+def VERSION_CODE = 49
 def VERSION_NAME = "5.0.0"
-def VERSION_NAME_SUFFIX = "-dev3"
+def VERSION_NAME_SUFFIX = "-dev4"
 
 buildscript {
     repositories {
