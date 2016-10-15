@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ToolbarTheme"
+        android:background="?attr/colorPrimary"
+        android:id="@+id/ToolBar" />
+
+    <ScrollView
+        android:id="@+id/itemBase"
+        android:layout_below="@+id/ToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="100sp">
+        <include layout="@layout/list_item_status"/>
+    </ScrollView>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/TweetTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/AddImageButton"
+        android:layout_below="@+id/itemBase"
+        android:padding="14sp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:gravity="left|top"
+            android:hint="@string/tweet_edittext_hinttext"
+            android:id="@+id/TweetTextInput" />
+    </android.support.design.widget.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/AddImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:src="@mipmap/ic_add_to_photos_white_24dp"
+        android:layout_marginLeft="14sp"
+        android:layout_marginBottom="14sp"
+        android:layout_alignTop="@+id/TweetPostButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ツイート\n140"
+        android:id="@+id/TweetPostButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="14sp"
+        android:layout_marginRight="14sp"/>
+
+    <!-- 添付したい画像のプレビュー部分 -->
+
+    <ImageView
+        android:layout_width="64sp"
+        android:layout_height="64sp"
+        app:srcCompat="@mipmap/clear"
+        android:id="@+id/selectImageView1"
+        android:layout_alignBottom="@+id/TweetTextInputLayout"/>
+
+    <ImageView
+        android:layout_width="64sp"
+        android:layout_height="64sp"
+        app:srcCompat="@mipmap/clear"
+        android:id="@+id/selectImageView2"
+        android:layout_toRightOf="@+id/selectImageView1"
+        android:layout_alignBottom="@+id/TweetTextInputLayout"/>
+
+    <ImageView
+        android:layout_width="64sp"
+        android:layout_height="64sp"
+        app:srcCompat="@mipmap/clear"
+        android:id="@+id/selectImageView3"
+        android:layout_toRightOf="@+id/selectImageView2"
+        android:layout_alignBottom="@+id/TweetTextInputLayout"/>
+
+    <ImageView
+        android:layout_width="64sp"
+        android:layout_height="64sp"
+        app:srcCompat="@mipmap/clear"
+        android:id="@+id/selectImageView4"
+        android:layout_toRightOf="@+id/selectImageView3"
+        android:layout_alignBottom="@+id/TweetTextInputLayout"/>
+
+    <!-- プレビューした画像とともに表示する削除ボタン -->
+    <ImageButton
+        android:id="@+id/imageDelButton1"
+        android:layout_width="18sp"
+        android:layout_height="18sp"
+        android:layout_alignRight="@+id/selectImageView1"
+        android:layout_alignTop="@+id/selectImageView1"
+        android:src="@mipmap/ic_clear_white_18dp"/>
+
+    <ImageButton
+        android:id="@+id/imageDelButton2"
+        android:layout_width="18sp"
+        android:layout_height="18sp"
+        android:layout_alignRight="@+id/selectImageView2"
+        android:layout_alignTop="@+id/selectImageView2"
+        android:src="@mipmap/ic_clear_white_18dp"/>
+
+    <ImageButton
+        android:id="@+id/imageDelButton3"
+        android:layout_width="18sp"
+        android:layout_height="18sp"
+        android:layout_alignRight="@+id/selectImageView3"
+        android:layout_alignTop="@+id/selectImageView3"
+        android:src="@mipmap/ic_clear_white_18dp"/>
+
+    <ImageButton
+        android:id="@+id/imageDelButton4"
+        android:layout_width="18sp"
+        android:layout_height="18sp"
+        android:layout_alignRight="@+id/selectImageView4"
+        android:layout_alignTop="@+id/selectImageView4"
+        android:src="@mipmap/ic_clear_white_18dp"/>
+</RelativeLayout>
