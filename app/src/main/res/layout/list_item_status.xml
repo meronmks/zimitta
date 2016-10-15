@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingTop="2sp"
     android:paddingBottom="2sp"
     android:descendantFocusability="blocksDescendants">
@@ -32,7 +32,7 @@
         android:focusable="false"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/UserIcon"
         android:layout_toEndOf="@+id/UserIcon"
         android:layout_marginLeft="4sp">
@@ -63,6 +63,7 @@
                     android:singleLine="true"
                     android:textStyle="bold"
                     android:layout_weight="1" />
+
                 <TextView
                     android:focusableInTouchMode="false"
                     android:focusable="false"
@@ -74,6 +75,7 @@
                     android:layout_marginLeft="8sp"
                     android:layout_weight="0"
                     android:layout_marginRight="4sp" />
+
                 <ImageView
                     android:focusableInTouchMode="false"
                     android:focusable="false"
