@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.meronmks.zimitta.Activity.AccountChangeActivity;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Settings.SettingsActivity;
@@ -43,6 +44,9 @@ public class MainMenu implements AdapterView.OnItemClickListener {
             case "プロフィール表示":
                 break;
             case "アカウント切り替えと変更":
+                Intent Account = new Intent(activity, AccountChangeActivity.class);
+                activity.startActivity(Account);
+                activity.finish();
                 break;
             case "設定":
                 Intent intent = new Intent(activity, SettingsActivity.class);
