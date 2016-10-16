@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
+import com.meronmks.zimitta.Core.HashTagClickable;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Core.UserIDClickable;
 import com.meronmks.zimitta.R;
@@ -71,6 +72,7 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
     }
 
     private static final Pattern ID_MATCH_PATTERN = Pattern.compile("@[a-zA-Z0-9_]+", Pattern.CASE_INSENSITIVE);
+    private static final Pattern HASH_TAG_MATCH_PATTERN = Pattern.compile("[#＃][Ａ-Ｚａ-ｚA-Za-z一-鿆0-9０-９ぁ-ヶｦ-ﾟー]+", Pattern.CASE_INSENSITIVE);
 
     public BaseAdapter(Context context, int resources) {
         super(context, resources);
@@ -211,7 +213,7 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
             setPreviewMedia(status.getExtendedMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
             text = deleteMediaURL(text, status.getExtendedMediaEntities());
         }
-        vh.QuoteText.setText(mutableIDMobement(text));
+        vh.QuoteText.setText(mutableIDandHashTagMobement(text));
         if(vh.QuoteText.length() == 0){
             vh.QuoteText.setVisibility(View.GONE);
         }else{
@@ -243,15 +245,21 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
     }
 
     /**
-     * テキストからIDを抽出してクリック可能に
+     * テキストからIDとハッシュタグを抽出してクリック可能に
      * @param string
      * @return
      */
-    protected SpannableString mutableIDMobement(String string){
+    protected SpannableString mutableIDandHashTagMobement(String string){
         SpannableString spannable = new SpannableString(string);
         Matcher matcher = ID_MATCH_PATTERN.matcher(string);
         while (matcher.find()){
             UserIDClickable span = new UserIDClickable();
+            spannable.setSpan(span, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        matcher = HASH_TAG_MATCH_PATTERN.matcher(string);
+        while (matcher.find()){
+            HashTagClickable span = new HashTagClickable();
             spannable.setSpan(span, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         return spannable;

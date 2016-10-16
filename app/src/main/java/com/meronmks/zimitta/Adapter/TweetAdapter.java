@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -89,7 +88,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
             setPreviewMedia(item.getExtendedMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
             text = deleteMediaURL(text, item.getExtendedMediaEntities());
         }
-        vh.TweetText.setText(mutableIDMobement(text));
+        vh.TweetText.setText(mutableIDandHashTagMobement(text));
         if(vh.TweetText.length() == 0){
             vh.TweetText.setVisibility(View.GONE);
         }else{

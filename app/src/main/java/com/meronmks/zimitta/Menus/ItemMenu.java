@@ -1,11 +1,12 @@
 package com.meronmks.zimitta.Menus;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,27 +21,26 @@ import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
-import com.meronmks.zimitta.Adapter.BaseAdapter;
+import com.meronmks.zimitta.Core.HashTagClickable;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
+import com.meronmks.zimitta.Core.UserIDClickable;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.ParcelStatus;
 import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
-import com.meronmks.zimitta.Fragments.HomeFragment;
 import com.meronmks.zimitta.R;
-import com.meronmks.zimitta.Settings.SettingsActivity;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import twitter4j.ExtendedMediaEntity;
 import twitter4j.HashtagEntity;
 import twitter4j.MediaEntity;
-import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
@@ -92,6 +92,10 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         ImageView[] ImageQuotePreviewViews = new ImageView[4];
         ImageView QuotePreviewVideoView1;
     }
+
+    private static final Pattern ID_MATCH_PATTERN = Pattern.compile("@[a-zA-Z0-9_]+", Pattern.CASE_INSENSITIVE);
+    private static final Pattern HASH_TAG_MATCH_PATTERN = Pattern.compile("[#＃][Ａ-Ｚａ-ｚA-Za-z一-鿆0-9０-９ぁ-ヶｦ-ﾟー]+", Pattern.CASE_INSENSITIVE);
+
 
     public ItemMenu(Activity activity){
         this.activity = activity;
@@ -319,7 +323,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         vh.Name.setText(status.getUser().getName());
         Glide.with(activity).load(status.getUser().getProfileImageURLHttps()).into(vh.UserIcon);
         vh.ScreenName.setText("@" + status.getUser().getScreenName());
-        vh.TweetText.setText(status.getText());
+        vh.TweetText.setText(mutableIDandHashTagMobement(status.getText()));
         replacrTimeAt(new Date(), status.getCreatedAt(), vh.Time);
         vh.Via.setText(status.getSource().replaceAll("<.+?>", "") + " : より");
         vh.RTCount.setText("RT : " + status.getRetweetCount());
@@ -471,6 +475,27 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
             //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
             return mt;
         });
+    }
+
+    /**
+     * テキストからIDとハッシュタグを抽出してクリック可能に
+     * @param string
+     * @return
+     */
+    protected SpannableString mutableIDandHashTagMobement(String string){
+        SpannableString spannable = new SpannableString(string);
+        Matcher matcher = ID_MATCH_PATTERN.matcher(string);
+        while (matcher.find()){
+            UserIDClickable span = new UserIDClickable();
+            spannable.setSpan(span, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+
+        matcher = HASH_TAG_MATCH_PATTERN.matcher(string);
+        while (matcher.find()){
+            HashTagClickable span = new HashTagClickable();
+            spannable.setSpan(span, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spannable;
     }
 
     /**
