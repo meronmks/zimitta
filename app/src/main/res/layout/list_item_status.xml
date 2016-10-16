@@ -104,13 +104,7 @@
                 android:id="@+id/TweetText"
                 android:textSize="14sp"
                 android:autoLink="web"/>
-            <TextView
-                android:focusableInTouchMode="false"
-                android:focusable="false"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="atTime"
-                android:id="@+id/Time" />
+
             <!-- RTとFavのカウント部分 -->
             <LinearLayout
                 android:focusableInTouchMode="false"
@@ -132,7 +126,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Fav : 0"
-                    android:id="@+id/FavCount" />
+                    android:id="@+id/FavCount"
+                    android:layout_marginRight="8sp" />
+
+                <TextView
+                    android:focusableInTouchMode="false"
+                    android:focusable="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="atTime"
+                    android:id="@+id/Time"
+                    android:layout_weight="1" />
             </LinearLayout>
             <TextView
                 android:focusableInTouchMode="false"
