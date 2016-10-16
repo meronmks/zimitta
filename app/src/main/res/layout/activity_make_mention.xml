@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,9 +16,15 @@
         android:id="@+id/itemBase"
         android:layout_below="@+id/ToolBar"
         android:layout_width="match_parent"
-        android:layout_height="100sp">
+        android:layout_height="wrap_content">
         <include layout="@layout/list_item_status"/>
     </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:layout_below="@+id/itemBase"
+        android:background="@color/colorPrimaryDark"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/TweetTextInputLayout"
@@ -25,7 +32,8 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/AddImageButton"
         android:layout_below="@+id/itemBase"
-        android:padding="14sp">
+        android:padding="8sp"
+        android:minHeight="200sp">
 
         <EditText
             android:layout_width="match_parent"
@@ -33,6 +41,7 @@
             android:inputType="textMultiLine"
             android:gravity="left|top"
             android:id="@+id/TweetTextInput" />
+
     </android.support.design.widget.TextInputLayout>
 
     <ImageButton
@@ -49,7 +58,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ツイート\n140"
+        android:text="ツイート"
         android:id="@+id/TweetPostButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
@@ -122,4 +131,11 @@
         android:layout_alignRight="@+id/selectImageView4"
         android:layout_alignTop="@+id/selectImageView4"
         android:src="@mipmap/ic_clear_white_18dp"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/postProgressBar"
+        android:indeterminate="true"/>
 </RelativeLayout>
