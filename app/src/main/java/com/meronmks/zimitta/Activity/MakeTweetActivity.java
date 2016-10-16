@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -82,6 +83,9 @@ public class MakeTweetActivity extends BaseActivity {
     private Status status;
     private ViewHolder vh;
     private boolean mentionFlag = false;
+    private ProgressBar progressBar;
+    private Toolbar toolbar;
+    private String toolBarTitle;
 
     static class ViewHolder {
         TextView Name;
@@ -122,8 +126,6 @@ public class MakeTweetActivity extends BaseActivity {
         mentionFlag = getIntent().getBooleanExtra("mention", false);
         if(mentionFlag) {
             setContentView(R.layout.activity_make_mention);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.ToolBar);
-            toolbar.setTitle("返信作成");
             ParcelStatus ps = getIntent().getParcelableExtra("status");
             status = ps.status;
             settingItemVIew(status);
@@ -131,21 +133,25 @@ public class MakeTweetActivity extends BaseActivity {
             mEditText.setHint("mention to @" + status.getUser().getScreenName());
             mEditText.setText("@" + status.getUser().getScreenName() + " ");
             mEditText.setSelection(mEditText.getText().length());
+            toolBarTitle = "返信（@" + status.getUser().getScreenName() + "）";
         }else{
             setContentView(R.layout.activity_make_tweet);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.ToolBar);
-            toolbar.setTitle("新規ツイート作成");
             mEditText = (EditText) findViewById(R.id.TweetTextInput);
+            toolBarTitle = "ツイート作成";
         }
+        toolbar = (Toolbar) findViewById(R.id.ToolBar);
+        toolbar.setTitle(toolBarTitle);
         mAction = new TwitterAction(this, listener);
 
         tweetButton = (Button)findViewById(R.id.TweetPostButton);
 
         if(UserSetting.TextCountVisible(getApplicationContext())){
-            tweetButton.setText("ツイート\n140");
-        }else{
-            tweetButton.setText("ツイート");
+            String txtLength = Integer.toString(140 - mEditText.length());
+            toolbar.setTitle(toolBarTitle + "：" + txtLength);
         }
+
+        progressBar = (ProgressBar) findViewById(R.id.postProgressBar);
+        progressBar.setVisibility(View.GONE);
 
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -158,7 +164,7 @@ public class MakeTweetActivity extends BaseActivity {
                 if(!UserSetting.TextCountVisible(getApplicationContext()))return;
 
                 String txtLength = Integer.toString(140 - s.length());
-                tweetButton.setText("ツイート\n" + txtLength);
+                toolbar.setTitle(toolBarTitle + "：" + txtLength);
             }
 
             @Override
@@ -220,6 +226,7 @@ public class MakeTweetActivity extends BaseActivity {
      */
     private void PostTweet(){
         if(mEditText.getText().length() < 0)return;
+        progressBar.setVisibility(View.VISIBLE);
         StatusUpdate statusUpdate = new StatusUpdate(mEditText.getText().toString());
         List<Long> media = new ArrayList<>();
         boolean[] imageFlags = {false,false,false,false};
@@ -332,6 +339,7 @@ public class MakeTweetActivity extends BaseActivity {
 
         @Override
         public void onException(TwitterException te, TwitterMethod method) {
+            progressBar.setVisibility(View.GONE);
             showToast("投稿に失敗しました");
             ErrorLogs.putErrorLog("投稿に失敗しました", te.getMessage());
         }
