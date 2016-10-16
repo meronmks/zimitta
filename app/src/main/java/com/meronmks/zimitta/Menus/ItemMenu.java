@@ -24,6 +24,7 @@ import com.meronmks.zimitta.Adapter.BaseAdapter;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.ParcelStatus;
+import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.Fragments.HomeFragment;
 import com.meronmks.zimitta.R;
@@ -155,19 +156,58 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
                 activity.startActivity(intent);
                 break;
             case "リツイート":
-                mAction.retweetStatus(status.getId());
+                if(UserSetting.ShowRTDialog(activity)){
+                    new AlertDialog.Builder(activity)
+                            .setTitle("確認")
+                            .setMessage("リツイートをしますか？")
+                            .setPositiveButton("はい", (dialog, which) -> mAction.retweetStatus(status.getId()))
+                            .setNegativeButton("いいえ", null)
+                            .show();
+                }else{
+                    mAction.retweetStatus(status.getId());
+                }
                 break;
             case "お気に入り":
-                mAction.createFavorite(status.getId());
+                if(UserSetting.ShowFavDialog(activity)){
+                    new AlertDialog.Builder(activity)
+                            .setTitle("確認")
+                            .setMessage("お気に入りをしますか？")
+                            .setPositiveButton("はい", (dialog, which) -> mAction.createFavorite(status.getId()))
+                            .setNegativeButton("いいえ", null)
+                            .show();
+                }else{
+                    mAction.createFavorite(status.getId());
+                }
                 break;
             case "お気に入り+リツイート":
-                mAction.retweetStatus(status.getId());
-                mAction.createFavorite(status.getId());
+                if(UserSetting.ShowFavRTDialog(activity)){
+                    new AlertDialog.Builder(activity)
+                            .setTitle("確認")
+                            .setMessage("お気に入り+リツイートをしますか？")
+                            .setPositiveButton("はい", (dialog, which) -> {
+                                mAction.retweetStatus(status.getId());
+                                mAction.createFavorite(status.getId());
+                            })
+                            .setNegativeButton("いいえ", null)
+                            .show();
+                }else{
+                    mAction.retweetStatus(status.getId());
+                    mAction.createFavorite(status.getId());
+                }
                 break;
             case "共有":
                 break;
             case "削除":
-                mAction.destroyStatus(status.getId());
+                if(UserSetting.ShowTweetDelDialog(activity)) {
+                    new AlertDialog.Builder(activity)
+                            .setTitle("確認")
+                            .setMessage("ツイートの削除をしますか？")
+                            .setPositiveButton("はい", (dialog, which) -> mAction.destroyStatus(status.getId()))
+                            .setNegativeButton("いいえ", null)
+                            .show();
+                }else {
+                    mAction.destroyStatus(status.getId());
+                }
                 break;
             default:    //IDとハッシュタグに対する処理
                 break;

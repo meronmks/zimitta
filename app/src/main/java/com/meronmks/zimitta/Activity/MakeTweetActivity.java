@@ -200,7 +200,7 @@ public class MakeTweetActivity extends BaseActivity {
                     if(UserSetting.ShowPostDialog(this)){
                         new AlertDialog.Builder(this)
                                 .setTitle("確認")
-                                .setMessage("ツイートしますか？")
+                                .setMessage("ツイートをしますか？")
                                 .setPositiveButton("はい", (dialog, which) -> PostTweet())
                                 .setNegativeButton("いいえ", null)
                                 .show();

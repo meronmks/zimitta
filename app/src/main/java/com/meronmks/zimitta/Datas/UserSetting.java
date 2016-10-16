@@ -60,4 +60,44 @@ public class UserSetting {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getBoolean("ShowPostDialog", true);
     }
+
+    /**
+     * お気に入り時の確認ダイアログを出すか
+     * @param context
+     * @return
+     */
+    public static boolean ShowFavDialog(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("ShowFavDialog", true);
+    }
+
+    /**
+     * リツイート時の確認ダイアログを出すか
+     * @param context
+     * @return
+     */
+    public static boolean ShowRTDialog(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("ShowRTDialog", true);
+    }
+
+    /**
+     * お気に入り＋リツイート時の確認ダイアログを出すか
+     * @param context
+     * @return
+     */
+    public static boolean ShowFavRTDialog(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("ShowFavRTDialog", true);
+    }
+
+    /**
+     * ツイート削除時の確認ダイアログを出すか
+     * @param context
+     * @return
+     */
+    public static boolean ShowTweetDelDialog(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("ShowTweetDelDialog", true);
+    }
 }
