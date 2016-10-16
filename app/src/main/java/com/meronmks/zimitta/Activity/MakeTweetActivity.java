@@ -3,6 +3,7 @@ package com.meronmks.zimitta.Activity;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Spannable;
@@ -189,59 +191,16 @@ public class MakeTweetActivity extends BaseActivity {
 
         RxView.clicks(tweetButton)
                 .subscribe(x -> {
-                    if(mEditText.getText().length() < 0)return;
-                    StatusUpdate statusUpdate = new StatusUpdate(mEditText.getText().toString());
-                    List<Long> media = new ArrayList<>();
-                    boolean[] imageFlags = {false,false,false,false};
-                    for(int i = 0; i < 4; i++){
-                        if(filePaths[i] == null)continue;
-                        imageFlags[i] = true;
-                        int finalI = i;
-                        AsyncTask<Void, Void, Long> task = new AsyncTask<Void, Void, Long>() {
-                            @Override
-                            protected Long doInBackground(Void... params) {
-                                try {
-                                    return mAction.uploadMedia(new File(filePaths[finalI])).getMediaId();
-                                } catch (TwitterException e) {
-                                    e.printStackTrace();
-                                    showToast("TwitterException");
-                                    ErrorLogs.putErrorLog("TwitterException", e.getMessage());
-                                }
-                                return null;
-                            }
-
-                            @Override
-                            protected void onPostExecute(Long aLong) {
-                                super.onPostExecute(aLong);
-                                media.add(aLong);
-                                imageFlags[finalI] = false;
-                            }
-                        };
-                        task.execute();
+                    if(UserSetting.ShowPostDialog(this)){
+                        new AlertDialog.Builder(this)
+                                .setTitle("確認")
+                                .setMessage("ツイートしますか？")
+                                .setPositiveButton("はい", (dialog, which) -> PostTweet())
+                                .setNegativeButton("いいえ", null)
+                                .show();
+                    }else {
+                        PostTweet();
                     }
-
-                    AsyncTask<Void, Void, Void> postTask = new AsyncTask<Void, Void, Void>() {
-                        @Override
-                        protected Void doInBackground(Void... params) {
-                            while(imageFlags[0] || imageFlags[1] || imageFlags[2] || imageFlags[3]){
-
-                            }
-
-                            long[] mediaIDs = new long[media.size()];
-                            for(int i = 0; i < media.size(); i++){
-                                mediaIDs[i] = media.toArray(new Long[media.size()])[i];
-                            }
-                            if(mediaIDs.length != 0) {
-                                statusUpdate.setMediaIds(mediaIDs);
-                            }
-                            if(mentionFlag){
-                                statusUpdate.setInReplyToStatusId(status.getId());
-                            }
-                            mAction.statusUpdate(statusUpdate);
-                            return null;
-                        }
-                    };
-                    postTask.execute();
                 });
 
         RxView.clicks(findViewById(R.id.AddImageButton))
@@ -254,6 +213,65 @@ public class MakeTweetActivity extends BaseActivity {
                         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
                     }
                 });
+    }
+
+    /**
+     * ツイートを送信する
+     */
+    private void PostTweet(){
+        if(mEditText.getText().length() < 0)return;
+        StatusUpdate statusUpdate = new StatusUpdate(mEditText.getText().toString());
+        List<Long> media = new ArrayList<>();
+        boolean[] imageFlags = {false,false,false,false};
+        for(int i = 0; i < 4; i++){
+            if(filePaths[i] == null)continue;
+            imageFlags[i] = true;
+            int finalI = i;
+            AsyncTask<Void, Void, Long> task = new AsyncTask<Void, Void, Long>() {
+                @Override
+                protected Long doInBackground(Void... params) {
+                    try {
+                        return mAction.uploadMedia(new File(filePaths[finalI])).getMediaId();
+                    } catch (TwitterException e) {
+                        e.printStackTrace();
+                        showToast("TwitterException");
+                        ErrorLogs.putErrorLog("TwitterException", e.getMessage());
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Long aLong) {
+                    super.onPostExecute(aLong);
+                    media.add(aLong);
+                    imageFlags[finalI] = false;
+                }
+            };
+            task.execute();
+        }
+
+        AsyncTask<Void, Void, Void> postTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                while(imageFlags[0] || imageFlags[1] || imageFlags[2] || imageFlags[3]){
+
+                }
+
+                long[] mediaIDs = new long[media.size()];
+                for(int i = 0; i < media.size(); i++){
+                    mediaIDs[i] = media.toArray(new Long[media.size()])[i];
+                }
+                if(mediaIDs.length != 0) {
+                    statusUpdate.setMediaIds(mediaIDs);
+                }
+                if(mentionFlag){
+                    statusUpdate.setInReplyToStatusId(status.getId());
+                }
+                mAction.statusUpdate(statusUpdate);
+                return null;
+            }
+        };
+        postTask.execute();
     }
 
     /**

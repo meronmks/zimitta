@@ -4,6 +4,36 @@
         android:title="設定"
         android:layout="@layout/pre_tool_bar">
     </PreferenceCategory>
+
+    <PreferenceScreen
+        android:title="一般設定">
+        <PreferenceCategory
+            android:title="一般設定"
+            android:layout="@layout/pre_tool_bar" />
+        <PreferenceCategory
+            android:title="確認ダイアログ"/>
+        <CheckBoxPreference
+            android:title="投稿"
+            android:key="ShowPostDialog"
+            android:defaultValue="true"/>
+        <CheckBoxPreference
+            android:title="お気に入り"
+            android:key="ShowFavDialog"
+            android:defaultValue="true"/>
+        <CheckBoxPreference
+            android:title="リツイート"
+            android:key="ShowRTDialog"
+            android:defaultValue="true"/>
+        <CheckBoxPreference
+            android:title="お気に入り＋リツイート"
+            android:key="ShowFavRTDialog"
+            android:defaultValue="true"/>
+        <CheckBoxPreference
+            android:title="削除"
+            android:key="ShowTweetDelDialog"
+            android:defaultValue="true"/>
+    </PreferenceScreen>
+
     <PreferenceScreen
         android:title="タイムライン設定">
         <PreferenceCategory

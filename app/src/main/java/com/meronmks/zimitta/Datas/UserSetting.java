@@ -50,4 +50,14 @@ public class UserSetting {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getBoolean("TextCountVisible", true);
     }
+
+    /**
+     * ツイート投稿時の確認ダイアログを出すか
+     * @param context
+     * @return
+     */
+    public static boolean ShowPostDialog(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("ShowPostDialog", true);
+    }
 }
