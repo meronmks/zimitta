@@ -50,7 +50,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         preferences = getSharedPreferences(getString(R.string.Account), 0);
-
         if(NetStatusUtil.isOnline(this) && !OauthUtils.hasAccessToken(this, preferences.getLong(getString(R.string.ActiveAccount), 0))){
             Intent intent = new Intent(this, TwitterOAuthActivity.class);
             intent.putExtra("Flag", false);
