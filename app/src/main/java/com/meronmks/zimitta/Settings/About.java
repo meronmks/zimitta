@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -21,11 +22,15 @@ import com.meronmks.zimitta.R;
 public class About extends AppCompatActivity {
 
     private AdView adView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
+        toolbar = (Toolbar)findViewById(R.id.ToolBar);
+        toolbar.setTitle("About");
+        setSupportActionBar(toolbar);
         TextView verName = (TextView)findViewById(R.id.verTextView);
         verName.setText(BuildConfig.VERSION_NAME);
         Button button = (Button)findViewById(R.id.aboutLicenseButton);
