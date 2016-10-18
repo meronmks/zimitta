@@ -8,7 +8,7 @@
         android:layout_height="40sp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@android:drawable/ic_menu_gallery" />
+        android:src="@mipmap/ic_sync_white_24dp" />
 
     <TextView
         android:id="@+id/name"

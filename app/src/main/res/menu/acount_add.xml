@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zimitta="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/acount_Menu"
+        android:icon="@mipmap/ic_person_add_white_24dp"
+        android:orderInCategory="100"
+        zimitta:showAsAction="ifRoom"
+        android:title="アカウントの追加"/>
 </menu>
