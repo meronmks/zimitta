@@ -47,11 +47,11 @@ public class TwitterOAuthActivity extends AppCompatActivity {
 
     private void setOauthResult(TwitterSession twitterSession){
         SharedPreferences preferences = getSharedPreferences(getString(R.string.Account), 0);
-        long accountNum = preferences.getLong(getString(R.string.AccountNum), -1);
-        OauthUtils.storeAccessToken(this, twitterSession, accountNum + 1);
+        long accountNum = preferences.getLong(getString(R.string.AccountNum), 0);
+        OauthUtils.storeAccessToken(this, twitterSession, accountNum);
 
         SharedPreferences.Editor e = preferences.edit();
-        e.putLong(getString(R.string.AccountNum), accountNum + 2);	//追加
+        e.putLong(getString(R.string.AccountNum), accountNum + 1);	//追加
         e.putLong(getString(R.string.ActiveAccount), accountNum);
         e.commit();
         SharedPreferences screanNameList = getSharedPreferences(getString(R.string.ScreanNameList), 0);
