@@ -7,6 +7,8 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
+import twitter4j.User;
+
 /**
  * Created by meron on 2016/10/02.
  */
@@ -17,6 +19,7 @@ public class UserInfo {
     public String tokenSecret;
     public long userID;
     public String userName;
+    public User user;
     private static final String USER_INFO_KEY = "USER_INFO";
 
     /**
@@ -48,6 +51,7 @@ public class UserInfo {
         instance.tokenSecret = "";
         instance.userID = 0;
         instance.userName = "";
+        instance.user = null;
         return instance;
     }
 
