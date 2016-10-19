@@ -81,18 +81,7 @@ public class AccountChangeActivity extends BaseActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode== KeyEvent.KEYCODE_BACK){
-            Intent intent = new Intent(AccountChangeActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-            return true;
-        }
-        return false;
-    }
-
+    
     private void getUserItem(final long i) {
         AsyncTask<Void, Void, User> task = new AsyncTask<Void, Void, User>() {
 

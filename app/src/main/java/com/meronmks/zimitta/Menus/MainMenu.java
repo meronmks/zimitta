@@ -46,7 +46,6 @@ public class MainMenu implements AdapterView.OnItemClickListener {
             case "アカウント切り替えと変更":
                 Intent Account = new Intent(activity, AccountChangeActivity.class);
                 activity.startActivity(Account);
-                activity.finish();
                 break;
             case "設定":
                 Intent intent = new Intent(activity, SettingsActivity.class);
