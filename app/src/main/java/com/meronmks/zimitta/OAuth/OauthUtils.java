@@ -34,15 +34,6 @@ public class OauthUtils {
         return twitter;
     }
 
-    public static Twitter addTwitterInstance(Context context) {
-
-        TwitterFactory factory = new TwitterFactory();
-        Twitter twitter = factory.getInstance();
-        twitter.setOAuthConsumer(OAuthVariable.TWITTER_KEY, OAuthVariable.TWITTER_SECRET);
-
-        return twitter;
-    }
-
     /**
      * アクセストークンをプリファレンスに保存します。
      *

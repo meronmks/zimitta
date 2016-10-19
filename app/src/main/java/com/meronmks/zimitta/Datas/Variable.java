@@ -1,9 +1,18 @@
 package com.meronmks.zimitta.Datas;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.meronmks.zimitta.Adapter.ErrorAdapter;
 import com.meronmks.zimitta.Adapter.TweetAdapter;
+import com.meronmks.zimitta.R;
+
+import java.lang.reflect.Type;
 
 import twitter4j.TwitterStream;
 import twitter4j.conf.Configuration;

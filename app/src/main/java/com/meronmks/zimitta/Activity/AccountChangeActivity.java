@@ -81,7 +81,7 @@ public class AccountChangeActivity extends BaseActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     private void getUserItem(final long i) {
         AsyncTask<Void, Void, User> task = new AsyncTask<Void, Void, User>() {
 
