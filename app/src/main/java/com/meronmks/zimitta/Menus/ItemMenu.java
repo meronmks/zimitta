@@ -23,6 +23,7 @@ import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Core.HashTagClickable;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
+import com.meronmks.zimitta.Core.StaticMethods;
 import com.meronmks.zimitta.Core.UserIDClickable;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.ParcelStatus;
@@ -356,31 +357,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
      * 時間を変換するやつ
      */
     protected void replacrTimeAt(Date TimeStatusNow, Date CreatedAt, TextView timeView){
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal1.setTime(CreatedAt);
-        cal2.setTime(TimeStatusNow);
-        long date1 = cal1.getTimeInMillis();
-        long date2 = cal2.getTimeInMillis();
-        long time = (date2 - date1) / 1000;
-        if(time < 5){
-            timeView.setText("now");
-        }
-        if (5 <= time && time <= 59) {
-            timeView.setText(time + "s前");
-        }
-        time = time / 60;
-        if ((time <= 59) && (time >= 1)) {
-            timeView.setText(time + "m前");
-        }
-        time = time / 60;
-        if ((time <= 23) && (time >= 1)) {
-            timeView.setText(time + "h前");
-        }
-        time = time / 24;
-        if (time != 0) {
-            timeView.setText(DateFormat.format("yyyy/MM/dd kk:mm:ss", CreatedAt));
-        }
+        StaticMethods.replacrTimeAt(TimeStatusNow, CreatedAt, timeView);
     }
 
     /**

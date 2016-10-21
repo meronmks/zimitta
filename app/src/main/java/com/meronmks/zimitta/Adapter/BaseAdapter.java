@@ -22,6 +22,7 @@ import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Core.HashTagClickable;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
+import com.meronmks.zimitta.Core.StaticMethods;
 import com.meronmks.zimitta.Core.UserIDClickable;
 import com.meronmks.zimitta.R;
 
@@ -82,66 +83,14 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
      * ループテキストの排除メソッド
      */
     protected String replaceLoopText(String tweetText){
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-        if(sp.getBoolean("zipTweet", false)) {
-            //ループテキストを圧縮準備
-            boolean loopTextFound = false;
-            tweetText = tweetText.replaceAll("\r\n", "\n");
-            //一行ずつ取り出し
-            String[] loopStrings = tweetText.split("\n");
-            //ループしてるか判定し、していたら文字を消す
-            //ただし最初に一致しているのを発見した場合「Following text looped」に置き換える
-            for (int i = 1; i < loopStrings.length; i++) {
-                if (loopStrings[0].equals(loopStrings[i]) && !loopTextFound) {
-                    loopStrings[i] = "Following text looped";
-                    loopTextFound = true;
-                } else {
-                    loopStrings[i] = loopStrings[i].replace(loopStrings[0], "");
-                }
-            }
-            //処理が終わったテキストを合成
-            StringBuffer buf = new StringBuffer();
-            for (int i = 0; i < loopStrings.length; i++) {
-                if (i + 1 != loopStrings.length && !loopStrings[i].equals("")) {
-                    buf.append(loopStrings[i] + "\n");
-                } else {
-                    buf.append(loopStrings[i]);
-                }
-            }
-            tweetText = buf.toString();
-        }
-        return tweetText;
+        return StaticMethods.replaceLoopText(tweetText, getContext());
     }
 
     /**
      * 時間を変換するやつ
      */
     protected void replacrTimeAt(Date TimeStatusNow, Date CreatedAt, TextView timeView){
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal1.setTime(CreatedAt);
-        cal2.setTime(TimeStatusNow);
-        long date1 = cal1.getTimeInMillis();
-        long date2 = cal2.getTimeInMillis();
-        long time = (date2 - date1) / 1000;
-        if(time < 5){
-            timeView.setText("now");
-        }
-        if (5 <= time && time <= 59) {
-            timeView.setText(time + "s前");
-        }
-        time = time / 60;
-        if ((time <= 59) && (time >= 1)) {
-            timeView.setText(time + "m前");
-        }
-        time = time / 60;
-        if ((time <= 23) && (time >= 1)) {
-            timeView.setText(time + "h前");
-        }
-        time = time / 24;
-        if (time != 0) {
-            timeView.setText(DateFormat.format("yyyy/MM/dd kk:mm:ss", CreatedAt));
-        }
+        StaticMethods.replacrTimeAt(TimeStatusNow, CreatedAt, timeView);
     }
 
     /**
