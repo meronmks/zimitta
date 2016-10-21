@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity {
         Variable.iniVariable(this);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(OAuthVariable.TWITTER_KEY, OAuthVariable.TWITTER_SECRET);
 
+        //TODO 5.0.0正規バージョンまでにはCrashlytics及びAnswersの機能をON,OFF可能へ
         Fabric.Builder builder = new Fabric.Builder(this)
                 .kits(new Twitter(authConfig), new Crashlytics(), new Answers());
         Fabric.with(builder.build());
