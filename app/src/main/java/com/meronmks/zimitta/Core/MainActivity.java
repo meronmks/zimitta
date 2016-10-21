@@ -41,7 +41,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionUtil());
 
         Variable.iniVariable(this);

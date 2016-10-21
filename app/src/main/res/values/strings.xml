@@ -1,4 +1,7 @@
 <resources>
+    <string name="compose_shortcut_short_label1">ShortText</string>
+    <string name="compose_shortcut_long_label1">LongText</string>
+    <string name="compose_disabled_message1">DisabledMes</string>
     <string name="PREF_NAME">twitter_access_token</string>
     <string name="TOKEN">token</string>
     <string name="TOKEN_SECRET">token_secret</string>
