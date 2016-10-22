@@ -3,18 +3,14 @@ package com.meronmks.zimitta.Core;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
-import com.google.gson.Gson;
 import com.jakewharton.rxbinding.view.RxView;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Adapter.MainPagerAdapter;
 import com.meronmks.zimitta.Datas.ErrorLogs;
-import com.meronmks.zimitta.Datas.UserInfo;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.Menus.MainMenu;
 import com.meronmks.zimitta.OAuth.OAuthVariable;
@@ -24,6 +20,11 @@ import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
+
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 import twitter4j.IDs;
