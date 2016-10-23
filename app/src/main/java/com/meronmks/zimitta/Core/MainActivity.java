@@ -2,15 +2,18 @@ package com.meronmks.zimitta.Core;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.jakewharton.rxbinding.view.RxView;
+import com.meronmks.zimitta.Activity.AccountChangeActivity;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Adapter.MainPagerAdapter;
 import com.meronmks.zimitta.Datas.ErrorLogs;
+import com.meronmks.zimitta.Datas.UserInfo;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.Menus.MainMenu;
 import com.meronmks.zimitta.OAuth.OAuthVariable;
@@ -46,6 +49,8 @@ public class MainActivity extends BaseActivity {
         Variable.iniVariable(this);
         TwitterAuthConfig authConfig = new TwitterAuthConfig(OAuthVariable.TWITTER_KEY, OAuthVariable.TWITTER_SECRET);
 
+        ErrorLogs.loadLog(this);
+
         //TODO 5.0.0正規バージョンまでにはCrashlytics及びAnswersの機能をON,OFF可能へ
         Fabric.Builder builder = new Fabric.Builder(this)
                 .kits(new Twitter(authConfig), new Crashlytics(), new Answers());
@@ -67,6 +72,7 @@ public class MainActivity extends BaseActivity {
             viewPager.setAdapter(pagerAdapter);
             mAction = new TwitterAction(this, listener);
             mAction.getMutesIDs();
+            mAction.getVerifyCredentials();
         }
 
         RxView.clicks(findViewById(R.id.tweet))
@@ -83,10 +89,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Variable.userInfo.saveInstance(getApplicationContext(), getSharedPreferences(getString(R.string.Account), 0).getLong(getString(R.string.ActiveAccount), 0));
+        Variable.userInfo.saveInstance(this, getSharedPreferences(getString(R.string.Account), 0).getLong(getString(R.string.ActiveAccount), 0));
         if(Variable.twitterStream != null) {
             Variable.twitterStream.shutdown();
         }
+        ErrorLogs.saveLog(this);
         Variable.Destroy();
     }
 
@@ -111,7 +118,10 @@ public class MainActivity extends BaseActivity {
         public void verifiedCredentials(User user) {
             if(user != null){
                 Variable.userInfo.userID = user.getId();
-                Variable.userInfo.userName = user.getScreenName();
+                Variable.userInfo.userName = user.getName();
+                Variable.userInfo.userScreenName = user.getScreenName();
+                Variable.userInfo.userProfileImageURLHttps = user.getProfileImageURLHttps();
+                Variable.userInfo.saveInstance(getApplicationContext(), getSharedPreferences(getString(R.string.Account), 0).getLong(getString(R.string.ActiveAccount), 0));
             }
         }
 

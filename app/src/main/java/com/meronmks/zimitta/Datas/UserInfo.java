@@ -19,7 +19,8 @@ public class UserInfo {
     public String tokenSecret;
     public long userID;
     public String userName;
-    public User user;
+    public String userScreenName;
+    public String userProfileImageURLHttps;
     private static final String USER_INFO_KEY = "USER_INFO";
 
     /**
@@ -51,7 +52,8 @@ public class UserInfo {
         instance.tokenSecret = "";
         instance.userID = 0;
         instance.userName = "";
-        instance.user = null;
+        instance.userScreenName = "";
+        instance.userProfileImageURLHttps = "";
         return instance;
     }
 

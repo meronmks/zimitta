@@ -17,6 +17,7 @@ public class ErrorLogs {
     public String message;
     public String overview;
     public Date createdAt;
+    private static final String ERROR_JSON = "ERROR_JSON_TEXT";
 
     public static void putErrorLog(String overview, String message){
         ErrorLogs errorLogs = new ErrorLogs();
@@ -33,6 +34,15 @@ public class ErrorLogs {
         }
         String jsonArray = JSONToolKit.ErrorListtoJSON(list);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(ERROR_JSON, jsonArray).apply();
+    }
+
+    public static void loadLog(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = sp.getString(ERROR_JSON, "");
+        List<ErrorLogs> list = JSONToolKit.JSONtoErrorList(json);
+        if(list == null)return;
+        Variable.errorLogs.addAll(list);
     }
 
     private ErrorLogs getInstance(String overview, String message){

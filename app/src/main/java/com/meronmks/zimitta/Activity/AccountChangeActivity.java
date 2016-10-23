@@ -16,6 +16,7 @@ import android.widget.ListView;
 import com.meronmks.zimitta.Adapter.AccountListAdapter;
 import com.meronmks.zimitta.Core.BaseActivity;
 import com.meronmks.zimitta.Core.MainActivity;
+import com.meronmks.zimitta.Datas.UserInfo;
 import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.OAuth.OauthUtils;
 import com.meronmks.zimitta.OAuth.TwitterOAuthActivity;
@@ -32,7 +33,6 @@ import twitter4j.User;
 public class AccountChangeActivity extends BaseActivity{
 
     private Toolbar toolbar;
-    private Twitter mTwitter;
     private AccountListAdapter adapter;
 
     @Override
@@ -49,7 +49,8 @@ public class AccountChangeActivity extends BaseActivity{
         long accountNum = preferences.getLong(getString(R.string.AccountNum), 0);
 
         for (long i = 0; i < accountNum; i++) {
-            getUserItem(i);
+            UserInfo userInfo = UserInfo.getInstance(this, i);
+            adapter.add(userInfo);
         }
 
         ListView listView = (ListView)findViewById(R.id.listView);
@@ -80,29 +81,5 @@ public class AccountChangeActivity extends BaseActivity{
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void getUserItem(final long i) {
-        AsyncTask<Void, Void, User> task = new AsyncTask<Void, Void, User>() {
-
-            @Override
-            protected twitter4j.User doInBackground(Void... params) {
-                try {
-                    mTwitter = OauthUtils.getTwitterInstance(AccountChangeActivity.this, i);
-                    return mTwitter.verifyCredentials();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(twitter4j.User result) {
-                if (result != null) {
-                    adapter.add(result);
-                }
-            }
-        };
-        task.execute();
     }
 }

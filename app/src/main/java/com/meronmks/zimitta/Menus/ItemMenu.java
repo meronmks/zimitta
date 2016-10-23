@@ -306,7 +306,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
             vh.TweetStatus.setBackgroundResource(R.color.Blue);
         }else {
             for (UserMentionEntity entity : status.getUserMentionEntities()) {
-                if(!entity.getScreenName().equals(Variable.userInfo.userName))continue;
+                if(!entity.getScreenName().equals(Variable.userInfo.userScreenName))continue;
                 vh.TweetStatus.setVisibility(View.VISIBLE);
                 vh.TweetStatus.setBackgroundResource(R.color.Rad);
             }

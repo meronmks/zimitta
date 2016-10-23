@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.meronmks.zimitta.Datas.UserInfo;
 import com.meronmks.zimitta.R;
 
 import twitter4j.User;
@@ -19,7 +20,7 @@ import twitter4j.User;
  * Created by meron on 2016/10/18.
  */
 
-public class AccountListAdapter extends ArrayAdapter<User> {
+public class AccountListAdapter extends ArrayAdapter<UserInfo> {
     private LayoutInflater mInflater;
 
     public AccountListAdapter(Context context) {
@@ -32,15 +33,15 @@ public class AccountListAdapter extends ArrayAdapter<User> {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.account_list_item, null);
         }
-        User item = getItem(position);
+        UserInfo item = getItem(position);
         TextView name = (TextView) convertView.findViewById(R.id.name);
-        name.setText(item.getName());
+        name.setText(item.userName);
         TextView screenName = (TextView) convertView.findViewById(R.id.atid);
-        screenName.setText("@" + item.getScreenName());
+        screenName.setText("@" + item.userScreenName);
         ImageView Icon = (ImageView)convertView.findViewById(R.id.icon);
 
         try{
-            Glide.with(getContext()).load(item.getProfileImageURLHttps()).into(Icon);
+            Glide.with(getContext()).load(item.userProfileImageURLHttps).into(Icon);
         }catch (Exception e){
             e.getStackTrace();
             Icon.setImageResource(R.mipmap.ic_sync_problem_white_24dp);

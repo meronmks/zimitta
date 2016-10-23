@@ -63,7 +63,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
             vh.TweetStatus.setBackgroundResource(R.color.Blue);
         }else {
             for (UserMentionEntity entity : item.getUserMentionEntities()) {
-                if(!entity.getScreenName().equals(Variable.userInfo.userName))continue;
+                if(!entity.getScreenName().equals(Variable.userInfo.userScreenName))continue;
                 vh.TweetStatus.setVisibility(View.VISIBLE);
                 vh.TweetStatus.setBackgroundResource(R.color.Rad);
             }
