@@ -76,7 +76,7 @@
                 android:layout_below="@+id/textView3"
                 android:layout_marginRight="20sp"
                 android:layout_marginTop="16sp"
-                android:text="このアプリは以下のライブラリ等を使用して作られています。\nTwitter4j\nGlide\njsoup\nAsyncHttpClient\nAndroid Device Compatibility Package\nMaterialLoadingProgressBar\nまたこのアプリは Apache License, Version 2.0 のライセンスで配布されている成果物を含んでいます。" />
+                android:text="このアプリは以下のライブラリ等を使用して作られています。\nTwitter4j\nGlide\njsoup\nAsyncHttpClient\nAndroid Device Compatibility Package\nmaterial-design-icons\nGson\nまたこのアプリは Apache License, Version 2.0 のライセンスで配布されている成果物を含んでいます。" />
 
             <TextView
                 android:id="@+id/textView6"
