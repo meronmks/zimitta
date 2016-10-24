@@ -1,5 +1,6 @@
 package com.meronmks.zimitta.Core;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -154,4 +155,13 @@ public class MainActivity extends BaseActivity {
             });
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode != 104) return;
+
+        if(data != null && data.getStringExtra("accountChange").equals("accountChange")){
+            finish();
+        }
+    }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import com.meronmks.zimitta.Adapter.TweetAdapter;
 import com.meronmks.zimitta.Core.BaseFragment;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.UserSetting;
@@ -113,6 +114,9 @@ public class MentionFragment extends BaseFragment implements SwipeRefreshLayout.
         mStreamReceiver = StreamReceiver.register(getContext(), status -> getActivity().runOnUiThread(() -> {
             int pos = 0;
             int top = 0;
+            if(Variable.MentionsAdapter == null){
+                Variable.MentionsAdapter = new TweetAdapter(getContext());
+            }
             if (!Variable.MentionsAdapter.isEmpty() && mListView.getChildAt(0) != null) {
                 pos = mListView.getFirstVisiblePosition();
                 top = mListView.getChildAt(0).getTop();

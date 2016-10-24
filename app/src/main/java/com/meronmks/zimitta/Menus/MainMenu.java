@@ -22,15 +22,15 @@ public class MainMenu implements AdapterView.OnItemClickListener {
     private ArrayAdapter<String> adapter;
     private AlertDialog alertDialog;
 
-    public MainMenu(Activity activity){
+    public MainMenu(Activity activity) {
         this.activity = activity;
     }
 
-    public void show(){
+    public void show() {
         View view = activity.getLayoutInflater().inflate(R.layout.menu_dialog, null);
         ListView listView = (ListView) view.findViewById(R.id.MenuList);
         listView.setOnItemClickListener(this);
-        String[] members = { "プロフィール表示", "アカウント切り替えと変更", "設定", "API"};
+        String[] members = {"プロフィール表示", "アカウント切り替えと変更", "設定", "API"};
         adapter = new ArrayAdapter<>(activity.getBaseContext(), android.R.layout.simple_expandable_list_item_1, members);
         listView.setAdapter(adapter);
         alertDialog = new AlertDialog.Builder(activity)
@@ -40,12 +40,12 @@ public class MainMenu implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
-        switch (parent.getItemAtPosition(position).toString()){
+        switch (parent.getItemAtPosition(position).toString()) {
             case "プロフィール表示":
                 break;
             case "アカウント切り替えと変更":
                 Intent Account = new Intent(activity, AccountChangeActivity.class);
-                activity.startActivity(Account);
+                activity.startActivityForResult(Account, 104);
                 break;
             case "設定":
                 Intent intent = new Intent(activity, SettingsActivity.class);
@@ -58,3 +58,5 @@ public class MainMenu implements AdapterView.OnItemClickListener {
         alertDialog.dismiss();
     }
 }
+
+

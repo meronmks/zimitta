@@ -1,5 +1,6 @@
 package com.meronmks.zimitta.Activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -58,8 +59,12 @@ public class AccountChangeActivity extends BaseActivity{
             SharedPreferences.Editor e = preferences.edit();
             e.putLong(getString(R.string.ActiveAccount), i);
             e.commit();
-            Intent intent = new Intent(AccountChangeActivity.this, MainActivity.class);
-            startActivity(intent);
+            Intent intetMain = new Intent(AccountChangeActivity.this, MainActivity.class);
+            startActivity(intetMain);
+
+            Intent intent = new Intent();
+            intent.putExtra("accountChange", "accountChange");
+            setResult(Activity.RESULT_OK, intent);
             finish();
         });
         listView.setAdapter(adapter);
