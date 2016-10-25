@@ -86,7 +86,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
-    compile 'com.google.android.gms:play-services-ads:9.8.00'
+    compile 'com.google.android.gms:play-services-ads:9.8.0'
     compile 'org.twitter4j:twitter4j-core:4.0.5'
     compile 'org.twitter4j:twitter4j-stream:4.0.5'
     compile 'org.twitter4j:twitter4j-async:4.0.5'
