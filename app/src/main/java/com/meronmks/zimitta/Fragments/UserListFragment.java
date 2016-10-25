@@ -4,10 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.meronmks.zimitta.Core.BaseFragment;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.Variable;
+import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
 import java.util.Timer;
@@ -29,6 +33,14 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
         super.onCreate(savedInstanceState);
         mAction = new TwitterAction(getContext(), listener);
         isLimited = false;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.user_list_view, container, false);
+
+        return v;
     }
 
     @Override
