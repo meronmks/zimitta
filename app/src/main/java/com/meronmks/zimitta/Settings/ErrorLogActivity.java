@@ -30,6 +30,8 @@ public class ErrorLogActivity extends AppCompatActivity {
 
         listView.setAdapter(Variable.errorLogs);
 
+        Variable.errorLogs.sort((t2, t1) -> t1.createdAt.compareTo(t2.createdAt));
+
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             ErrorLogs errorLogs = (ErrorLogs) adapterView.getItemAtPosition(i);
             new AlertDialog.Builder(this)
