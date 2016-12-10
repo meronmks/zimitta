@@ -4,15 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/userListListView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/spinner1"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
-
-    </ListView>
+        android:layout_alignParentTop="true">
+        <ListView
+            android:id="@+id/userListListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <Spinner
         android:id="@+id/spinner1"
@@ -20,15 +24,16 @@
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/listTlReloadButton"
         android:layout_toStartOf="@+id/listTlReloadButton"
-        android:layout_height="40sp" />
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/listTlReloadButton" />
 
     <ImageButton
         android:id="@+id/listTlReloadButton"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:src="@mipmap/ic_sync_white_48dp"
+        android:background="#00ffffff"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>

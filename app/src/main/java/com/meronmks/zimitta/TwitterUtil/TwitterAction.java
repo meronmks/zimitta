@@ -21,6 +21,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.TwitterListener;
 import twitter4j.TwitterStreamFactory;
 import twitter4j.UploadedMedia;
+import twitter4j.UserList;
 import twitter4j.conf.ConfigurationBuilder;
 
 /**
@@ -151,6 +152,32 @@ public class TwitterAction {
      */
     public void destroyStatus(long ID){
         asyncTwitter.destroyStatus(ID);
+    }
+
+    /**
+     * アカウントで作られたor保存しているListの呼び出し
+     * @param userID ユーザの固有ID
+     */
+    public void getUserLists(long userID){
+        asyncTwitter.getUserLists(userID);
+    }
+
+    /**
+     * ListのTLを取得
+     * @param listID 取得したListのID
+     * @param paging 各種設定等
+     */
+    public void getUserListStatuses(long listID, Paging paging){
+        asyncTwitter.getUserListStatuses(listID, paging);
+    }
+
+    /**
+     * リストに登録されているメンバーの取得（２０人ずつ）
+     * @param listID 取得したいListのID
+     * @param cursor ページ数的な奴
+     */
+    public void getUserListMembers(long listID, long cursor){
+        asyncTwitter.getUserListMembers(listID, cursor);
     }
 
     /**

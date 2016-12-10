@@ -28,6 +28,7 @@ import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterListener;
 import twitter4j.TwitterMethod;
+import twitter4j.UserList;
 
 /**
  * Created by meron on 2016/09/14.
@@ -69,6 +70,7 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         Paging p = new Paging();
         p.count(UserSetting.LoadTweetCount(getContext()));
         mAction.getHomeTimeline(p);
+        mAction.getUserLists(Variable.userInfo.userID);
     }
 
     @Override
@@ -154,6 +156,12 @@ public class HomeFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
             });
+        }
+
+        @Override
+        public void gotUserLists(ResponseList<UserList> userLists) {
+            super.gotUserLists(userLists);
+            Variable.userLists = userLists;
         }
 
         @Override

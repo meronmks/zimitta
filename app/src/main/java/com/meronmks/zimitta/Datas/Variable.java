@@ -14,7 +14,9 @@ import com.meronmks.zimitta.R;
 
 import java.lang.reflect.Type;
 
+import twitter4j.ResponseList;
 import twitter4j.TwitterStream;
+import twitter4j.UserList;
 import twitter4j.conf.Configuration;
 
 /**
@@ -34,6 +36,7 @@ public class Variable {
     public static final int REQUEST_PICK_CONTENT = 0;
     public static RateLimits rateLimits;
     public static ErrorAdapter errorLogs;
+    public static ResponseList<UserList> userLists;
 
     public static boolean iniVariable(Context context){
         Destroy();
@@ -55,5 +58,6 @@ public class Variable {
         conf = null;
         twitterStream = null;
         rateLimits = null;
+        userLists = null;
     }
 }
