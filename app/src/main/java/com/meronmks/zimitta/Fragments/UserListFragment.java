@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -55,7 +56,7 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
         setStatusItemClickListener();
         setLongStatusItemClickListener();
         mListView.setAdapter(Variable.UserListTLAdapter);
-//        setScrollListener();
+        setScrollListener();
 //        setReceiver();
         setButtonLisner();
         setSpinner();
@@ -67,7 +68,11 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-
+        UserList userList = getSelectUserList();
+        if(spinner.getCount() == 0 || userList == null)return;
+        Paging p = new Paging();
+        p.count(UserSetting.LoadTweetCount(getContext()));
+        mAction.getUserListStatuses(userList.getId(), p);
     }
 
     @Override
@@ -87,14 +92,54 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
 
     private void setButtonLisner(){
         reloadButton.setOnClickListener(view -> {
-            if(spinner.getCount() == 0)return;
-            for(UserList userList : Variable.userLists){
-                if(!spinner.getSelectedItem().equals(userList.getName()))continue;
-                Paging p = new Paging();
-                p.count(UserSetting.LoadTweetCount(getContext()));
-                mAction.getUserListStatuses(userList.getId(), p);
+            UserList userList = getSelectUserList();
+            if(spinner.getCount() == 0 || userList == null)return;
+            mSwipeRefreshLayout.setRefreshing(true);
+            Variable.UserListTLAdapter.clear();
+            Paging p = new Paging();
+            p.count(UserSetting.LoadTweetCount(getContext()));
+            mAction.getUserListStatuses(userList.getId(), p);
+        });
+
+        reloadButton.setOnLongClickListener(view -> {
+            mAction.getUserLists(Variable.userInfo.userID);
+            return true;
+        });
+    }
+
+    private void setScrollListener(){
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (totalItemCount != 0 && !mSwipeRefreshLayout.isRefreshing() && !isLimited && totalItemCount == firstVisibleItem + visibleItemCount) {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    isStatusAdd = true;
+                    UserList userList = getSelectUserList();
+                    if(spinner.getCount() == 0 || userList == null) return;
+                    Paging p = new Paging();
+                    p.setMaxId(Variable.UserListTLAdapter.getItem(Variable.UserListTLAdapter.getCount()-1).getId());
+                    p.count(UserSetting.LoadTweetCount(getContext()));
+                    mAction.getUserListStatuses(userList.getId(), p);
+                }
             }
         });
+    }
+
+    /**
+     * 選択されたListを取得
+     * @return Listの情報
+     */
+    private UserList getSelectUserList(){
+        for(UserList userList : Variable.userLists){
+            if(!spinner.getSelectedItem().equals(userList.getName()))continue;
+            return userList;
+        }
+        return null;
     }
 
     /**
@@ -118,6 +163,13 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
                 }
                 mSwipeRefreshLayout.setRefreshing(false);
             });
+        }
+
+        @Override
+        public void gotUserLists(ResponseList<UserList> userLists) {
+            super.gotUserLists(userLists);
+            Variable.userLists = userLists;
+            setSpinner();
         }
 
         @Override
