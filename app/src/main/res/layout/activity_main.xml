@@ -38,9 +38,9 @@
                 android:id="@+id/tweet"
                 android:layout_width="48sp"
                 android:layout_height="48sp"
-                android:src="@mipmap/ic_edit_white_48dp"
+                android:src="@drawable/button_color"
                 android:layout_gravity="center_vertical"
-                android:background="#00ffffff" />
+                android:background="@mipmap/ic_edit_white_48dp" />
 
             <View
                 android:layout_width="0dp"
@@ -51,9 +51,9 @@
                 android:id="@+id/Menu_button"
                 android:layout_width="48sp"
                 android:layout_height="48sp"
-                android:src="@mipmap/ic_settings_applications_white_48dp"
+                android:src="@drawable/button_color"
                 android:layout_gravity="center_vertical"
-                android:background="#00ffffff" />
+                android:background="@mipmap/ic_settings_applications_white_48dp" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

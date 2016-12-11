@@ -10,4 +10,5 @@
     <color name="Gray">#313131</color>
     <color name="ClickBlue">#0D47A1</color>
     <color name="White">#FFFFFF</color>
+    <color name="ClickGray">#80808080</color>
 </resources>
