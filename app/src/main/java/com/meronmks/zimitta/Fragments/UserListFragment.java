@@ -14,7 +14,6 @@ import android.widget.Spinner;
 
 import com.meronmks.zimitta.Adapter.TweetAdapter;
 import com.meronmks.zimitta.Core.BaseFragment;
-import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
@@ -67,7 +66,7 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
         mListView.setAdapter(Variable.UserListTLAdapter);
         setScrollListener();
         setReceiver();
-        setButtonLisner();
+        setButtonListener();
         setSpinner();
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -93,13 +92,14 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
     private void setSpinner(){
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        if(Variable.userLists == null)return;
         for(UserList userList : Variable.userLists){
             adapter.add(userList.getName());
         }
         spinner.setAdapter(adapter);
     }
 
-    private void setButtonLisner(){
+    private void setButtonListener(){
         reloadButton.setOnClickListener(view -> {
             UserList userList = getSelectUserList();
             if(spinner.getCount() == 0 || userList == null)return;
