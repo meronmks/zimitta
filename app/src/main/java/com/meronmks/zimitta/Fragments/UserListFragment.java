@@ -12,15 +12,21 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.meronmks.zimitta.Adapter.TweetAdapter;
 import com.meronmks.zimitta.Core.BaseFragment;
+import com.meronmks.zimitta.Core.MainActivity;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
+import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 
+import twitter4j.PagableResponseList;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
@@ -28,6 +34,7 @@ import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterListener;
 import twitter4j.TwitterMethod;
+import twitter4j.User;
 import twitter4j.UserList;
 
 /**
@@ -37,12 +44,14 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
 
     private Spinner spinner;
     private ImageButton reloadButton;
+    private List<Long> listMemberIDs;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAction = new TwitterAction(getContext(), listener);
         isLimited = false;
+        listMemberIDs = new ArrayList<>();
     }
 
     @Nullable
@@ -57,7 +66,7 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
         setLongStatusItemClickListener();
         mListView.setAdapter(Variable.UserListTLAdapter);
         setScrollListener();
-//        setReceiver();
+        setReceiver();
         setButtonLisner();
         setSpinner();
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
@@ -96,12 +105,15 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
             if(spinner.getCount() == 0 || userList == null)return;
             mSwipeRefreshLayout.setRefreshing(true);
             Variable.UserListTLAdapter.clear();
+            listMemberIDs.clear();
             Paging p = new Paging();
             p.count(UserSetting.LoadTweetCount(getContext()));
             mAction.getUserListStatuses(userList.getId(), p);
+            mAction.getUserListMembers(userList.getId(), -1L);
         });
 
         reloadButton.setOnLongClickListener(view -> {
+            showToast(getString(R.string.reloadUserListsText));
             mAction.getUserLists(Variable.userInfo.userID);
             return true;
         });
@@ -143,6 +155,31 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     /**
+     * レシーバの受け取り口作成
+     */
+    private void setReceiver(){
+        mStreamReceiver = StreamReceiver.register(getContext(), status -> getActivity().runOnUiThread(() -> {
+            int pos = 0;
+            int top = 0;
+            if(Variable.UserListTLAdapter == null){
+                Variable.UserListTLAdapter = new TweetAdapter(getContext());
+            }
+            if (!Variable.TLAdapter.isEmpty() && mListView.getChildAt(0) != null) {
+                pos = mListView.getFirstVisiblePosition();
+                top = mListView.getChildAt(0).getTop();
+            }
+
+            if(listMemberIDs.indexOf(status.getUser().getId()) == -1) return;
+
+            Variable.UserListTLAdapter.statusAdd(Variable.UserListTLAdapter, status);
+            mListView.setSelectionFromTop(pos + 1, top);
+            if (pos == 0 && top == 0) {
+                mListView.smoothScrollToPositionFromTop(0, 0);
+            }
+        }));
+    }
+
+    /**
      * Listener定義
      */
     private TwitterListener listener = new TwitterAdapter() {
@@ -173,13 +210,22 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         @Override
+        public void gotUserListMembers(PagableResponseList<User> users) {
+            super.gotUserListMembers(users);
+            for(User user : users){
+                listMemberIDs.add(user.getId());
+            }
+            if(users.hasNext()) mAction.getUserListMembers(getSelectUserList().getId(), users.getNextCursor());
+        }
+
+        @Override
         public void onException(TwitterException te, TwitterMethod method) {
             getActivity().runOnUiThread(() -> {
                 switch (method){
                     case USER_LISTS:
                     case USER_LIST_MEMBERSHIPS:
-                        showToast("List情報取得に失敗しました。");
-                        ErrorLogs.putErrorLog("List一覧の取得に失敗しました。", te.getMessage());
+                        showToast(getString(R.string.ListInfoErrorText));
+                        ErrorLogs.putErrorLog(getString(R.string.ListInfoErrorText), te.getMessage());
                         break;
                     case USER_LIST_STATUSES:
                         showToast("ListTLの取得に失敗しました。");

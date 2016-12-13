@@ -10,4 +10,6 @@
     <string name="ScreanNameList">ScreanNameList</string>
     <string name="AccountNum">AccountNum</string>
     <string name="tweet_edittext_hinttext">いまなにしてる？</string>
+    <string name="reloadUserListsText">List一覧の再取得中</string>
+    <string name="ListInfoErrorText">List情報取得に失敗しました。</string>
 </resources>
