@@ -89,6 +89,9 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
         mSwipeRefreshLayout.removeAllViews();   //残像バグ対策
     }
 
+    /**
+     * スピナーへの項目追加
+     */
     private void setSpinner(){
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -99,6 +102,9 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
         spinner.setAdapter(adapter);
     }
 
+    /**
+     * 更新ボタンの処理定義
+     */
     private void setButtonListener(){
         reloadButton.setOnClickListener(view -> {
             UserList userList = getSelectUserList();
@@ -146,6 +152,7 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
      * 選択されたListを取得
      * @return Listの情報
      */
+    @Nullable
     private UserList getSelectUserList(){
         for(UserList userList : Variable.userLists){
             if(!spinner.getSelectedItem().equals(userList.getName()))continue;
@@ -228,8 +235,8 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
                         ErrorLogs.putErrorLog(getString(R.string.ListInfoErrorText), te.getMessage());
                         break;
                     case USER_LIST_STATUSES:
-                        showToast("ListTLの取得に失敗しました。");
-                        ErrorLogs.putErrorLog("ListTLの取得に失敗しました", te.getMessage());
+                        showToast(getString(R.string.ListTLLoadErrorText));
+                        ErrorLogs.putErrorLog(getString(R.string.ListTLLoadErrorText), te.getMessage());
                         isLimited = true;
                         limitTimer = new Timer();
                         limitTimer.schedule(new LimitTimer(), te.getRateLimitStatus().getSecondsUntilReset()*1000);

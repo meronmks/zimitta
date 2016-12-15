@@ -21,11 +21,13 @@ import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
+import com.meronmks.zimitta.Adapter.MenuItemAdapter;
 import com.meronmks.zimitta.Core.HashTagClickable;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Core.StaticMethods;
 import com.meronmks.zimitta.Core.UserIDClickable;
 import com.meronmks.zimitta.Datas.ErrorLogs;
+import com.meronmks.zimitta.Datas.MenuItems;
 import com.meronmks.zimitta.Datas.ParcelStatus;
 import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.Datas.Variable;
@@ -56,7 +58,7 @@ import twitter4j.UserMentionEntity;
 public class ItemMenu implements AdapterView.OnItemClickListener {
 
     private Activity activity;
-    private ArrayAdapter<String> adapter;
+    private MenuItemAdapter adapter;
     private AlertDialog alertDialog;
     private ViewHolder vh;
     private TwitterAction mAction;
@@ -110,8 +112,8 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
 
         ListView listView = (ListView) view.findViewById(R.id.listItemMenu);
         listView.setOnItemClickListener(this);
-        String[] members = makeItemMenu();
-        adapter = new ArrayAdapter<>(activity.getBaseContext(), android.R.layout.simple_expandable_list_item_1, members);
+        adapter = new MenuItemAdapter(activity.getBaseContext());
+        makeItemMenu();
         listView.setAdapter(adapter);
         alertDialog = new AlertDialog.Builder(activity)
                 .setView(view)
@@ -122,37 +124,35 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
      * 動的にメニュー内容生成
      * @return
      */
-    @NonNull
-    private String[] makeItemMenu(){
-        List<String> menuItem = new ArrayList<>();
-        menuItem.add("詳細");
-        menuItem.add("返信");
-        menuItem.add("リツイート");
-        menuItem.add("お気に入り");
-        menuItem.add("お気に入り+リツイート");
-        menuItem.add("@" + status.getUser().getScreenName());
+    private void makeItemMenu(){
+        adapter.add(new MenuItems().getInstans("詳細", MenuItems.Tags.Detail));
+        adapter.add(new MenuItems().getInstans("返信", MenuItems.Tags.Replay));
+        adapter.add(new MenuItems().getInstans("リツイート", MenuItems.Tags.RT));
+        adapter.add(new MenuItems().getInstans("お気に入り", MenuItems.Tags.Fav));
+        adapter.add(new MenuItems().getInstans("お気に入り＋リツイート", MenuItems.Tags.RTandFav));
+        adapter.add(new MenuItems().getInstans("@" + status.getUser().getScreenName(), MenuItems.Tags.User));
         if(status.getRetweetedStatus() != null){
-            menuItem.add("@" + status.getRetweetedStatus().getUser().getScreenName());
+            adapter.add(new MenuItems().getInstans("@" + status.getRetweetedStatus().getUser().getScreenName(), MenuItems.Tags.User));
             status = status.getRetweetedStatus();
         }
         for (UserMentionEntity entity : status.getUserMentionEntities()) {
-            menuItem.add("@" + entity.getScreenName());
+            adapter.add(new MenuItems().getInstans("@" + entity.getScreenName(), MenuItems.Tags.User));
         }
         for(HashtagEntity entity : status.getHashtagEntities()){
-            menuItem.add("#" + entity.getText());
+            adapter.add(new MenuItems().getInstans("#" + entity.getText(), MenuItems.Tags.HashTag));
         }
         if(Variable.userInfo.userID == status.getUser().getId()){
-            menuItem.add("削除");
+            adapter.add(new MenuItems().getInstans("削除", MenuItems.Tags.Delete));
         }
-        return menuItem.toArray(new String[menuItem.size()]);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (parent.getItemAtPosition(position).toString()){
-            case "詳細":
+        if(adapter == null) return;
+        switch (adapter.getItem(position).tag){
+            case Detail:
                 break;
-            case "返信":
+            case Replay:
                 Intent intent = new Intent(activity, MakeTweetActivity.class);
                 intent.putExtra("mention", true);
                 ParcelStatus ps = new ParcelStatus();
@@ -160,7 +160,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
                 intent.putExtra("status", ps);
                 activity.startActivity(intent);
                 break;
-            case "リツイート":
+            case RT:
                 if(UserSetting.ShowRTDialog(activity)){
                     new AlertDialog.Builder(activity)
                             .setTitle("確認")
@@ -172,7 +172,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
                     mAction.retweetStatus(status.getId());
                 }
                 break;
-            case "お気に入り":
+            case Fav:
                 if(UserSetting.ShowFavDialog(activity)){
                     new AlertDialog.Builder(activity)
                             .setTitle("確認")
@@ -184,7 +184,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
                     mAction.createFavorite(status.getId());
                 }
                 break;
-            case "お気に入り+リツイート":
+            case RTandFav:
                 if(UserSetting.ShowFavRTDialog(activity)){
                     new AlertDialog.Builder(activity)
                             .setTitle("確認")
@@ -200,9 +200,9 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
                     mAction.createFavorite(status.getId());
                 }
                 break;
-            case "共有":
+            case Share:
                 break;
-            case "削除":
+            case Delete:
                 if(UserSetting.ShowTweetDelDialog(activity)) {
                     new AlertDialog.Builder(activity)
                             .setTitle("確認")
