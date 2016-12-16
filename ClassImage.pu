@@ -1,0 +1,44 @@
+@startuml
+package Core{
+
+    AppCompatActivity <|-- BaseActivity
+    BaseActivity <|- MainActivity
+    Fragment <|-- BaseFragment
+    TimerTask <|-- LimitTimer
+    BaseFragment - LimitTimer
+    note on link : 内部クラス
+    ClickableSpan <|-- HashTagClickable
+
+    class BaseActivity{
+        # void showToast(String text)
+    }
+    class MainActivity{
+        - SharedPreferences preferences
+        - TwitterAction mAction
+
+        - void showMenu()
+    }
+
+    class BaseFragment{
+        # ListView mListView
+        # SwipeRefreshLayout mSwipeRefreshLayout
+        # TwitterAction mAction
+        # boolean isStatusAdd
+        # StreamReceiver mStreamReceiver
+        # Timer limitTimer
+        # boolean isLimited
+
+        # void showToast(String text)
+        # void setStatusItemClickListener()
+        # void setLongStatusItemClickListener()
+    }
+
+    class LimitTimer{
+        + void run()
+    }
+
+    class HashTagClickable{
+        + void onClick(View widget)
+    }
+}
+@enduml
