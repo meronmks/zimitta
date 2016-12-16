@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="2sp"
+    android:paddingBottom="2sp"
+    android:descendantFocusability="blocksDescendants">
+
+    <include
+        android:id="@+id/itemBase"
+        layout="@layout/list_item_status"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/listItemMenu"
+        android:layout_below="@id/itemBase" />
+
+</RelativeLayout>
