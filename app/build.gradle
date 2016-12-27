@@ -77,9 +77,9 @@ dependencies {
     compile('com.crashlytics.sdk.android:answers:1.3.10@aar') {
         transitive = true;
     }
-    compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.android.support:design:25.0.1'
-    compile 'com.android.support:support-v4:25.0.1'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:support-v4:25.1.0'
     compile 'com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'io.reactivex:rxandroid:1.1.0'
@@ -87,9 +87,9 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
     compile 'com.google.android.gms:play-services-ads:10.0.1'
-    compile 'org.twitter4j:twitter4j-core:4.0.5'
-    compile 'org.twitter4j:twitter4j-stream:4.0.5'
-    compile 'org.twitter4j:twitter4j-async:4.0.5'
+    compile 'org.twitter4j:twitter4j-core:4.0.6'
+    compile 'org.twitter4j:twitter4j-stream:4.0.6'
+    compile 'org.twitter4j:twitter4j-async:4.0.6'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.code.gson:gson:2.7'
 }
