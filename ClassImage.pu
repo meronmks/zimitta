@@ -1,6 +1,13 @@
 @startuml
-package Core{
+package Activity{
 
+}
+
+package Adapter{
+
+}
+
+package Core{
     AppCompatActivity <|-- BaseActivity
     BaseActivity <|- MainActivity
     Fragment <|-- BaseFragment
@@ -8,6 +15,10 @@ package Core{
     BaseFragment - LimitTimer
     note on link : 内部クラス
     ClickableSpan <|-- HashTagClickable
+    LinkMovementMethod <|-- MutableLinkMovementMethod
+    OnUrlClickListener <.. MutableLinkMovementMethod : URLタップ時の\nイベント受け取り
+    NetStatusUtil <.. MainActivity
+    ClickableSpan <|-- UserIDClickable
 
     class BaseActivity{
         # void showToast(String text)
@@ -15,6 +26,7 @@ package Core{
     class MainActivity{
         - SharedPreferences preferences
         - TwitterAction mAction
+        - TwitterListener listener
 
         - void showMenu()
     }
@@ -40,5 +52,126 @@ package Core{
     class HashTagClickable{
         + void onClick(View widget)
     }
+
+    class JSONToolKit{
+        +{static} List<ErrorLogs> JSONtoErrorList(String json)
+        +{static} String ErrorListtoJSON(List<ErrorLogs> list)
+    }
+
+    class MutableLinkMovementMethod{
+        -OnUrlClickListener listener
+    }
+
+    interface OnUrlClickListener{
+        +{abstract} void onUrlClick(TextView widget, Uri uri)
+    }
+
+    class NetStatusUtil{
+        +{static} boolean isOnline(Context context)
+    }
+
+    class StaticMethods{
+        +{static} void replacrTimeAt(Date TimeStatusNow, Date CreatedAt, TextView timeView)
+        +{static} String replaceLoopText(String tweetText, Context context)
+    }
+
+    class UserIDClickable
+}
+
+package Datas{
+    Tags <.. MenuItems
+    Parcelable <|- ParcelStatus
+
+    class ErrorLogs{
+        +String message
+        +String overview
+        +Date createdA
+        -{static} final String ERROR_JSON
+        +{static} void putErrorLog(String overview, String message)
+        +{static} void saveLog(Context context)
+        +{static} void loadLog(Context context)
+        -ErrorLogs getInstance(String overview, String message)
+    }
+
+    class MenuItems{
+        +String name
+        +Tags Tags
+        +MenuItems getInstans(String name, Tags tags)
+    }
+
+    enum Tags{
+        Detail
+        Replay
+        RT
+        Fav
+        RTandFav
+        User
+        HashTag
+        Delete
+        Share
+    }
+
+    class ParcelStatus{
+        +Status status
+        +ParcelStatus()
+        #ParcelStatus(Parcel in)
+    }
+
+    class RateLimits{
+        -RateLimitStatus Home
+        -RateLimitStatus Mention
+        +RateLimitStatus getHome()
+        +void setHome(RateLimitStatus home)
+        +RateLimitStatus getMention()
+        +void setMention(RateLimitStatus mention)
+    }
+
+    class UserInfo{
+        +String token
+        +String tokenSecret
+        +long userID
+        +String userName
+        +String userScreenName
+        +String userProfileImageURLHttps
+        -{static} final String USER_INFO_KEY
+
+        +{static} UserInfo getInstance(Context context, long ID)
+        +{static} UserInfo getDefaultInstance()
+        +void saveInstance(Context context, long ID)
+    }
+
+    class UserSetting{
+
+    }
+
+    class Variable{
+
+    }
+}
+
+package Fragments{
+
+}
+
+package ImageMoveUtil{
+
+}
+
+package Listener{
+
+}
+package Menus{
+
+}
+package OAuth{
+
+}
+
+package Settings{
+
+}
+
+package TwitterUtil{
+
 }
 @enduml
