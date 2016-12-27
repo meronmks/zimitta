@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 /**
  * Htmlテキストのリンククリックアクションをオーバーライドするためのクラス。
- * Created by meron on 2016/09/15.
+ * Created by http://oigami.hatenablog.com/entry/2014/11/08/082615
  */
 public class MutableLinkMovementMethod extends LinkMovementMethod{
     /**
