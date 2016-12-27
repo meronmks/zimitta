@@ -83,10 +83,10 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.ScreenName.setText("@" + item.getUser().getScreenName());
         String text = item.getText();
         //画像処理
-        if(item.getExtendedMediaEntities().length != 0){
+        if(item.getMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(item.getExtendedMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
-            text = deleteMediaURL(text, item.getExtendedMediaEntities());
+            setPreviewMedia(item.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
+            text = deleteMediaURL(text, item.getMediaEntities());
         }
         vh.TweetText.setText(mutableIDandHashTagMobement(text));
         if(vh.TweetText.length() == 0){

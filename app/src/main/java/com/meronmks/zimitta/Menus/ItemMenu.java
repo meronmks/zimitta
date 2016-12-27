@@ -331,10 +331,10 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         vh.FavCount.setText("Fav : " + status.getFavoriteCount());
 
         //画像処理
-        if(status.getExtendedMediaEntities().length != 0){
+        if(status.getMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(status.getExtendedMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
-            vh.TweetText.setText(deleteMediaURL(status.getText(), status.getExtendedMediaEntities()));
+            setPreviewMedia(status.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
+            vh.TweetText.setText(deleteMediaURL(status.getText(), status.getMediaEntities()));
         }
 
         //引用ツイート関連
@@ -362,19 +362,19 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
 
     /**
      * メディアのプレビュー表示
-     * @param extendedMediaEntity
+     * @param mediaEntity
      * @param imageViews
      */
-    protected void setPreviewMedia(ExtendedMediaEntity[] extendedMediaEntity, ImageView[] imageViews, ImageView videoPlayView){
-        for(int i = 0; i < extendedMediaEntity.length; i++){
+    protected void setPreviewMedia(MediaEntity[] mediaEntity, ImageView[] imageViews, ImageView videoPlayView){
+        for(int i = 0; i < mediaEntity.length; i++){
             imageViews[i].setVisibility(View.VISIBLE);
-            if(extendedMediaEntity[i].getType().equals("photo")) {
+            if(mediaEntity[i].getType().equals("photo")) {
                 videoPlayView.setVisibility(View.GONE);
             }else{
                 videoPlayView.setVisibility(View.VISIBLE);
             }
             Glide.with(activity)
-                    .load(extendedMediaEntity[i].getMediaURLHttps() + ":thumb")
+                    .load(mediaEntity[i].getMediaURLHttps() + ":thumb")
                     .placeholder(R.mipmap.ic_sync_white_24dp)
                     .error(R.mipmap.ic_sync_problem_white_24dp)
                     .dontAnimate()
@@ -382,15 +382,15 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
 
             final int finalI = i;
             imageViews[i].setOnClickListener(view -> {
-                if(extendedMediaEntity[finalI].getType().equals("photo")){
-                    String imageURL = extendedMediaEntity[finalI].getMediaURLHttps();
+                if(mediaEntity[finalI].getType().equals("photo")){
+                    String imageURL = mediaEntity[finalI].getMediaURLHttps();
                     Intent image = new Intent(activity, ShowImageActivity.class);
                     image.putExtra("Images", imageURL);
                     activity.startActivity(image);
                 }else{
-                    ExtendedMediaEntity.Variant[] videoURLs = extendedMediaEntity[finalI].getVideoVariants();
-                    ExtendedMediaEntity.Variant videoURL = videoURLs[0];
-                    for(ExtendedMediaEntity.Variant var : videoURLs){
+                    MediaEntity.Variant[] videoURLs = mediaEntity[finalI].getVideoVariants();
+                    MediaEntity.Variant videoURL = videoURLs[0];
+                    for(MediaEntity.Variant var : videoURLs){
                         if(var.getContentType().equals("mp4") && var.getBitrate() > videoURL.getBitrate()){
                             videoURL = var;
                         }
@@ -406,10 +406,10 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
     /**
      * メディアURLを消す
      * @param tweet
-     * @param extendedMediaEntity
+     * @param mediaEntity
      */
-    protected String deleteMediaURL(String tweet, ExtendedMediaEntity[] extendedMediaEntity){
-        for(MediaEntity media : extendedMediaEntity){
+    protected String deleteMediaURL(String tweet, MediaEntity[] mediaEntity){
+        for(MediaEntity media : mediaEntity){
             tweet = tweet.replaceAll(media.getURL(), "");
         }
         return tweet;
@@ -426,10 +426,10 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         vh.QuoteText.setText(status.getText());
         replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
         mutableLinkMovement(vh.QuoteText);
-        if(status.getExtendedMediaEntities().length != 0){
+        if(status.getMediaEntities().length != 0){
             vh.QuotePreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(status.getExtendedMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
-            vh.QuoteText.setText(deleteMediaURL(status.getText(), status.getExtendedMediaEntities()));
+            setPreviewMedia(status.getMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
+            vh.QuoteText.setText(deleteMediaURL(status.getText(), status.getMediaEntities()));
         }
     }
 

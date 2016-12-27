@@ -95,19 +95,19 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
 
     /**
      * メディアのプレビュー表示
-     * @param extendedMediaEntity
+     * @param mediaEntity
      * @param imageViews
      */
-    protected void setPreviewMedia(ExtendedMediaEntity[] extendedMediaEntity, ImageView[] imageViews, ImageView videoPlayView){
-        for(int i = 0; i < extendedMediaEntity.length; i++){
+    protected void setPreviewMedia(MediaEntity[] mediaEntity, ImageView[] imageViews, ImageView videoPlayView){
+        for(int i = 0; i < mediaEntity.length; i++){
             imageViews[i].setVisibility(View.VISIBLE);
-            if(extendedMediaEntity[i].getType().equals("photo")) {
+            if(mediaEntity[i].getType().equals("photo")) {
                 videoPlayView.setVisibility(View.GONE);
             }else{
                 videoPlayView.setVisibility(View.VISIBLE);
             }
             Glide.with(getContext())
-                    .load(extendedMediaEntity[i].getMediaURLHttps() + ":thumb")
+                    .load(mediaEntity[i].getMediaURLHttps() + ":thumb")
                     .placeholder(R.mipmap.ic_sync_white_24dp)
                     .error(R.mipmap.ic_sync_problem_white_24dp)
                     .dontAnimate()
@@ -115,15 +115,15 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
 
             final int finalI = i;
             imageViews[i].setOnClickListener(view -> {
-                if(extendedMediaEntity[finalI].getType().equals("photo")){
-                    String imageURL = extendedMediaEntity[finalI].getMediaURLHttps();
+                if(mediaEntity[finalI].getType().equals("photo")){
+                    String imageURL = mediaEntity[finalI].getMediaURLHttps();
                     Intent image = new Intent(getContext(), ShowImageActivity.class);
                     image.putExtra("Images", imageURL);
                     getContext().startActivity(image);
                 }else{
-                    ExtendedMediaEntity.Variant[] videoURLs = extendedMediaEntity[finalI].getVideoVariants();
-                    ExtendedMediaEntity.Variant videoURL = videoURLs[0];
-                    for(ExtendedMediaEntity.Variant var : videoURLs){
+                    MediaEntity.Variant[] videoURLs = mediaEntity[finalI].getVideoVariants();
+                    MediaEntity.Variant videoURL = videoURLs[0];
+                    for(MediaEntity.Variant var : videoURLs){
                         if(var.getContentType().equals("mp4") && var.getBitrate() > videoURL.getBitrate()){
                             videoURL = var;
                         }
@@ -139,10 +139,10 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
     /**
      * メディアURLを消す
      * @param tweet
-     * @param extendedMediaEntity
+     * @param mediaEntity
      */
-    protected String deleteMediaURL(String tweet, ExtendedMediaEntity[] extendedMediaEntity){
-        for(MediaEntity media : extendedMediaEntity){
+    protected String deleteMediaURL(String tweet, MediaEntity[] mediaEntity){
+        for(MediaEntity media : mediaEntity){
             tweet = tweet.replaceAll(media.getURL(), "");
         }
         return tweet;
@@ -157,10 +157,10 @@ public class BaseAdapter<T> extends ArrayAdapter<T> {
         vh.QuoteName.setText(status.getUser().getName());
         vh.QuoteScreenName.setText("@" + status.getUser().getScreenName());
         String text = status.getText();
-        if(status.getExtendedMediaEntities().length != 0){
+        if(status.getMediaEntities().length != 0){
             vh.QuotePreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(status.getExtendedMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
-            text = deleteMediaURL(text, status.getExtendedMediaEntities());
+            setPreviewMedia(status.getMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
+            text = deleteMediaURL(text, status.getMediaEntities());
         }
         vh.QuoteText.setText(mutableIDandHashTagMobement(text));
         if(vh.QuoteText.length() == 0){

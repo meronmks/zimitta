@@ -81,6 +81,7 @@ public class TwitterAction {
         }else{
             builder.setUserStreamRepliesAllEnabled(false);
         }
+        builder.setTweetModeExtended(true);
         Variable.conf = builder.build();
     }
 
