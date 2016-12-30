@@ -44,7 +44,7 @@ public class StreamReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getBundleExtra(Variable.STREAM_BUNDLE);
         ParcelStatus parcelStatus = bundle.getParcelable(Variable.STREAM_PARCELABLE);
-        if(parcelStatus == null)return;
+        if(parcelStatus == null || parcelStatus.status == null)return;
         callback.onEventInvoked(parcelStatus.status);
     }
 
