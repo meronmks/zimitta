@@ -10,7 +10,7 @@ import com.meronmks.zimitta.R;
  * Created by meron on 2016/12/29.
  */
 
-public class TweetDetail extends BaseActivity {
+public class TweetDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
