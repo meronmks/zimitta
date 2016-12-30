@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Datas.Variable;
@@ -31,38 +30,6 @@ import twitter4j.UserMentionEntity;
 public class BaseActivity extends AppCompatActivity {
 
     private ViewHolder vh;
-
-    static class ViewHolder {
-        TextView Name;
-        ImageView UserIcon;
-        ImageView RTUserIcon;
-        TextView ScreenName;
-        TextView TweetText;
-        TextView Time;
-        TextView Via;
-        TextView RTCount;
-        TextView FavCount;
-
-        TextView RTUserName;
-
-        ImageView TweetDeletedStatus;
-        ImageView LockedStatus;
-        View TweetStatus;
-
-        LinearLayout PreviewImage;
-        ImageView[] ImagePreviewViews = new ImageView[4];
-        ImageView PreviewVideoView1;
-
-        //引用ツイート関連
-        LinearLayout QuoteTweetView;
-        TextView QuoteName;
-        TextView QuoteScreenName;
-        TextView QuoteText;
-        TextView QuoteAtTime;
-        LinearLayout QuotePreviewImage;
-        ImageView[] ImageQuotePreviewViews = new ImageView[4];
-        ImageView QuotePreviewVideoView1;
-    }
 
     protected void showToast(String text){
         if(text == null || text.length() == 0) return;

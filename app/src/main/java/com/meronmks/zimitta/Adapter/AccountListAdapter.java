@@ -14,8 +14,6 @@ import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Datas.UserInfo;
 import com.meronmks.zimitta.R;
 
-import twitter4j.User;
-
 /**
  * Created by meron on 2016/10/18.
  */

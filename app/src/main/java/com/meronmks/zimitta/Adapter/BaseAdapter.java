@@ -24,6 +24,7 @@ import com.meronmks.zimitta.Core.HashTagClickable;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Core.StaticMethods;
 import com.meronmks.zimitta.Core.UserIDClickable;
+import com.meronmks.zimitta.Core.ViewHolder;
 import com.meronmks.zimitta.R;
 
 import java.util.Calendar;
@@ -32,65 +33,20 @@ import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import twitter4j.ExtendedMediaEntity;
 import twitter4j.MediaEntity;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 
+import static com.meronmks.zimitta.Core.StaticMethods.replacrTimeAt;
+
 
 public class BaseAdapter<T> extends ArrayAdapter<T> {
-
-    static class ViewHolder {
-        TextView Name;
-        ImageView UserIcon;
-        ImageView RTUserIcon;
-        TextView ScreenName;
-        TextView TweetText;
-        TextView Time;
-        TextView Via;
-        TextView RTCount;
-        TextView FavCount;
-
-        TextView RTUserName;
-
-        ImageView TweetDeletedStatus;
-        ImageView LockedStatus;
-        View TweetStatus;
-
-        LinearLayout PreviewImage;
-        ImageView[] ImagePreviewViews = new ImageView[4];
-        ImageView PreviewVideoView1;
-
-        //引用ツイート関連
-        LinearLayout QuoteTweetView;
-        TextView QuoteName;
-        TextView QuoteScreenName;
-        TextView QuoteText;
-        TextView QuoteAtTime;
-        LinearLayout QuotePreviewImage;
-        ImageView[] ImageQuotePreviewViews = new ImageView[4];
-        ImageView QuotePreviewVideoView1;
-    }
 
     private static final Pattern ID_MATCH_PATTERN = Pattern.compile("@[a-zA-Z0-9_]+", Pattern.CASE_INSENSITIVE);
     private static final Pattern HASH_TAG_MATCH_PATTERN = Pattern.compile("[#＃][Ａ-Ｚａ-ｚA-Za-z一-鿆0-9０-９ぁ-ヶｦ-ﾟー]+", Pattern.CASE_INSENSITIVE);
 
     public BaseAdapter(Context context, int resources) {
         super(context, resources);
-    }
-
-    /**
-     * ループテキストの排除メソッド
-     */
-    protected String replaceLoopText(String tweetText){
-        return StaticMethods.replaceLoopText(tweetText, getContext());
-    }
-
-    /**
-     * 時間を変換するやつ
-     */
-    protected void replacrTimeAt(Date TimeStatusNow, Date CreatedAt, TextView timeView){
-        StaticMethods.replacrTimeAt(TimeStatusNow, CreatedAt, timeView);
     }
 
     /**

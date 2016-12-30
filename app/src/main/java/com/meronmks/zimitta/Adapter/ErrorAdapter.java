@@ -12,8 +12,6 @@ import android.widget.TextView;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.R;
 
-import java.util.List;
-
 /**
  * Created by meron on 2016/09/28.
  */
