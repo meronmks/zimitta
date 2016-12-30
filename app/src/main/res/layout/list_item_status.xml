@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
         android:layout_alignRight="@+id/UserIcon"
         android:layout_alignEnd="@+id/UserIcon"
         android:layout_marginTop="4sp" />
+
     <LinearLayout
         android:focusable="false"
         android:orientation="horizontal"
@@ -342,4 +344,14 @@
             android:background="@color/Blue"
             android:layout_weight="0" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="24sp"
+        android:layout_height="24sp"
+        app:srcCompat="@mipmap/ic_retweet_icon_green_32px"
+        android:id="@+id/RTIcon"
+        android:layout_alignTop="@+id/RTUserIcon"
+        android:layout_toLeftOf="@+id/RTUserIcon"
+        android:layout_toStartOf="@+id/RTUserIcon" />
+
 </RelativeLayout>

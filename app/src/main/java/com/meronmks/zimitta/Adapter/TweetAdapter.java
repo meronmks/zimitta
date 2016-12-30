@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.meronmks.zimitta.Core.ViewHolder;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 
@@ -17,6 +18,8 @@ import java.util.Date;
 
 import twitter4j.Status;
 import twitter4j.UserMentionEntity;
+
+import static com.meronmks.zimitta.Core.StaticMethods.replacrTimeAt;
 
 /**
  * Created by meron on 2016/09/14.
@@ -46,6 +49,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
 
         vh.TweetDeletedStatus.setVisibility(View.GONE);
         vh.RTUserIcon.setVisibility(View.GONE);
+        vh.RTIcon.setVisibility(View.GONE);
         vh.RTUserName.setVisibility(View.GONE);
         vh.TweetStatus.setVisibility(View.GONE);
         vh.PreviewImage.setVisibility(View.GONE);
@@ -74,6 +78,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
             vh.RTUserName.setVisibility(View.VISIBLE);
             vh.RTUserName.setText(item.getUser().getName() + " さんがRT");
             vh.RTUserIcon.setVisibility(View.VISIBLE);
+            vh.RTIcon.setVisibility(View.VISIBLE);
             Glide.with(getContext()).load(item.getUser().getProfileImageURLHttps()).into(vh.RTUserIcon);
             item = item.getRetweetedStatus();
         }
@@ -130,6 +135,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
         vh.Name = (TextView) cv.findViewById(R.id.Name);
         vh.UserIcon = (ImageView) cv.findViewById(R.id.UserIcon);
         vh.RTUserIcon = (ImageView) cv.findViewById(R.id.RTUserIcon);
+        vh.RTIcon = (ImageView) cv.findViewById(R.id.RTIcon);
         vh.ScreenName = (TextView) cv.findViewById(R.id.ScreenName);
         vh.TweetText = (TextView) cv.findViewById(R.id.TweetText);
         vh.Via = (TextView) cv.findViewById(R.id.Via);
