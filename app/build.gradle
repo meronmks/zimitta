@@ -26,7 +26,7 @@ repositories {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.meronmks.zimitta"
         minSdkVersion 14
@@ -80,6 +80,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.android.support:percent:25.1.0'
     compile 'com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'io.reactivex:rxandroid:1.1.0'
