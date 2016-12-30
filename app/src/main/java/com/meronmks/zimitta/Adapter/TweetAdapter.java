@@ -19,7 +19,12 @@ import java.util.Date;
 import twitter4j.Status;
 import twitter4j.UserMentionEntity;
 
+import static com.meronmks.zimitta.Core.StaticMethods.deleteMediaURL;
+import static com.meronmks.zimitta.Core.StaticMethods.mutableIDandHashTagMobement;
+import static com.meronmks.zimitta.Core.StaticMethods.mutableLinkMovement;
+import static com.meronmks.zimitta.Core.StaticMethods.quoteTweetSetting;
 import static com.meronmks.zimitta.Core.StaticMethods.replacrTimeAt;
+import static com.meronmks.zimitta.Core.StaticMethods.setPreviewMedia;
 
 /**
  * Created by meron on 2016/09/14.
@@ -90,7 +95,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
         //画像処理
         if(item.getMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(item.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
+            setPreviewMedia(item.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1, getContext());
             text = deleteMediaURL(text, item.getMediaEntities());
         }
         vh.TweetText.setText(mutableIDandHashTagMobement(text));
@@ -106,7 +111,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
 
         //引用ツイート関連
         if(item.getQuotedStatus() != null){
-            quoteTweetSetting(item.getQuotedStatus(), vh);
+            quoteTweetSetting(item.getQuotedStatus(), vh, getContext());
         }
 
         //鍵垢判定

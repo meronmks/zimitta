@@ -23,6 +23,11 @@ import twitter4j.MediaEntity;
 import twitter4j.Status;
 import twitter4j.UserMentionEntity;
 
+import static com.meronmks.zimitta.Core.StaticMethods.deleteMediaURL;
+import static com.meronmks.zimitta.Core.StaticMethods.quoteTweetSetting;
+import static com.meronmks.zimitta.Core.StaticMethods.replacrTimeAt;
+import static com.meronmks.zimitta.Core.StaticMethods.setPreviewMedia;
+
 /**
  *
  * Created by meron on 2016/09/20.
@@ -91,13 +96,13 @@ public class BaseActivity extends AppCompatActivity {
         //画像処理
         if(status.getMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(status.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
+            setPreviewMedia(status.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1, getBaseContext());
             vh.TweetText.setText(deleteMediaURL(status.getText(), status.getMediaEntities()));
         }
 
         //引用ツイート関連
         if(status.getQuotedStatus() != null){
-            quoteTweetSetting(status.getQuotedStatus(), vh);
+            quoteTweetSetting(status.getQuotedStatus(), vh, getBaseContext());
         }
 
         //鍵垢判定
@@ -109,110 +114,6 @@ public class BaseActivity extends AppCompatActivity {
 
         //リンク処理
         mutableLinkMovement(vh.TweetText);
-    }
-
-    /**
-     * 時間を変換するやつ
-     */
-    protected void replacrTimeAt(Date TimeStatusNow, Date CreatedAt, TextView timeView){
-        Calendar cal1 = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal1.setTime(CreatedAt);
-        cal2.setTime(TimeStatusNow);
-        long date1 = cal1.getTimeInMillis();
-        long date2 = cal2.getTimeInMillis();
-        long time = (date2 - date1) / 1000;
-        if(time < 5){
-            timeView.setText("now");
-        }
-        if (5 <= time && time <= 59) {
-            timeView.setText(time + "s前");
-        }
-        time = time / 60;
-        if ((time <= 59) && (time >= 1)) {
-            timeView.setText(time + "m前");
-        }
-        time = time / 60;
-        if ((time <= 23) && (time >= 1)) {
-            timeView.setText(time + "h前");
-        }
-        time = time / 24;
-        if (time != 0) {
-            timeView.setText(DateFormat.format("yyyy/MM/dd kk:mm:ss", CreatedAt));
-        }
-    }
-
-    /**
-     * メディアのプレビュー表示
-     * @param mediaEntity
-     * @param imageViews
-     */
-    protected void setPreviewMedia(MediaEntity[] mediaEntity, ImageView[] imageViews, ImageView videoPlayView){
-        for(int i = 0; i < mediaEntity.length; i++){
-            imageViews[i].setVisibility(View.VISIBLE);
-            if(mediaEntity[i].getType().equals("photo")) {
-                videoPlayView.setVisibility(View.GONE);
-            }else{
-                videoPlayView.setVisibility(View.VISIBLE);
-            }
-            Glide.with(this)
-                    .load(mediaEntity[i].getMediaURLHttps() + ":thumb")
-                    .placeholder(R.mipmap.ic_sync_white_24dp)
-                    .error(R.mipmap.ic_sync_problem_white_24dp)
-                    .dontAnimate()
-                    .into(imageViews[i]);
-
-            final int finalI = i;
-            imageViews[i].setOnClickListener(view -> {
-                if(mediaEntity[finalI].getType().equals("photo")){
-                    String imageURL = mediaEntity[finalI].getMediaURLHttps();
-                    Intent image = new Intent(this, ShowImageActivity.class);
-                    image.putExtra("Images", imageURL);
-                    startActivity(image);
-                }else{
-                    MediaEntity.Variant[] videoURLs = mediaEntity[finalI].getVideoVariants();
-                    MediaEntity.Variant videoURL = videoURLs[0];
-                    for(MediaEntity.Variant var : videoURLs){
-                        if(var.getContentType().equals("mp4") && var.getBitrate() > videoURL.getBitrate()){
-                            videoURL = var;
-                        }
-                    }
-                    Intent video = new Intent(this, PlayVideoActivity.class);
-                    video.putExtra("Video", videoURL.getUrl());
-                    startActivity(video);
-                }
-            });
-        }
-    }
-
-    /**
-     * メディアURLを消す
-     * @param tweet
-     * @param mediaEntity
-     */
-    protected String deleteMediaURL(String tweet, MediaEntity[] mediaEntity){
-        for(MediaEntity media : mediaEntity){
-            tweet = tweet.replaceAll(media.getURL(), "");
-        }
-        return tweet;
-    }
-
-    /**
-     * 引用ツイートの処理
-     * @param status
-     */
-    protected void quoteTweetSetting(Status status, ViewHolder vh){
-        vh.QuoteTweetView.setVisibility(View.VISIBLE);
-        vh.QuoteName.setText(status.getUser().getName());
-        vh.QuoteScreenName.setText("@" + status.getUser().getScreenName());
-        vh.QuoteText.setText(status.getText());
-        replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
-        mutableLinkMovement(vh.QuoteText);
-        if(status.getMediaEntities().length != 0){
-            vh.QuotePreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(status.getMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
-            vh.QuoteText.setText(deleteMediaURL(status.getText(), status.getMediaEntities()));
-        }
     }
 
     /**
