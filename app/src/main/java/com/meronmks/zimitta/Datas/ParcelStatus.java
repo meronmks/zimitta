@@ -7,6 +7,7 @@ import twitter4j.Status;
 
 /**
  * Created by meron on 2016/09/16.
+ * IntentでStatusを投げる時に使うクラス
  */
 public class ParcelStatus implements Parcelable {
     public Status status;
