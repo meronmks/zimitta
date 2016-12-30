@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
+import com.meronmks.zimitta.Activity.TweetDetail;
 import com.meronmks.zimitta.Adapter.MenuItemAdapter;
 import com.meronmks.zimitta.Core.HashTagClickable;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
@@ -149,13 +150,20 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(adapter == null) return;
+        Intent intent;
+        ParcelStatus ps;
         switch (adapter.getItem(position).tag){
             case Detail:
+                intent = new Intent(activity, TweetDetail.class);
+                ps = new ParcelStatus();
+                ps.status = status;
+                intent.putExtra("status", ps);
+                activity.startActivity(intent);
                 break;
             case Replay:
-                Intent intent = new Intent(activity, MakeTweetActivity.class);
+                intent = new Intent(activity, MakeTweetActivity.class);
                 intent.putExtra("mention", true);
-                ParcelStatus ps = new ParcelStatus();
+                ps = new ParcelStatus();
                 ps.status = status;
                 intent.putExtra("status", ps);
                 activity.startActivity(intent);
