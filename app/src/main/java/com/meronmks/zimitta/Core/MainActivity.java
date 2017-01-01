@@ -45,9 +45,11 @@ public class MainActivity extends BaseActivity {
 
         ErrorLogs.loadLog(this);
 
-        //TODO 5.0.0正規バージョンまでにはCrashlytics及びAnswersの機能をON,OFF可能へ
-        Fabric.Builder builder = new Fabric.Builder(this)
-                .kits(new Twitter(authConfig), new Crashlytics(), new Answers());
+        Fabric.Builder builder = new Fabric.Builder(this).kits(new Twitter(authConfig));
+        if(UserSetting.DebugLogSend(this) || BuildConfig.DebugFlag) {
+            builder = new Fabric.Builder(this).kits(new Twitter(authConfig), new Crashlytics(), new Answers());
+        }
+
         Fabric.with(builder.build());
         setContentView(R.layout.activity_main);
 

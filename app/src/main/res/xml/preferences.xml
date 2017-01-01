@@ -32,6 +32,13 @@
             android:title="削除"
             android:key="ShowTweetDelDialog"
             android:defaultValue="true"/>
+        <PreferenceCategory
+            android:title="その他"/>
+        <CheckBoxPreference
+            android:title="統計情報を送信する"
+            android:summary="アプリの改善に使います。"
+            android:key="DebugLogSend"
+            android:defaultValue="false"/>
     </PreferenceScreen>
 
     <PreferenceScreen

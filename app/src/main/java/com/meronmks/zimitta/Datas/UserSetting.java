@@ -100,4 +100,14 @@ public class UserSetting {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getBoolean("ShowTweetDelDialog", true);
     }
+
+    /**
+     * 統計情報を送信するのに同意してるか
+     * @param context
+     * @return
+     */
+    public static boolean DebugLogSend(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("DebugLogSend", false);
+    }
 }
