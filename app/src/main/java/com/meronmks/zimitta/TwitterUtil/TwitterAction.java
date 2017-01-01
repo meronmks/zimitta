@@ -21,6 +21,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.TwitterListener;
 import twitter4j.TwitterStreamFactory;
 import twitter4j.UploadedMedia;
+import twitter4j.User;
 import twitter4j.UserList;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -179,6 +180,7 @@ public class TwitterAction {
      */
     public void getUserListMembers(long listID, long cursor){
         asyncTwitter.getUserListMembers(listID, cursor);
+
     }
 
     /**
@@ -188,5 +190,21 @@ public class TwitterAction {
      */
     public UploadedMedia uploadMedia(File file) throws TwitterException {
         return twitter.uploadMedia(file);
+    }
+
+    /**
+     * 指定したスクリーンネームのアカウントの情報取得
+     * @param screenName 取得対象のスクリーンネーム
+     */
+    public void showUser(String screenName){
+        asyncTwitter.showUser(screenName);
+    }
+
+    /**
+     * 指定したIDのアカウントの情報取得
+     * @param ID 取得対象のID
+     */
+    public void showUser(long ID){
+        asyncTwitter.showUser(ID);
     }
 }

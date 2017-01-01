@@ -9,7 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.meronmks.zimitta.Activity.AccountChangeActivity;
+import com.meronmks.zimitta.Activity.UserDetailActivity;
 import com.meronmks.zimitta.Datas.ErrorLogs;
+import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.Settings.SettingsActivity;
 
@@ -40,15 +42,19 @@ public class MainMenu implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+        Intent intent;
         switch (parent.getItemAtPosition(position).toString()) {
             case "プロフィール表示":
+                intent = new Intent(activity, UserDetailActivity.class);
+                intent.putExtra("userName", Variable.userInfo.userScreenName);
+                activity.startActivity(intent);
                 break;
             case "アカウント切り替えと変更":
-                Intent Account = new Intent(activity, AccountChangeActivity.class);
-                activity.startActivityForResult(Account, 104);
+                intent = new Intent(activity, AccountChangeActivity.class);
+                activity.startActivityForResult(intent, 104);
                 break;
             case "設定":
-                Intent intent = new Intent(activity, SettingsActivity.class);
+                intent = new Intent(activity, SettingsActivity.class);
                 activity.startActivity(intent);
                 break;
             case "API":

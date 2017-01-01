@@ -2,6 +2,7 @@ package com.meronmks.zimitta.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.meronmks.zimitta.Activity.UserDetailActivity;
 import com.meronmks.zimitta.Core.ViewHolder;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
@@ -123,6 +125,15 @@ public class TweetAdapter extends BaseAdapter<Status> {
 
         //リンク処理
         mutableLinkMovement(vh.TweetText);
+
+        final Status finalStatus = item;
+
+        //アイコンクリック処理
+        vh.UserIcon.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), UserDetailActivity.class);
+            intent.putExtra("userName", finalStatus.getUser().getScreenName());
+            getContext().startActivity(intent);
+        });
 
        return convertView;
     }

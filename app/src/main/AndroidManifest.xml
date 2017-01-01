@@ -36,6 +36,7 @@
         <activity android:name=".Settings.ErrorLogActivity"/>
         <activity android:name=".Activity.AccountChangeActivity"/>
         <activity android:name=".Activity.TweetDetailActivity"/>
+        <activity android:name=".Activity.UserDetailActivity"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>

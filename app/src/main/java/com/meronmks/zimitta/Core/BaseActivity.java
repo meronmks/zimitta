@@ -15,6 +15,8 @@ import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Datas.Variable;
 import com.meronmks.zimitta.R;
+import com.meronmks.zimitta.TwitterUtil.StreamReceiver;
+import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -34,7 +36,8 @@ import static com.meronmks.zimitta.Core.StaticMethods.setPreviewMedia;
  */
 public class BaseActivity extends AppCompatActivity {
 
-    private ViewHolder vh;
+    protected ViewHolder vh;
+    protected TwitterAction mAction;
 
     protected void showToast(String text){
         if(text == null || text.length() == 0) return;

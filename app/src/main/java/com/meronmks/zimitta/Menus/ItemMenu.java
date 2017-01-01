@@ -19,11 +19,13 @@ import com.meronmks.zimitta.Activity.MakeTweetActivity;
 import com.meronmks.zimitta.Activity.PlayVideoActivity;
 import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Activity.TweetDetailActivity;
+import com.meronmks.zimitta.Activity.UserDetailActivity;
 import com.meronmks.zimitta.Adapter.MenuItemAdapter;
 import com.meronmks.zimitta.Core.HashTagClickable;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
 import com.meronmks.zimitta.Core.StaticMethods;
 import com.meronmks.zimitta.Core.UserIDClickable;
+import com.meronmks.zimitta.Core.ViewHolder;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.MenuItems;
 import com.meronmks.zimitta.Datas.ParcelStatus;
@@ -45,6 +47,12 @@ import twitter4j.TwitterListener;
 import twitter4j.TwitterMethod;
 import twitter4j.UserMentionEntity;
 
+import static com.meronmks.zimitta.Core.StaticMethods.deleteMediaURL;
+import static com.meronmks.zimitta.Core.StaticMethods.mutableIDandHashTagMobement;
+import static com.meronmks.zimitta.Core.StaticMethods.quoteTweetSetting;
+import static com.meronmks.zimitta.Core.StaticMethods.replacrTimeAt;
+import static com.meronmks.zimitta.Core.StaticMethods.setPreviewMedia;
+
 /**
  * Created by p-user on 2016/10/03.
  */
@@ -57,42 +65,6 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
     private ViewHolder vh;
     private TwitterAction mAction;
     private Status status;
-
-    static class ViewHolder {
-        TextView Name;
-        ImageView UserIcon;
-        ImageView RTUserIcon;
-        TextView ScreenName;
-        TextView TweetText;
-        TextView Time;
-        TextView Via;
-        TextView RTCount;
-        TextView FavCount;
-
-        TextView RTUserName;
-
-        ImageView TweetDeletedStatus;
-        ImageView LockedStatus;
-        View TweetStatus;
-
-        LinearLayout PreviewImage;
-        ImageView[] ImagePreviewViews = new ImageView[4];
-        ImageView PreviewVideoView1;
-
-        //引用ツイート関連
-        LinearLayout QuoteTweetView;
-        TextView QuoteName;
-        TextView QuoteScreenName;
-        TextView QuoteText;
-        TextView QuoteAtTime;
-        LinearLayout QuotePreviewImage;
-        ImageView[] ImageQuotePreviewViews = new ImageView[4];
-        ImageView QuotePreviewVideoView1;
-    }
-
-    private static final Pattern ID_MATCH_PATTERN = Pattern.compile("@[a-zA-Z0-9_]+", Pattern.CASE_INSENSITIVE);
-    private static final Pattern HASH_TAG_MATCH_PATTERN = Pattern.compile("[#＃][Ａ-Ｚａ-ｚA-Za-z一-鿆0-9０-９ぁ-ヶｦ-ﾟー]+", Pattern.CASE_INSENSITIVE);
-
 
     public ItemMenu(Activity activity){
         this.activity = activity;
@@ -142,7 +114,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(adapter == null) return;
+        if(adapter == null || adapter.getItem(position) == null) return;
         Intent intent;
         ParcelStatus ps;
         switch (adapter.getItem(position).tag){
@@ -215,7 +187,14 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
                     mAction.destroyStatus(status.getId());
                 }
                 break;
-            default:    //IDとハッシュタグに対する処理
+            case HashTag:
+                break;
+            case User:
+                intent = new Intent(activity, UserDetailActivity.class);
+                intent.putExtra("userName", adapter.getItem(position).name);
+                activity.startActivity(intent);
+                break;
+            default:
                 break;
         }
         alertDialog.dismiss();
@@ -334,13 +313,13 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         //画像処理
         if(status.getMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(status.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1);
+            setPreviewMedia(status.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1, activity);
             vh.TweetText.setText(deleteMediaURL(status.getText(), status.getMediaEntities()));
         }
 
         //引用ツイート関連
         if(status.getQuotedStatus() != null){
-            quoteTweetSetting(status.getQuotedStatus(), vh);
+            quoteTweetSetting(status.getQuotedStatus(), vh, activity);
         }
 
         //鍵垢判定
@@ -352,86 +331,6 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
 
         //リンク処理
         mutableLinkMovement(vh.TweetText);
-    }
-
-    /**
-     * 時間を変換するやつ
-     */
-    protected void replacrTimeAt(Date TimeStatusNow, Date CreatedAt, TextView timeView){
-        StaticMethods.replacrTimeAt(TimeStatusNow, CreatedAt, timeView);
-    }
-
-    /**
-     * メディアのプレビュー表示
-     * @param mediaEntity
-     * @param imageViews
-     */
-    protected void setPreviewMedia(MediaEntity[] mediaEntity, ImageView[] imageViews, ImageView videoPlayView){
-        for(int i = 0; i < mediaEntity.length; i++){
-            imageViews[i].setVisibility(View.VISIBLE);
-            if(mediaEntity[i].getType().equals("photo")) {
-                videoPlayView.setVisibility(View.GONE);
-            }else{
-                videoPlayView.setVisibility(View.VISIBLE);
-            }
-            Glide.with(activity)
-                    .load(mediaEntity[i].getMediaURLHttps() + ":thumb")
-                    .placeholder(R.mipmap.ic_sync_white_24dp)
-                    .error(R.mipmap.ic_sync_problem_white_24dp)
-                    .dontAnimate()
-                    .into(imageViews[i]);
-
-            final int finalI = i;
-            imageViews[i].setOnClickListener(view -> {
-                if(mediaEntity[finalI].getType().equals("photo")){
-                    String imageURL = mediaEntity[finalI].getMediaURLHttps();
-                    Intent image = new Intent(activity, ShowImageActivity.class);
-                    image.putExtra("Images", imageURL);
-                    activity.startActivity(image);
-                }else{
-                    MediaEntity.Variant[] videoURLs = mediaEntity[finalI].getVideoVariants();
-                    MediaEntity.Variant videoURL = videoURLs[0];
-                    for(MediaEntity.Variant var : videoURLs){
-                        if(var.getContentType().equals("mp4") && var.getBitrate() > videoURL.getBitrate()){
-                            videoURL = var;
-                        }
-                    }
-                    Intent video = new Intent(activity, PlayVideoActivity.class);
-                    video.putExtra("Video", videoURL.getUrl());
-                    activity.startActivity(video);
-                }
-            });
-        }
-    }
-
-    /**
-     * メディアURLを消す
-     * @param tweet
-     * @param mediaEntity
-     */
-    protected String deleteMediaURL(String tweet, MediaEntity[] mediaEntity){
-        for(MediaEntity media : mediaEntity){
-            tweet = tweet.replaceAll(media.getURL(), "");
-        }
-        return tweet;
-    }
-
-    /**
-     * 引用ツイートの処理
-     * @param status
-     */
-    protected void quoteTweetSetting(Status status, ViewHolder vh){
-        vh.QuoteTweetView.setVisibility(View.VISIBLE);
-        vh.QuoteName.setText(status.getUser().getName());
-        vh.QuoteScreenName.setText("@" + status.getUser().getScreenName());
-        vh.QuoteText.setText(status.getText());
-        replacrTimeAt(new Date(), status.getCreatedAt(), vh.QuoteAtTime);
-        mutableLinkMovement(vh.QuoteText);
-        if(status.getMediaEntities().length != 0){
-            vh.QuotePreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(status.getMediaEntities(),vh.ImageQuotePreviewViews, vh.QuotePreviewVideoView1);
-            vh.QuoteText.setText(deleteMediaURL(status.getText(), status.getMediaEntities()));
-        }
     }
 
     /**
@@ -453,27 +352,6 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
             //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
             return mt;
         });
-    }
-
-    /**
-     * テキストからIDとハッシュタグを抽出してクリック可能に
-     * @param string
-     * @return
-     */
-    protected SpannableString mutableIDandHashTagMobement(String string){
-        SpannableString spannable = new SpannableString(string);
-        Matcher matcher = ID_MATCH_PATTERN.matcher(string);
-        while (matcher.find()){
-            UserIDClickable span = new UserIDClickable();
-            spannable.setSpan(span, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-
-        matcher = HASH_TAG_MATCH_PATTERN.matcher(string);
-        while (matcher.find()){
-            HashTagClickable span = new HashTagClickable();
-            spannable.setSpan(span, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        }
-        return spannable;
     }
 
     /**

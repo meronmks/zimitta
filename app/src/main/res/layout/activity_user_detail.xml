@@ -8,18 +8,115 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="80sp"
+        app:layout_heightPercent="20%"
         app:srcCompat="@mipmap/clear"
-        android:id="@+id/imageView2"
+        android:id="@+id/HeaderImage"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:layout_width="48sp"
-        android:layout_height="48sp"
+        android:layout_width="72sp"
+        android:layout_height="72sp"
         app:srcCompat="@mipmap/ic_sync_white_48dp"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/HeaderImage"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/imageView3" />
+        android:id="@+id/UserIcon"
+        android:layout_marginLeft="8sp"
+        android:layout_marginTop="8sp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/UserIcon"
+        android:layout_toRightOf="@+id/UserIcon"
+        android:layout_toEndOf="@+id/UserIcon"
+        android:layout_alignBottom="@+id/UserIcon"
+        android:layout_marginLeft="4sp"
+        android:layout_marginRight="8sp">
+
+        <TextView
+            android:text="Name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/Name"
+            android:textSize="18sp"
+            android:layout_weight="0.5"/>
+
+        <TextView
+            android:text="\@ScreenName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ScreenName"
+            android:textSize="16sp"
+            android:layout_weight="0.5"/>
+    </LinearLayout>
+
+    <TextView
+        android:text="Vio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/UserIcon"
+        android:layout_alignLeft="@+id/UserIcon"
+        android:layout_alignStart="@+id/UserIcon"
+        android:id="@+id/UserVioText"
+        android:layout_marginTop="4sp"
+        android:layout_marginRight="8sp"
+        android:autoLink="web"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/UserInfos"
+        android:layout_below="@+id/UserVioText"
+        android:layout_alignLeft="@+id/UserVioText"
+        android:layout_alignStart="@+id/UserVioText"
+        android:layout_marginTop="4sp"
+        android:layout_marginRight="8sp">
+
+        <Button
+            android:text="Tweet\nCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/TweetCountButton"
+            android:textSize="12sp"
+            android:layout_weight="0.5" />
+
+        <Button
+            android:text="Follow\nCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/FollowCountButton"
+            android:textSize="12sp"
+            android:layout_weight="0.5" />
+
+        <Button
+            android:text="Follower\nCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/FollowerCountButton"
+            android:textSize="12sp"
+            android:layout_weight="0.5" />
+
+        <Button
+            android:text="Fav\nCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/FavCountButton"
+            android:textSize="12sp"
+            android:layout_weight="0.5" />
+    </LinearLayout>
+
+    <Button
+        android:text="Menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/UserMenuButton"
+        android:layout_marginTop="14sp"
+        android:layout_below="@+id/UserInfos"
+        android:layout_alignRight="@+id/UserInfos"
+        android:layout_alignEnd="@+id/UserInfos" />
+
 </android.support.percent.PercentRelativeLayout>
