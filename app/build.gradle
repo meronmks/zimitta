@@ -47,7 +47,7 @@ android {
         }
         release {
             debuggable false
-            minifyEnabled false
+            minifyEnabled true
             buildConfigField "boolean", "DebugFlag", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -82,10 +82,10 @@ dependencies {
     compile 'com.android.support:percent:25.1.0'
     compile 'com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE'
     compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'io.reactivex:rxjava:1.1.0'
-    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'com.jakewharton.rxbinding:rxbinding:1.0.0'
+    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:1.0.0'
     compile 'com.google.android.gms:play-services-ads:10.0.1'
     compile 'org.twitter4j:twitter4j-core:4.0.6'
     compile 'org.twitter4j:twitter4j-stream:4.0.6'

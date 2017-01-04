@@ -15,3 +15,33 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#twitter4j
+-dontwarn twitter4j.**
+-keep  class twitter4j.conf.PropertyConfigurationFactory
+-keep class twitter4j.** { *; }
+
+#retrolambda
+-dontwarn java.lang.invoke.*
+
+# rxjava
+-dontwarn sun.misc.Unsafe
+
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+   long producerIndex;
+   long consumerIndex;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+   long producerNode;
+   long consumerNode;
+}
+
+#AdMob
+-keep public class com.google.android.gms.ads.** {
+   public *;
+}
+
+-keep public class com.google.ads.** {
+   public *;
+}
