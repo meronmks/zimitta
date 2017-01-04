@@ -49,6 +49,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568226920139:android:e0c0e266f956b702",
+        "android_client_info": {
+          "package_name": "com.meronmks.zimitta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568226920139-1iuhd48hqd223j434smsnld1nep19o01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-KWU_4KmRRZUXK_VQw1AEuWVRb6-bvTA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"
