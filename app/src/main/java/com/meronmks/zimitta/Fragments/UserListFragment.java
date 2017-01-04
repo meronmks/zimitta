@@ -166,6 +166,7 @@ public class UserListFragment extends BaseFragment implements SwipeRefreshLayout
      */
     private void setReceiver(){
         mStreamReceiver = StreamReceiver.register(getContext(), status -> getActivity().runOnUiThread(() -> {
+            if(status == null)return;
             int pos = 0;
             int top = 0;
             if(Variable.UserListTLAdapter == null){
