@@ -55,6 +55,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import rx.subscriptions.BooleanSubscription;
 import twitter4j.ExtendedMediaEntity;
 import twitter4j.MediaEntity;
 import twitter4j.Status;
@@ -294,11 +295,12 @@ public class MakeTweetActivity extends BaseActivity {
      * Listener定義
      */
     private TwitterListener listener = new TwitterAdapter() {
-
         @Override
         public void updatedStatus(Status status) {
             showToast("投稿しました");
-            Answers.getInstance().logCustom(new CustomEvent("Tweet Post"));
+            if(UserSetting.DebugLogSend(getBaseContext())) {
+                Answers.getInstance().logCustom(new CustomEvent("Tweet Post"));
+            }
             finish();
         }
 
