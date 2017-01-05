@@ -36,7 +36,7 @@
             android:title="その他"/>
         <CheckBoxPreference
             android:title="統計情報を送信する"
-            android:summary="アプリの改善に使います。"
+            android:summary="アプリの改善に使います。（要再起動）"
             android:key="DebugLogSend"
             android:defaultValue="false"/>
     </PreferenceScreen>
@@ -95,12 +95,12 @@
             android:key="Streaming_Nof_Toast"
             android:dependency="Stream_Flag"/>
         <CheckBoxPreference
-            android:title="フォロー外のリプライを取得する"
+            android:title="フォロー外のアカウントへのリプライを取得する"
             android:summary="フォローしてる人のあなたが未フォローの人へのリプライを取得します（要再起動）"
             android:key="Streaming_FF_Mention"
             android:dependency="Stream_Flag"/>
         <CheckBoxPreference
-            android:title="Wi-Fiのみで有効"
+            android:title="Wi-Fiのみで有効にする"
             android:summary="Wi-Fi接続時のみでStreamingを有効にします"
             android:key="Streaming_Wifi"
             android:dependency="Stream_Flag"/>
@@ -110,8 +110,8 @@
             <PreferenceCategory
                 android:title="通知設定"
                 android:layout="@layout/pre_tool_bar" />
-            <PreferenceScreen
-                android:title="アプリ起動中に通知します" />
+            <PreferenceCategory
+                android:title="アプリ起動中に通知します"/>
             <CheckBoxPreference
                 android:title="Mention通知"
                 android:key="NotificationMen"
@@ -146,7 +146,7 @@
             android:title="ミュート設定"
             android:layout="@layout/pre_tool_bar"/>
         <CheckBoxPreference
-            android:title="公式のミュートを使う"
+            android:title="公式のミュート設定を使う"
             android:key="mute_flag"
             android:defaultValue="true"/>
     </PreferenceScreen>
