@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.meronmks.zimitta.BuildConfig;
+
 /**
  * Created by meron on 2016/10/02.
  * 設定の読み出しラッパ
@@ -108,6 +110,6 @@ public class UserSetting {
      */
     public static boolean DebugLogSend(Context context){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getBoolean("DebugLogSend", false);
+        return sp.getBoolean("DebugLogSend", BuildConfig.DebugFlag);
     }
 }

@@ -4,11 +4,13 @@ package com.meronmks.zimitta.Settings;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
+import com.meronmks.zimitta.Datas.UserSetting;
 import com.meronmks.zimitta.R;
 
 /**
@@ -22,6 +24,9 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
 
         ListPreference list_preference = (ListPreference)getPreferenceScreen().findPreference("LoadTweetCount");
         list_preference.setSummary(list_preference.getEntry());
+
+        CheckBoxPreference sendAnalytics = (CheckBoxPreference)getPreferenceScreen().findPreference("DebugLogSend");
+        sendAnalytics.setChecked(UserSetting.DebugLogSend(getActivity()));
 
         Preference About = findPreference("About");
         About.setOnPreferenceClickListener(preference -> {

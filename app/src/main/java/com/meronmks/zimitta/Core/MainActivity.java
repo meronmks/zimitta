@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
         ErrorLogs.loadLog(this);
 
         Fabric.Builder builder = new Fabric.Builder(this).kits(new Twitter(authConfig));
-        if(UserSetting.DebugLogSend(this) || BuildConfig.DebugFlag) {
+        if(UserSetting.DebugLogSend(this)) {
             builder = new Fabric.Builder(this).kits(new Twitter(authConfig), new Crashlytics(), new Answers());
         }
 
