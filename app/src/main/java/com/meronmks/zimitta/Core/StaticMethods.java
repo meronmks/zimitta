@@ -189,7 +189,7 @@ public class StaticMethods {
         SpannableString spannable = new SpannableString(string);
         Matcher matcher = ID_MATCH_PATTERN.matcher(string);
         while (matcher.find()){
-            UserIDClickable span = new UserIDClickable();
+            ScreenNameClickable span = new ScreenNameClickable(matcher.group());
             spannable.setSpan(span, matcher.start(), matcher.end(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
