@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -16,15 +14,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.meronmks.zimitta.Activity.MakeTweetActivity;
-import com.meronmks.zimitta.Activity.PlayVideoActivity;
-import com.meronmks.zimitta.Activity.ShowImageActivity;
 import com.meronmks.zimitta.Activity.TweetDetailActivity;
 import com.meronmks.zimitta.Activity.UserDetailActivity;
 import com.meronmks.zimitta.Adapter.MenuItemAdapter;
-import com.meronmks.zimitta.Core.HashTagClickable;
 import com.meronmks.zimitta.Core.MutableLinkMovementMethod;
-import com.meronmks.zimitta.Core.StaticMethods;
-import com.meronmks.zimitta.Core.UserIDClickable;
 import com.meronmks.zimitta.Core.ViewHolder;
 import com.meronmks.zimitta.Datas.ErrorLogs;
 import com.meronmks.zimitta.Datas.MenuItems;
@@ -35,11 +28,8 @@ import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import twitter4j.HashtagEntity;
-import twitter4j.MediaEntity;
 import twitter4j.Status;
 import twitter4j.TwitterAdapter;
 import twitter4j.TwitterException;
