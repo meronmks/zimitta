@@ -1,177 +1,243 @@
 @startuml
-package Activity{
 
-}
+package zimitta{
 
-package Adapter{
+    Core -[hidden]u- Datas
 
-}
+    package Datas{
+        Tags <.. MenuItems
+        Parcelable <|- ParcelStatus
 
-package Core{
-    AppCompatActivity <|-- BaseActivity
-    BaseActivity <|- MainActivity
-    Fragment <|-- BaseFragment
-    TimerTask <|-- LimitTimer
-    BaseFragment - LimitTimer
-    note on link : 内部クラス
-    ClickableSpan <|-- HashTagClickable
-    LinkMovementMethod <|-- MutableLinkMovementMethod
-    OnUrlClickListener <.. MutableLinkMovementMethod : URLタップ時の\nイベント受け取り
-    NetStatusUtil <.. MainActivity
-    ClickableSpan <|-- UserIDClickable
+        class ErrorLogs{
+            +String message
+            +String overview
+            +Date createdA
+            -{static} final String ERROR_JSON
+            +{static} void putErrorLog(String overview, String message)
+            +{static} void saveLog(Context context)
+            +{static} void loadLog(Context context)
+            -ErrorLogs getInstance(String overview, String message)
+        }
 
-    class BaseActivity{
-        # void showToast(String text)
-    }
-    class MainActivity{
-        - SharedPreferences preferences
-        - TwitterAction mAction
-        - TwitterListener listener
+        class MenuItems{
+            +String name
+            +Tags Tags
+            +MenuItems getInstans(String name, Tags tags)
+        }
 
-        - void showMenu()
-    }
+        enum Tags{
+            Detail
+            Replay
+            RT
+            Fav
+            RTandFav
+            User
+            HashTag
+            Delete
+            Share
+        }
 
-    class BaseFragment{
-        # ListView mListView
-        # SwipeRefreshLayout mSwipeRefreshLayout
-        # TwitterAction mAction
-        # boolean isStatusAdd
-        # StreamReceiver mStreamReceiver
-        # Timer limitTimer
-        # boolean isLimited
+        class ParcelStatus{
+            +Status status
+            +ParcelStatus()
+            #ParcelStatus(Parcel in)
+        }
 
-        # void showToast(String text)
-        # void setStatusItemClickListener()
-        # void setLongStatusItemClickListener()
-    }
+        class RateLimits{
+            -RateLimitStatus Home
+            -RateLimitStatus Mention
+            +RateLimitStatus getHome()
+            +void setHome(RateLimitStatus home)
+            +RateLimitStatus getMention()
+            +void setMention(RateLimitStatus mention)
+        }
 
-    class LimitTimer{
-        + void run()
-    }
+        class UserInfo{
+            +String token
+            +String tokenSecret
+            +long userID
+            +String userName
+            +String userScreenName
+            +String userProfileImageURLHttps
+            -{static} final String USER_INFO_KEY
 
-    class HashTagClickable{
-        + void onClick(View widget)
-    }
+            +{static} UserInfo getInstance(Context context, long ID)
+            +{static} UserInfo getDefaultInstance()
+            +void saveInstance(Context context, long ID)
+        }
 
-    class JSONToolKit{
-        +{static} List<ErrorLogs> JSONtoErrorList(String json)
-        +{static} String ErrorListtoJSON(List<ErrorLogs> list)
-    }
+        class UserSetting{
 
-    class MutableLinkMovementMethod{
-        -OnUrlClickListener listener
-    }
+        }
 
-    interface OnUrlClickListener{
-        +{abstract} void onUrlClick(TextView widget, Uri uri)
-    }
+        class Variable{
 
-    class NetStatusUtil{
-        +{static} boolean isOnline(Context context)
-    }
-
-    class StaticMethods{
-        +{static} void replacrTimeAt(Date TimeStatusNow, Date CreatedAt, TextView timeView)
-        +{static} String replaceLoopText(String tweetText, Context context)
-    }
-
-    class UserIDClickable
-}
-
-package Datas{
-    Tags <.. MenuItems
-    Parcelable <|- ParcelStatus
-
-    class ErrorLogs{
-        +String message
-        +String overview
-        +Date createdA
-        -{static} final String ERROR_JSON
-        +{static} void putErrorLog(String overview, String message)
-        +{static} void saveLog(Context context)
-        +{static} void loadLog(Context context)
-        -ErrorLogs getInstance(String overview, String message)
+        }
     }
 
-    class MenuItems{
-        +String name
-        +Tags Tags
-        +MenuItems getInstans(String name, Tags tags)
+    package TwitterUtil{
+
+        UserStreamAdapter <|-- StreamAdapter
+        BroadcastReceiver <|-- StreamReceiver
+        StreamReceiver <-- Callback
+        note on link : 内部インターフェース
+        Datas.Variable <.d.. TwitterAction
+
+
+        class StreamAdapter{
+            -Context context
+            +StreamAdapter(Contexr context)
+            +void onStatus(Status status)
+            +void onException(Exception ex)
+        }
+
+        interface Callback{
+            void onEventInvoked(Status status)
+        }
+
+        class StreamReceiver{
+            -Callback callback
+            -LocalBroadcastManager manager
+            -StreamReceiver(Context context, Callback callback)
+            +{static} StreamReceiver register(Context context, Callback callback)
+            +void onReceive(Context context, Intent intent)
+            +{static} void sendLocalBroadcast(Context context, Status status)
+            +void unregister()
+        }
+
+        class TwitterAction{
+            -AsyncTwitter asyncTwitter
+            -Twitter twitter
+            -ConfigurationBuilder builder
+            +TwitterAction(Context context, TwitterListener twitterListener)
+            -void makeConfigurationBuilder(Context context)
+            +void statusUpdate(StatusUpdate statusUpdate)
+            +void getHomeTimeline(Paging p)
+            +void getMentions(Paging p)
+            +void getVerifyCredentials()
+            +void getMutesIDs()
+            +void retweetStatus(long ID)
+            +void createFavorite(long ID)
+            +void destroyFavorite(long ID)
+            +void destroyStatus(long ID)
+            +void getUserLists(long userID)
+            +void getUserListStatuses(long listID, Paging paging)
+            +void getUserListMembers(long listID, long cursor)
+            +UploadedMedia uploadMedia(File file) throws TwitterException
+            +void showUser(String screenName)
+            +void showUser(long ID)
+        }
     }
 
-    enum Tags{
-        Detail
-        Replay
-        RT
-        Fav
-        RTandFav
-        User
-        HashTag
-        Delete
-        Share
+    package Core{
+        AppCompatActivity <|-- BaseActivity
+        BaseActivity <|- MainActivity
+        Fragment <|-- BaseFragment
+        TimerTask <|-- LimitTimer
+        BaseFragment <- LimitTimer
+        note on link : 内部クラス
+        ClickableSpan <|-- HashTagClickable
+        LinkMovementMethod <|-- MutableLinkMovementMethod
+        OnUrlClickListener <.. MutableLinkMovementMethod : URLタップ時の\nイベント受け取り
+        NetStatusUtil <.. MainActivity
+        ClickableSpan <|-- UserIDClickable
+        Datas.Variable <.d. MainActivity
+        TwitterUtil.TwitterAction <. BaseActivity
+        TwitterUtil.TwitterAction <. MainActivity
+        TwitterUtil.TwitterAction <. BaseFragment
+
+        class BaseActivity{
+            # void showToast(String text)
+        }
+        class MainActivity{
+            - SharedPreferences preferences
+            - TwitterAction mAction
+            - TwitterListener listener
+
+            - void showMenu()
+        }
+
+        class BaseFragment{
+            # ListView mListView
+            # SwipeRefreshLayout mSwipeRefreshLayout
+            # TwitterAction mAction
+            # boolean isStatusAdd
+            # StreamReceiver mStreamReceiver
+            # Timer limitTimer
+            # boolean isLimited
+
+            # void showToast(String text)
+            # void setStatusItemClickListener()
+            # void setLongStatusItemClickListener()
+        }
+
+        class LimitTimer{
+            + void run()
+        }
+
+        class HashTagClickable{
+            + void onClick(View widget)
+        }
+
+        class JSONToolKit{
+            +{static} List<ErrorLogs> JSONtoErrorList(String json)
+            +{static} String ErrorListtoJSON(List<ErrorLogs> list)
+        }
+
+        class MutableLinkMovementMethod{
+            -OnUrlClickListener listener
+        }
+
+        interface OnUrlClickListener{
+            +{abstract} void onUrlClick(TextView widget, Uri uri)
+        }
+
+        class NetStatusUtil{
+            +{static} boolean isOnline(Context context)
+        }
+
+        class StaticMethods{
+            +{static} void replacrTimeAt(Date TimeStatusNow, Date CreatedAt, TextView timeView)
+            +{static} String replaceLoopText(String tweetText, Context context)
+        }
+
+        class UserIDClickable
     }
 
-    class ParcelStatus{
-        +Status status
-        +ParcelStatus()
-        #ParcelStatus(Parcel in)
+    package Activity{
+
+        Core.BaseActivity <|- AccountChangeActivity
+
+        class AccountChangeActivity{
+            -Toolbar toolbar
+            -AccountListAdapter adapter
+        }
     }
 
-    class RateLimits{
-        -RateLimitStatus Home
-        -RateLimitStatus Mention
-        +RateLimitStatus getHome()
-        +void setHome(RateLimitStatus home)
-        +RateLimitStatus getMention()
-        +void setMention(RateLimitStatus mention)
-    }
-
-    class UserInfo{
-        +String token
-        +String tokenSecret
-        +long userID
-        +String userName
-        +String userScreenName
-        +String userProfileImageURLHttps
-        -{static} final String USER_INFO_KEY
-
-        +{static} UserInfo getInstance(Context context, long ID)
-        +{static} UserInfo getDefaultInstance()
-        +void saveInstance(Context context, long ID)
-    }
-
-    class UserSetting{
+    package Adapter{
 
     }
 
-    class Variable{
+    package Fragments{
 
     }
-}
 
-package Fragments{
+    package ImageMoveUtil{
 
-}
+    }
 
-package ImageMoveUtil{
+    package Listener{
 
-}
+    }
+    package Menus{
 
-package Listener{
+    }
+    package OAuth{
 
-}
-package Menus{
+    }
 
-}
-package OAuth{
+    package Settings{
 
-}
-
-package Settings{
-
-}
-
-package TwitterUtil{
-
+    }
 }
 @enduml
