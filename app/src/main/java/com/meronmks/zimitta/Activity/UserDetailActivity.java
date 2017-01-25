@@ -43,22 +43,42 @@ public class UserDetailActivity extends BaseActivity{
     private void showUserDetail(User user){
         ImageView userIcon = (ImageView) findViewById(R.id.UserIcon);
         Glide.with(this).load(user.getProfileImageURLHttps()).into(userIcon);
+
         ImageView headerImage = (ImageView) findViewById(R.id.HeaderImage);
         Glide.with(this).load(user.getProfileBannerURL()).into(headerImage);
+
         TextView name = (TextView) findViewById(R.id.Name);
         name.setText(user.getName());
+
         TextView screenName = (TextView) findViewById(R.id.ScreenName);
         screenName.setText(user.getScreenName());
+
         Button  tweetCountButton = (Button) findViewById(R.id.TweetCountButton);
         tweetCountButton.setText(Integer.toString(user.getStatusesCount()) + "\nツイート");
+
         Button  followCountButton = (Button) findViewById(R.id.FollowCountButton);
         followCountButton.setText(Integer.toString(user.getFriendsCount()) + "\nフォロー");
+
         Button  followerCountButton = (Button) findViewById(R.id.FollowerCountButton);
         followerCountButton.setText(Integer.toString(user.getFollowersCount()) + "\nフォロワー");
+
         Button  favCountButton = (Button) findViewById(R.id.FavCountButton);
         favCountButton.setText(Integer.toString(user.getFavouritesCount()) + "\nお気に入り");
+
         TextView userVio = (TextView) findViewById(R.id.UserVioText);
         userVio.setText(mutableIDandHashTagMobement(user.getDescription()));
+
+        TextView uniqueUserID = (TextView)findViewById(R.id.UniqueUserID);
+        uniqueUserID.setText(Long.toString(user.getId()));
+
+        TextView userLocation = (TextView)findViewById(R.id.LocationTextView);
+        userLocation.setText(user.getLocation());
+
+        TextView webSite = (TextView)findViewById(R.id.WebSiteTextView);
+        webSite.setText(user.getURLEntity().getExpandedURL());
+
+        TextView userSince = (TextView)findViewById(R.id.SinceTextView);
+        userSince.setText(user.getCreatedAt().toString());
     }
 
     /**

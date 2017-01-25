@@ -12,7 +12,8 @@
         app:srcCompat="@mipmap/clear"
         android:id="@+id/HeaderImage"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop" />
 
     <ImageView
         android:layout_width="72sp"
@@ -53,70 +54,134 @@
             android:layout_weight="0.5"/>
     </LinearLayout>
 
-    <TextView
-        android:text="Vio"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_below="@+id/UserIcon"
         android:layout_alignLeft="@+id/UserIcon"
         android:layout_alignStart="@+id/UserIcon"
-        android:id="@+id/UserVioText"
-        android:layout_marginTop="4sp"
-        android:layout_marginRight="8sp"
-        android:autoLink="web"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/UserInfos"
-        android:layout_below="@+id/UserVioText"
-        android:layout_alignLeft="@+id/UserVioText"
-        android:layout_alignStart="@+id/UserVioText"
         android:layout_marginTop="4sp"
         android:layout_marginRight="8sp">
-
-        <Button
-            android:text="Tweet\nCount"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/TweetCountButton"
-            android:textSize="12sp"
-            android:layout_weight="0.5" />
+            android:orientation="vertical" >
+            <TextView
+                android:text="Vio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/UserVioText"
 
-        <Button
-            android:text="Follow\nCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/FollowCountButton"
-            android:textSize="12sp"
-            android:layout_weight="0.5" />
+                android:autoLink="web"/>
 
-        <Button
-            android:text="Follower\nCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/FollowerCountButton"
-            android:textSize="12sp"
-            android:layout_weight="0.5" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/UserInfos"
+                android:layout_marginTop="4sp"
+                android:layout_marginRight="8sp">
 
-        <Button
-            android:text="Fav\nCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/FavCountButton"
-            android:textSize="12sp"
-            android:layout_weight="0.5" />
-    </LinearLayout>
+                <Button
+                    android:text="Tweet\nCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/TweetCountButton"
+                    android:textSize="12sp"
+                    android:layout_weight="0.5" />
 
-    <Button
-        android:text="Menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/UserMenuButton"
-        android:layout_marginTop="14sp"
-        android:layout_below="@+id/UserInfos"
-        android:layout_alignRight="@+id/UserInfos"
-        android:layout_alignEnd="@+id/UserInfos" />
+                <Button
+                    android:text="Follow\nCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/FollowCountButton"
+                    android:textSize="12sp"
+                    android:layout_weight="0.5" />
+
+                <Button
+                    android:text="Follower\nCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/FollowerCountButton"
+                    android:textSize="12sp"
+                    android:layout_weight="0.5" />
+
+                <Button
+                    android:text="Fav\nCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/FavCountButton"
+                    android:textSize="12sp"
+                    android:layout_weight="0.5" />
+            </LinearLayout>
+
+            <Button
+                android:text="Menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/UserMenuButton"
+                android:layout_marginRight="8sp"
+                android:layout_gravity="right"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UniqueUserID"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/UniqueUserID"
+                android:text="1145141919"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:text="Location"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/LocationTextView"
+                android:text="hogehoge"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:text="WebSite"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:id="@+id/WebSiteTextView"
+                android:text="http://hogehoge"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:text="Since"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SinceTextView"
+                android:text="XXXX/XX/XX"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8sp"
+                android:text="FriendStatus"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/FriendStatusTextView"
+                android:text="StatusUnknown"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.percent.PercentRelativeLayout>
