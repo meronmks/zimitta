@@ -2,6 +2,7 @@ package com.meronmks.zimitta.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.format.DateFormat;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -72,13 +73,13 @@ public class UserDetailActivity extends BaseActivity{
         uniqueUserID.setText(Long.toString(user.getId()));
 
         TextView userLocation = (TextView)findViewById(R.id.LocationTextView);
-        userLocation.setText(user.getLocation());
+        userLocation.setText(user.getLocation().isEmpty() ? "Location is Empty" : user.getLocation());
 
         TextView webSite = (TextView)findViewById(R.id.WebSiteTextView);
-        webSite.setText(user.getURLEntity().getExpandedURL());
+        webSite.setText(user.getURLEntity().getExpandedURL().isEmpty() ? "WebSite is Empty" : user.getURLEntity().getExpandedURL());
 
         TextView userSince = (TextView)findViewById(R.id.SinceTextView);
-        userSince.setText(user.getCreatedAt().toString());
+        userSince.setText(DateFormat.format("yyyy/MM/dd kk:mm:ss", user.getCreatedAt()));
     }
 
     /**
