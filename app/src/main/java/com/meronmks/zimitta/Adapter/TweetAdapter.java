@@ -22,6 +22,7 @@ import twitter4j.Status;
 import twitter4j.UserMentionEntity;
 
 import static com.meronmks.zimitta.Core.StaticMethods.deleteMediaURL;
+import static com.meronmks.zimitta.Core.StaticMethods.expansionURL;
 import static com.meronmks.zimitta.Core.StaticMethods.mutableIDandHashTagMobement;
 import static com.meronmks.zimitta.Core.StaticMethods.mutableLinkMovement;
 import static com.meronmks.zimitta.Core.StaticMethods.quoteTweetSetting;
@@ -100,6 +101,7 @@ public class TweetAdapter extends BaseAdapter<Status> {
             setPreviewMedia(item.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1, getContext());
             text = deleteMediaURL(text, item.getMediaEntities());
         }
+        text = expansionURL(text, item.getURLEntities());
         vh.TweetText.setText(mutableIDandHashTagMobement(text));
         if(vh.TweetText.length() == 0){
             vh.TweetText.setVisibility(View.GONE);

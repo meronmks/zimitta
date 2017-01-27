@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import twitter4j.MediaEntity;
 import twitter4j.Status;
+import twitter4j.URLEntity;
 
 /**
  * Created by p-user on 2016/10/21.
@@ -104,11 +105,24 @@ public class StaticMethods {
     /**
      * メディアURLを消す
      * @param tweet
-     * @param mediaEntity
+     * @param mediaEntities
      */
-    public static String deleteMediaURL(String tweet, MediaEntity[] mediaEntity){
-        for(MediaEntity media : mediaEntity){
+    public static String deleteMediaURL(String tweet, MediaEntity[] mediaEntities){
+        for(MediaEntity media : mediaEntities){
             tweet = tweet.replaceAll(media.getURL(), "");
+        }
+        return tweet;
+    }
+
+    /**
+     * 短縮URLを展開する
+     * @param tweet
+     * @param urlEntities
+     * @return
+     */
+    public static String expansionURL(String tweet, URLEntity[] urlEntities){
+        for(URLEntity url : urlEntities){
+            tweet = tweet.replaceAll(url.getURL(), url.getExpandedURL());
         }
         return tweet;
     }

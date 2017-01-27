@@ -38,6 +38,7 @@ import twitter4j.TwitterMethod;
 import twitter4j.UserMentionEntity;
 
 import static com.meronmks.zimitta.Core.StaticMethods.deleteMediaURL;
+import static com.meronmks.zimitta.Core.StaticMethods.expansionURL;
 import static com.meronmks.zimitta.Core.StaticMethods.mutableIDandHashTagMobement;
 import static com.meronmks.zimitta.Core.StaticMethods.quoteTweetSetting;
 import static com.meronmks.zimitta.Core.StaticMethods.replacrTimeAt;
@@ -299,13 +300,15 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         vh.Via.setText(status.getSource().replaceAll("<.+?>", "") + " : より");
         vh.RTCount.setText("RT : " + status.getRetweetCount());
         vh.FavCount.setText("Fav : " + status.getFavoriteCount());
-
+        String text = status.getText();
         //画像処理
         if(status.getMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
             setPreviewMedia(status.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1, activity);
-            vh.TweetText.setText(deleteMediaURL(status.getText(), status.getMediaEntities()));
+            text = deleteMediaURL(text, status.getMediaEntities());
         }
+        text = expansionURL(text, status.getURLEntities());
+        vh.TweetText.setText(mutableIDandHashTagMobement(text));
 
         //引用ツイート関連
         if(status.getQuotedStatus() != null){

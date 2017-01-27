@@ -26,6 +26,8 @@ import twitter4j.Status;
 import twitter4j.UserMentionEntity;
 
 import static com.meronmks.zimitta.Core.StaticMethods.deleteMediaURL;
+import static com.meronmks.zimitta.Core.StaticMethods.expansionURL;
+import static com.meronmks.zimitta.Core.StaticMethods.mutableIDandHashTagMobement;
 import static com.meronmks.zimitta.Core.StaticMethods.quoteTweetSetting;
 import static com.meronmks.zimitta.Core.StaticMethods.replacrTimeAt;
 import static com.meronmks.zimitta.Core.StaticMethods.setPreviewMedia;
@@ -95,13 +97,15 @@ public class BaseActivity extends AppCompatActivity {
         vh.Via.setText(status.getSource().replaceAll("<.+?>", "") + " : より");
         vh.RTCount.setText("RT : " + status.getRetweetCount());
         vh.FavCount.setText("Fav : " + status.getFavoriteCount());
-
+        String text = status.getText();
         //画像処理
         if(status.getMediaEntities().length != 0){
             vh.PreviewImage.setVisibility(View.VISIBLE);
             setPreviewMedia(status.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1, getBaseContext());
-            vh.TweetText.setText(deleteMediaURL(status.getText(), status.getMediaEntities()));
+            text = deleteMediaURL(text, status.getMediaEntities());
         }
+        text = expansionURL(text, status.getURLEntities());
+        vh.TweetText.setText(mutableIDandHashTagMobement(text));
 
         //引用ツイート関連
         if(status.getQuotedStatus() != null){
