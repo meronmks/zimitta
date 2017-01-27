@@ -33,6 +33,7 @@ android {
         targetSdkVersion 25
         versionCode VERSION_CODE
         versionName VERSION_NAME
+        multiDexEnabled true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -94,6 +95,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.1'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
