@@ -42,10 +42,12 @@ import twitter4j.UserMentionEntity;
 
 import static com.meronmks.zimitta.Core.StaticMethods.deleteMediaURL;
 import static com.meronmks.zimitta.Core.StaticMethods.expansionURL;
+import static com.meronmks.zimitta.Core.StaticMethods.iniViewHolder;
 import static com.meronmks.zimitta.Core.StaticMethods.mutableIDandHashTagMobement;
 import static com.meronmks.zimitta.Core.StaticMethods.quoteTweetSetting;
 import static com.meronmks.zimitta.Core.StaticMethods.replacrTimeAt;
 import static com.meronmks.zimitta.Core.StaticMethods.setPreviewMedia;
+import static com.meronmks.zimitta.Core.StaticMethods.setStatusitemtoView;
 
 /**
  * Created by p-user on 2016/10/03.
@@ -294,144 +296,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
      * @param cv
      */
     private void settingItemVIew(Status status, View cv){
-
         vh = iniViewHolder(cv);
-        vh.TweetDeletedStatus.setVisibility(View.GONE);
-        vh.RTUserIcon.setVisibility(View.GONE);
-        vh.RTIcon.setVisibility(View.GONE);
-        vh.RTUserName.setVisibility(View.GONE);
-        vh.TweetStatus.setVisibility(View.GONE);
-        vh.PreviewImage.setVisibility(View.GONE);
-        vh.QuoteTweetView.setVisibility(View.GONE);
-        vh.QuotePreviewImage.setVisibility(View.GONE);
-        for(int i = 0; i < vh.ImagePreviewViews.length; i++){
-            vh.ImagePreviewViews[i].setVisibility(View.GONE);
-        }
-        for(int i = 0; i < vh.ImageQuotePreviewViews.length; i++){
-            vh.ImageQuotePreviewViews[i].setVisibility(View.GONE);
-        }
-
-        if(status.getUser().getId() == Variable.userInfo.userID){
-            vh.TweetStatus.setVisibility(View.VISIBLE);
-            vh.TweetStatus.setBackgroundResource(R.color.Blue);
-        }else {
-            for (UserMentionEntity entity : status.getUserMentionEntities()) {
-                if(!entity.getScreenName().equals(Variable.userInfo.userScreenName))continue;
-                vh.TweetStatus.setVisibility(View.VISIBLE);
-                vh.TweetStatus.setBackgroundResource(R.color.Rad);
-            }
-        }
-        if(status.isRetweet()){
-            vh.TweetStatus.setVisibility(View.VISIBLE);
-            vh.TweetStatus.setBackgroundResource(R.color.Green);
-            vh.RTUserName.setVisibility(View.VISIBLE);
-            vh.RTUserName.setText(status.getUser().getName() + " さんがRT");
-            vh.RTUserIcon.setVisibility(View.VISIBLE);
-            vh.RTIcon.setVisibility(View.VISIBLE);
-            Glide.with(activity).load(status.getUser().getProfileImageURLHttps()).into(vh.RTUserIcon);
-            status = status.getRetweetedStatus();
-        }
-
-        vh.Name.setText(status.getUser().getName());
-        Glide.with(activity).load(status.getUser().getProfileImageURLHttps()).into(vh.UserIcon);
-        vh.ScreenName.setText("@" + status.getUser().getScreenName());
-        vh.TweetText.setText(mutableIDandHashTagMobement(status.getText()));
-        replacrTimeAt(new Date(), status.getCreatedAt(), vh.Time);
-        vh.Via.setText(status.getSource().replaceAll("<.+?>", "") + " : より");
-        vh.RTCount.setText("RT : " + status.getRetweetCount());
-        vh.FavCount.setText("Fav : " + status.getFavoriteCount());
-        String text = status.getText();
-        //画像処理
-        if(status.getMediaEntities().length != 0){
-            vh.PreviewImage.setVisibility(View.VISIBLE);
-            setPreviewMedia(status.getMediaEntities(),vh.ImagePreviewViews, vh.PreviewVideoView1, activity);
-            text = deleteMediaURL(text, status.getMediaEntities());
-        }
-        text = expansionURL(text, status.getURLEntities());
-        vh.TweetText.setText(mutableIDandHashTagMobement(text));
-
-        //引用ツイート関連
-        if(status.getQuotedStatus() != null){
-            quoteTweetSetting(status.getQuotedStatus(), vh, activity);
-        }
-
-        //鍵垢判定
-        if(status.getUser().isProtected()){
-            vh.LockedStatus.setVisibility(View.VISIBLE);
-        }else{
-            vh.LockedStatus.setVisibility(View.GONE);
-        }
-
-        //リンク処理
-        mutableLinkMovement(vh.TweetText);
-    }
-
-    /**
-     * TextViewのリンク以外のクリックイベントを更に下のViewへ渡す
-     * @param TweetText
-     */
-    protected void mutableLinkMovement(TextView TweetText){
-        TweetText.setOnTouchListener((view, event) -> {
-            TextView textView = (TextView) view;
-            //LinkMovementMethodを継承したもの 下記参照
-            MutableLinkMovementMethod m = new MutableLinkMovementMethod();
-            //リンクのチェックを行うため一時的にsetする
-            textView.setMovementMethod(m);
-            boolean mt = m.onTouchEvent(textView, (Spannable) textView.getText(), event);
-            //チェックが終わったので解除する しないと親view(listview)に行けない
-            textView.setMovementMethod(null);
-            //setMovementMethodを呼ぶとフォーカスがtrueになるのでfalseにする
-            textView.setFocusable(false);
-            //戻り値がtrueの場合は今のviewで処理、falseの場合は親viewで処理
-            return mt;
-        });
-    }
-
-    /**
-     * Holderを初期化
-     * @param cv
-     * @return
-     */
-    private ViewHolder iniViewHolder(View cv){
-        vh = new ViewHolder();
-
-        vh.Name = (TextView) cv.findViewById(R.id.Name);
-        vh.UserIcon = (ImageView) cv.findViewById(R.id.UserIcon);
-        vh.RTUserIcon = (ImageView) cv.findViewById(R.id.RTUserIcon);
-        vh.RTIcon = (ImageView) cv.findViewById(R.id.RTIcon);
-        vh.ScreenName = (TextView) cv.findViewById(R.id.ScreenName);
-        vh.TweetText = (TextView) cv.findViewById(R.id.TweetText);
-        vh.Via = (TextView) cv.findViewById(R.id.Via);
-        vh.RTCount = (TextView) cv.findViewById(R.id.RTCount);
-        vh.FavCount = (TextView) cv.findViewById(R.id.FavCount);
-
-        vh.RTUserName = (TextView) cv.findViewById(R.id.RTUserName);
-
-        vh.TweetDeletedStatus = (ImageView) cv.findViewById(R.id.TweetDeletedStatus);
-        vh.LockedStatus = (ImageView) cv.findViewById(R.id.LockedStatus);
-        vh.TweetStatus = cv.findViewById(R.id.TweetStatus);
-        vh.Time = (TextView) cv.findViewById(R.id.Time);
-
-        vh.PreviewImage = (LinearLayout) cv.findViewById(R.id.PreviewImage);
-        vh.ImagePreviewViews[0] = (ImageView) cv.findViewById(R.id.PreviewImageView1);
-        vh.ImagePreviewViews[1] = (ImageView) cv.findViewById(R.id.PreviewImageView2);
-        vh.ImagePreviewViews[2] = (ImageView) cv.findViewById(R.id.PreviewImageView3);
-        vh.ImagePreviewViews[3] = (ImageView) cv.findViewById(R.id.PreviewImageView4);
-        vh.PreviewVideoView1 = (ImageView) cv.findViewById(R.id.PreviewVideoView1);
-
-        //引用ツイート関連
-        vh.QuoteTweetView = (LinearLayout) cv.findViewById(R.id.QuoteTweetView);
-        vh.QuoteName = (TextView) cv.findViewById(R.id.QuoteName);
-        vh.QuoteScreenName = (TextView) cv.findViewById(R.id.QuoteScreenName);
-        vh.QuoteText = (TextView) cv.findViewById(R.id.QuoteText);
-        vh.QuoteAtTime = (TextView) cv.findViewById(R.id.QuoteAtTime);
-        vh.QuotePreviewImage = (LinearLayout) cv.findViewById(R.id.QuotePreviewImage);
-        vh.ImageQuotePreviewViews[0] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView1);
-        vh.ImageQuotePreviewViews[1] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView2);
-        vh.ImageQuotePreviewViews[2] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView3);
-        vh.ImageQuotePreviewViews[3] = (ImageView) cv.findViewById(R.id.QuotePreviewImageView4);
-        vh.QuotePreviewVideoView1 = (ImageView) cv.findViewById(R.id.QuotePreviewVideoView1);
-
-        return vh;
+        setStatusitemtoView(activity, vh, status);
     }
 }
