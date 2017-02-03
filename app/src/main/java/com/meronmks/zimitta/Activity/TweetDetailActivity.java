@@ -22,5 +22,6 @@ public class TweetDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_tweet_detail);
         ParcelStatus ps = getIntent().getParcelableExtra("status");
         status = ps.status;
+        settingItemVIew(status);
     }
 }
