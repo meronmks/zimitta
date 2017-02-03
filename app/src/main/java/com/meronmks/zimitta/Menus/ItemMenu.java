@@ -2,6 +2,8 @@ package com.meronmks.zimitta.Menus;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.view.View;
@@ -28,6 +30,7 @@ import com.meronmks.zimitta.R;
 import com.meronmks.zimitta.TwitterUtil.TwitterAction;
 
 import java.util.Date;
+import java.util.List;
 
 import twitter4j.HashtagEntity;
 import twitter4j.Status;
@@ -101,6 +104,8 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         if(Variable.userInfo.userID == status.getUser().getId()){
             adapter.add(new MenuItems().getInstans("削除", MenuItems.Tags.Delete));
         }
+        adapter.add(new MenuItems().getInstans("共有", MenuItems.Tags.Share));
+        adapter.add(new MenuItems().getInstans("プラグイン", MenuItems.Tags.Plugin));
     }
 
     @Override
@@ -185,10 +190,43 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
                 intent.putExtra("userName", adapter.getItem(position).name);
                 activity.startActivity(intent);
                 break;
+            case Plugin:
+                getPluginList();
+                break;
             default:
                 break;
         }
         alertDialog.dismiss();
+    }
+
+    /**
+     * プラグイン一覧表示
+     */
+    private void getPluginList(){
+        Intent intent = new Intent("jp.r246.twicca.ACTION_SHOW_TWEET");
+        intent.putExtra("android.intent.extra.TEXT", status.getText());
+        intent.putExtra("id", (String.valueOf(status.getId())));
+        if(status.getGeoLocation() != null) {
+            intent.putExtra("latitude", (String.valueOf(status.getGeoLocation().getLatitude())));
+            intent.putExtra("longitude", (String.valueOf(status.getGeoLocation().getLongitude())));
+        }
+        intent.putExtra("created_at", (String.valueOf(status.getCreatedAt().getTime())));
+        intent.putExtra("source", (status.getSource()));
+        intent.putExtra("in_reply_to_status_id", (String.valueOf(status.getInReplyToStatusId())));
+        intent.putExtra("user_screen_name", (status.getUser().getScreenName()));
+        intent.putExtra("user_name", (status.getUser().getName()));
+        intent.putExtra("user_id", (String.valueOf(status.getUser().getId())));
+        intent.putExtra("user_profile_image_url", (status.getUser().getProfileImageURLHttps()));
+        intent.putExtra("user_profile_image_url_mini", (status.getUser().getProfileImageURLHttps() + "_mini"));
+        intent.putExtra("user_profile_image_url_normal", (status.getUser().getProfileImageURLHttps() + "_normal"));
+        intent.putExtra("user_profile_image_url_bigger", (status.getUser().getProfileImageURLHttps() + "_bigger"));
+        Intent chooser = Intent.createChooser(intent, "プラグイン一覧");
+        if (intent.resolveActivity(activity.getPackageManager()) != null) {
+            activity.startActivity(chooser);
+        }else{
+            showToast("使用できるプラグインが見つかりません。");
+            ErrorLogs.putErrorLog("プラグイン関連エラー","使用できるプラグインが見つかりません。インストールされていないか、対応していません。");
+        }
     }
 
     /**

@@ -19,7 +19,8 @@ public class MenuItems {
         User,
         HashTag,
         Delete,
-        Share
+        Share,
+        Plugin
     }
 
     public MenuItems getInstans(String name, Tags tags){
