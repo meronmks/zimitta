@@ -298,6 +298,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         vh = iniViewHolder(cv);
         vh.TweetDeletedStatus.setVisibility(View.GONE);
         vh.RTUserIcon.setVisibility(View.GONE);
+        vh.RTIcon.setVisibility(View.GONE);
         vh.RTUserName.setVisibility(View.GONE);
         vh.TweetStatus.setVisibility(View.GONE);
         vh.PreviewImage.setVisibility(View.GONE);
@@ -326,6 +327,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
             vh.RTUserName.setVisibility(View.VISIBLE);
             vh.RTUserName.setText(status.getUser().getName() + " さんがRT");
             vh.RTUserIcon.setVisibility(View.VISIBLE);
+            vh.RTIcon.setVisibility(View.VISIBLE);
             Glide.with(activity).load(status.getUser().getProfileImageURLHttps()).into(vh.RTUserIcon);
             status = status.getRetweetedStatus();
         }
@@ -396,6 +398,7 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
         vh.Name = (TextView) cv.findViewById(R.id.Name);
         vh.UserIcon = (ImageView) cv.findViewById(R.id.UserIcon);
         vh.RTUserIcon = (ImageView) cv.findViewById(R.id.RTUserIcon);
+        vh.RTIcon = (ImageView) cv.findViewById(R.id.RTIcon);
         vh.ScreenName = (TextView) cv.findViewById(R.id.ScreenName);
         vh.TweetText = (TextView) cv.findViewById(R.id.TweetText);
         vh.Via = (TextView) cv.findViewById(R.id.Via);
