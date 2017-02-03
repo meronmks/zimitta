@@ -206,24 +206,24 @@ public class ItemMenu implements AdapterView.OnItemClickListener {
      */
     private void getPluginList(){
         Intent intent = new Intent("jp.r246.twicca.ACTION_SHOW_TWEET");
-        intent.putExtra("android.intent.extra.TEXT", status.getText());
-        intent.putExtra("id", (String.valueOf(status.getId())));
-        if(status.getGeoLocation() != null) {
-            intent.putExtra("latitude", (String.valueOf(status.getGeoLocation().getLatitude())));
-            intent.putExtra("longitude", (String.valueOf(status.getGeoLocation().getLongitude())));
-        }
-        intent.putExtra("created_at", (String.valueOf(status.getCreatedAt().getTime())));
-        intent.putExtra("source", (status.getSource()));
-        intent.putExtra("in_reply_to_status_id", (String.valueOf(status.getInReplyToStatusId())));
-        intent.putExtra("user_screen_name", (status.getUser().getScreenName()));
-        intent.putExtra("user_name", (status.getUser().getName()));
-        intent.putExtra("user_id", (String.valueOf(status.getUser().getId())));
-        intent.putExtra("user_profile_image_url", (status.getUser().getProfileImageURLHttps()));
-        intent.putExtra("user_profile_image_url_mini", (status.getUser().getProfileImageURLHttps() + "_mini"));
-        intent.putExtra("user_profile_image_url_normal", (status.getUser().getProfileImageURLHttps() + "_normal"));
-        intent.putExtra("user_profile_image_url_bigger", (status.getUser().getProfileImageURLHttps() + "_bigger"));
-        Intent chooser = Intent.createChooser(intent, "プラグイン一覧");
         if (intent.resolveActivity(activity.getPackageManager()) != null) {
+            intent.putExtra("android.intent.extra.TEXT", status.getText());
+            intent.putExtra("id", (String.valueOf(status.getId())));
+            if(status.getGeoLocation() != null) {
+                intent.putExtra("latitude", (String.valueOf(status.getGeoLocation().getLatitude())));
+                intent.putExtra("longitude", (String.valueOf(status.getGeoLocation().getLongitude())));
+            }
+            intent.putExtra("created_at", (String.valueOf(status.getCreatedAt().getTime())));
+            intent.putExtra("source", (status.getSource()));
+            intent.putExtra("in_reply_to_status_id", (String.valueOf(status.getInReplyToStatusId())));
+            intent.putExtra("user_screen_name", (status.getUser().getScreenName()));
+            intent.putExtra("user_name", (status.getUser().getName()));
+            intent.putExtra("user_id", (String.valueOf(status.getUser().getId())));
+            intent.putExtra("user_profile_image_url", (status.getUser().getProfileImageURLHttps()));
+            intent.putExtra("user_profile_image_url_mini", (status.getUser().getProfileImageURLHttps() + "_mini"));
+            intent.putExtra("user_profile_image_url_normal", (status.getUser().getProfileImageURLHttps() + "_normal"));
+            intent.putExtra("user_profile_image_url_bigger", (status.getUser().getProfileImageURLHttps() + "_bigger"));
+            Intent chooser = Intent.createChooser(intent, "プラグイン一覧");
             activity.startActivity(chooser);
         }else{
             showToast("使用できるプラグインが見つかりません。");
