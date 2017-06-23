@@ -142,9 +142,9 @@ package zimitta{
         NetStatusUtil <.. MainActivity
         ClickableSpan <|-- UserIDClickable
         Datas.Variable <.d. MainActivity
-        TwitterUtil.TwitterAction <. BaseActivity
-        TwitterUtil.TwitterAction <. MainActivity
-        TwitterUtil.TwitterAction <. BaseFragment
+        TwitterAction <. BaseActivity
+        TwitterAction <. MainActivity
+        TwitterAction <. BaseFragment
 
         class BaseActivity{
             # void showToast(String text)
