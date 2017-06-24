@@ -8,3 +8,11 @@ $RECYCLE.BIN/
 ._*
 *.apk
 out/
+/build
+/captures
+.externalNativeBuild
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
