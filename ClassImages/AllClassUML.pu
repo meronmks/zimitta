@@ -1,0 +1,55 @@
+@startuml
+
+Title じみったー（仮）Ver5.0.0（仮）クラス図（継承等の関係のみ）
+
+package zimitta{
+    package Activity{
+        class MainActivity
+        class MakeTweetActivity
+        class TwitterLogin
+    }
+
+    package Listener{
+        Android.ClickableSpan <|-- ScreenNameClickListener
+        Android.ClickableSpan <|-- HashTagClickListener
+        Android.LinkMovementMethod <|-- MutableLinkMovementMethod
+        twitter4j.TwitterListener <|-- TwitterListenerCore
+        class ScreenNameClickListener
+        class HashTagClickListener
+        interface UrlClickListener
+        class MutableLinkMovementMethod
+        class TwitterListenerCore
+    }
+
+    package Core{
+        AppCompatActivity <|-- ActivityCore
+        ActivityCore <|-- MainActivity
+        ActivityCore <|-- MakeTweetActivity
+        Fragment <|-- FragmentCore
+        class ActivityCore
+        class FragmentCore
+        class ViewHolder
+    }
+
+    package Datas{
+        Android.Parcelable <|-- ParcelStatus
+        enum MenuTags
+        class MenuItems
+        class ParcelStatus
+        class StaticVariable
+    }
+
+    package TwitterUtl{
+        Android.BroadcastReceiver <|-- StreamReceiver
+        twitter4j.UserStreamAdapter <|-- StreamAdapter
+        class TwitterAction
+        class StreamAdapter
+        class StreamReceiver
+        interface Callback
+    }
+
+    package OAuth{
+        class TwitterUtils
+    }
+}
+@enduml

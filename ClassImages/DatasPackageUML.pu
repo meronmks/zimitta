@@ -1,0 +1,47 @@
+@startuml
+
+Title じみったー（仮）Ver5.0.0（仮）クラス図（Datasパッケージ）
+
+package zimitta{
+    package Datas{
+
+        Android.Parcelable <|-- ParcelStatus
+
+        enum MenuTags{
+            Detail
+            Replay
+            RT
+            Fav
+            RTandFav
+            User
+            HashTag
+            Delete
+            Share
+            Plugin
+        }
+
+        class MenuItems{
+            +String name
+            +Tags Tags
+            +MenuItems getInstans(String name, Tags tags)
+        }
+
+        'クラスごとIntentで投げつける時に使う
+        class ParcelStatus{
+            +Status status
+            +ParcelStatus()
+            #ParcelStatus(Parcel in)
+            +int describeContents()
+            +void writeToParcel(Parcel dest, int flags)
+            +static final Parcelable.Creator<ParcelStatus> CREATOR
+        }
+
+        note "どこまでのデータを静的に保持させるべきなのか検討する" as SVNT
+        StaticVariable . SVNT
+        class StaticVariable{
+            +{static} boolean initialize(Context context)
+            +{static} void Destroy()
+        }
+    }
+}
+@enduml

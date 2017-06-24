@@ -1,0 +1,79 @@
+@startuml
+
+Title じみったー（仮）Ver5.0.0（仮）クラス図（Coreパッケージ）
+
+package zimitta{
+    package Core{
+        AppCompatActivity <|-- ActivityCore
+        ActivityCore <|-- MainActivity
+
+        Fragment <|-- FragmentCore
+
+        class ActivityCore{
+            #ViewHolder viewHolder
+            #TwitterAction TwitterAction
+            #void showToast(String text)
+            #void setItemView(Status status)
+        }
+        class FragmentCore{
+            #ListView ListView
+            #SwipeRefreshLayout swipeRefreshLayout
+            #TwitterAction twitterAction
+            #StreamReceiver streamReceiver
+            #void showToast(String text)
+        }
+        class ViewHolder{
+            -Context context
+            -final Pattern ID_MATCH_PATTERN
+            -final Pattern HASH_TAG_MATCH_PATTERN
+            'レイアウト
+            +TextView Name
+            +ImageView UserIcon
+            +ImageView RTUserIcon
+            +ImageView RTIcon
+            +TextView ScreenName
+            +TextView TweetText
+            +TextView Time
+            +TextView Via
+            +TextView RTCount
+            +TextView FavCount
+            +TextView RTUserName
+            +ImageView TweetDeletedStatus
+            +ImageView LockedStatus
+            +View TweetStatus
+            +LinearLayout PreviewImage
+            +ImageView[] ImagePreviewViews
+            +ImageView PreviewVideoView
+            '引用ツイート関連
+            +LinearLayout QuoteTweetView
+            +TextView QuoteName
+            +TextView QuoteScreenName
+            +TextView QuoteText
+            +TextView QuoteAtTime
+            +LinearLayout QuotePreviewImage
+            +ImageView[] ImageQuotePreviewViews
+            +ImageView QuotePreviewVideoView
+
+            +ViewHolder(Context context)
+            +ViewHolder initialize(View view)
+            +void setStatusItemView(Status item)
+            '引用ツイートの処理
+            -void setQuoteTweetView(Status item)
+            'TextViewのリンク以外のクリックイベントを更に下のViewへ渡す
+            -void mutableLinkMovement(TextView TweetText)
+            'メディアのプレビュー表示
+            -void setPreviewMedia(MediaEntity[] mediaEntity, ImageView[] imageViews, ImageView videoPlayView)
+            '時間を変換するやつ
+            -void replacrTimeAt(Date TimeStatusNow, Date CreatedAt, TextView timeView)
+            'ループしてるテキストの置き換えメソッド
+            -String replaceLoopText(String tweetText, Context context)
+            'メディアURLを消す
+            -String deleteMediaURL(String tweet, MediaEntity[] mediaEntities)
+            '短縮URLを展開する
+            -String expansionURL(String tweet, URLEntity[] urlEntities)
+            'テキストからIDとハッシュタグを抽出してクリック可能に
+            -SpannableString mutableIDandHashTagMobement(String string)
+        }
+    }
+}
+@enduml

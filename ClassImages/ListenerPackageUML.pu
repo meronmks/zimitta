@@ -1,0 +1,31 @@
+@startuml
+
+Title じみったー（仮）Ver5.0.0（仮）クラス図（Listenerパッケージ）
+
+package zimitta{
+    package Listener{
+        Android.ClickableSpan <|-- ScreenNameClickListener
+        Android.ClickableSpan <|-- HashTagClickListener
+        Android.LinkMovementMethod <|-- MutableLinkMovementMethod
+
+        class ScreenNameClickListener{
+            -String screenName
+            +ScreenNameClickable(String screenName)
+            +void onClick(View widget)
+        }
+        class HashTagClickListener{
+            +void onClick(View widget)
+        }
+
+        interface UrlClickListener{
+            +{abstract} void onUrlClick(TextView widget, Uri uri)
+        }
+
+        class MutableLinkMovementMethod{
+            -UrlClickListener listener
+            +void setOnUrlClickListener(UrlClickListener listener)
+            +boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event)
+        }
+    }
+}
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+
+Title じみったー（仮）Ver5.0.0（仮）クラス図（TwitterUtlパッケージ）
+
+package zimitta{
+    package TwitterUtl{
+
+        Android.BroadcastReceiver <|-- StreamReceiver
+        twitter4j.UserStreamAdapter <|-- StreamAdapter
+
+        class TwitterAction{
+            -AsyncTwitter asyncTwitter
+            -Twitter twitter
+            -ConfigurationBuilder builder
+            +TwitterAction(Context context, TwitterListener twitterListener)
+            -void makeConfigurationBuilder(Context context)
+            +void statusUpdate(StatusUpdate statusUpdate)
+            +void getHomeTimeline(Paging p)
+            +void getMentions(Paging p)
+            +void getVerifyCredentials()
+            +void getMutesIDs()
+            +void retweetStatus(long ID)
+            +void createFavorite(long ID)
+            +void destroyFavorite(long ID)
+            +void destroyStatus(long ID)
+            +void getUserLists(long userID)
+            +void getUserListStatuses(long listID, Paging paging)
+            +void getUserListMembers(long listID, long cursor)
+            +UploadedMedia uploadMedia(File file) throws TwitterException
+            +void showUser(String screenName)
+            +void showUser(long ID)
+        }
+
+        class StreamAdapter{
+            -Context context
+            +StreamAdapter(Context context)
+            +void onStatus(Status status)
+            +void onException(Exception e)
+        }
+
+        class StreamReceiver{
+            -Callback callback
+            -LocalBroadcastManager manager
+        }
+
+        interface Callback{
+            void onEventInvoked(Status status)
+        }
+    }
+}
+@enduml

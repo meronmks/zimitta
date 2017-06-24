@@ -1,0 +1,12 @@
+@startuml
+
+Title じみったー（仮）Ver5.0.0（仮）クラス図（Activityパッケージ）
+
+package zimitta{
+    package Activity{
+        class MainActivity{
+
+        }
+    }
+}
+@enduml
